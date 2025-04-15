@@ -7,8 +7,13 @@ using DG.Tweening;
 public class CardHolder : MonoBehaviour
 {
     #region Register variable
-    Vector3 offset;
+    [Header("Card Dragging")]
+    private Vector3 offset;
     [SerializeField] List<ButtonUI> selectedCards = new();
+    [SerializeField] Vector2 scaleWhenDragging = new Vector2(1.05f, 1.05f);
+    private float rotationAmount = 20f;
+    private float rotationSpeed = 20f;
+    private Vector2 rotationDelta;
 
     [SerializeField] ButtonUI draggingCard;
 
@@ -49,8 +54,17 @@ public class CardHolder : MonoBehaviour
             Vector2 direction = (targetPostion - (Vector2)draggingCard.transform.position).normalized;
             draggingCard.transform.position = Vector3.Lerp(draggingCard.transform.position, targetPostion, 0.1f);
             draggingCard.transform.position = ClampScreen(draggingCard.transform.position);
+
+            float targetZRotation = -direction.x * rotationAmount;
+
+            targetZRotation = Mathf.Clamp(targetZRotation, -60f, 60f);
+            float smoothedZ = Mathf.LerpAngle(draggingCard.transform.eulerAngles.z, targetZRotation, rotationSpeed * Time.deltaTime);
+            draggingCard.transform.rotation = Quaternion.Euler(0f, 0f, smoothedZ);
+
             SwapCheck();
         }
+
+        ApplyCardIdleTilt();
     }
     #endregion
 
@@ -66,6 +80,9 @@ public class CardHolder : MonoBehaviour
 
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             offset = mousePosition - (Vector2)gameObject.transform.position;
+            cardRect.DOScale(scaleWhenDragging, 0.1f);
+
+            // Change Card To First Layer
             cardCanvas.overrideSorting = true;
             cardCanvas.sortingLayerName = "Interact";
             cardCanvas.sortingOrder = 1;
@@ -77,8 +94,10 @@ public class CardHolder : MonoBehaviour
         buttonUI.MouseDragEnd = () =>
         {
             draggingCard = null;
+            cardRect.DOScale(Vector2.one, 0.1f);
+            cardRect.DOAnchorPos(Vector2.zero, 0.3f).SetUpdate(false);
+            cardRect.DORotate(Vector2.zero, 0.3f).SetUpdate(false);
 
-            cardRect.DOAnchorPos(Vector2.zero, .3f).SetUpdate(true);
             selectedCards.Remove(buttonUI);
             cardCanvas.overrideSorting = false;
         };
@@ -87,12 +106,12 @@ public class CardHolder : MonoBehaviour
             if (selectedCards.Contains(buttonUI))
             {
                 selectedCards.Remove(buttonUI);
-                cardRect.DOAnchorPos(Vector2.zero, 0.3f / 2).SetUpdate(true);
+                cardRect.DOAnchorPos(Vector2.zero, 0.3f / 2).SetUpdate(false);
             }
             else if (selectedCards.Count < 5)
             {
                 selectedCards.Add(buttonUI);
-                cardRect.DOAnchorPosY((transform.position.y + 50f), 0.3f).SetUpdate(true);
+                cardRect.DOAnchorPosY((transform.position.y + 50f), 0.3f).SetUpdate(false);
             }
         };
     }
@@ -148,11 +167,11 @@ public class CardHolder : MonoBehaviour
         cards[index].transform.SetParent(focusedParent);
         if (selectedCards.Contains(cards[index]))
         {
-            cards[index].GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,50f), 0.01f).SetUpdate(true);
+            cards[index].GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 50f), 0.1f).SetUpdate(false);
         }
         else
         {
-            cards[index].GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
+            cards[index].GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f);
         }
 
         //cards[index].transform.localPosition = cards[index].selected ? new Vector3(0, cards[index].selectionOffset, 0) : Vector3.zero;
@@ -165,6 +184,27 @@ public class CardHolder : MonoBehaviour
         foreach (ButtonUI card in cards)
         {
             //card.cardVisual.UpdateIndex(transform.childCount);
+        }
+    }
+
+    void ApplyCardIdleTilt()
+    {
+        float frequency = 1.5f;  
+        float amplitude = 2.5f;
+
+        for (int i = 0; i < cards.Count; i++)
+        {
+            var card = cards[i];
+            if (card == draggingCard) continue;
+
+            float timeOffset = Time.time * frequency + i * 0.5f;
+
+            float tiltX = Mathf.Sin(timeOffset) * amplitude * 1.5f;
+            float tiltY = Mathf.Cos(timeOffset) * amplitude * 1.5f;
+            float tiltZ = Mathf.Sin(timeOffset + 1f) * amplitude * 1.5f;
+
+            Quaternion targetRotation = Quaternion.Euler(tiltX, tiltY, tiltZ);
+            card.transform.rotation = Quaternion.Lerp(card.transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
     }
     #endregion
