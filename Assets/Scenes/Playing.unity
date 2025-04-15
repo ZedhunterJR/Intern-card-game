@@ -662,7 +662,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 282983661
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &806728004
@@ -690,6 +690,56 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1015469268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1015469270}
+  - component: {fileID: 1015469269}
+  m_Layer: 0
+  m_Name: CardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1015469269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015469268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b1ae4293d3a7e04890c3937cc41ed3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedCards: []
+  draggingCard: {fileID: 0}
+  cardSlot: {fileID: 3736175457334129866, guid: c2117543c7c9fa54689102c98b6b00a2, type: 3}
+  cardHolder: {fileID: 1494703523}
+  cardsToSpawn: 7
+  cards: []
+--- !u!4 &1015469270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015469268}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1088952795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,7 +1203,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1494703523}
   - component: {fileID: 1494703526}
-  - component: {fileID: 1494703527}
   - component: {fileID: 1494703525}
   - component: {fileID: 1494703524}
   m_Layer: 5
@@ -1246,23 +1295,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494703522}
   m_CullTransparentMesh: 1
---- !u!114 &1494703527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1494703522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b1ae4293d3a7e04890c3937cc41ed3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedCard: {fileID: 0}
-  hoveringCard: {fileID: 0}
-  cardSlot: {fileID: 3736175457334129866, guid: c2117543c7c9fa54689102c98b6b00a2, type: 3}
-  cardsToSpawn: 7
-  cards: []
 --- !u!1 &1535809119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1835,3 +1867,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 806728004}
   - {fileID: 614920013}
+  - {fileID: 1015469270}

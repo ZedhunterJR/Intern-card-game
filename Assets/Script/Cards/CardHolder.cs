@@ -148,7 +148,7 @@ public class CardHolder : MonoBehaviour
         cards[index].transform.SetParent(focusedParent);
         if (selectedCards.Contains(cards[index]))
         {
-            cards[index].GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,50f), 0.3f).SetUpdate(true);
+            cards[index].GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,50f), 0.01f).SetUpdate(true);
         }
         else
         {
