@@ -10,12 +10,17 @@ public class CardHolder : MonoBehaviour
     [Header("Card Dragging")]
     private Vector3 offset;
     [SerializeField] List<ButtonUI> selectedCards = new();
-    [SerializeField] Vector2 scaleWhenDragging = new Vector2(1.05f, 1.05f);
+    [SerializeField] Vector2 scaleWhenDragging = new Vector2(1.25f, 1.25f);
     private float rotationAmount = 20f;
     private float rotationSpeed = 20f;
     private Vector2 rotationDelta;
-
     [SerializeField] ButtonUI draggingCard;
+
+    [Header("Hover Parameters")]
+    [SerializeField] Vector2 scaleWhenHover = new Vector2(1.15f, 1.15f);
+    [SerializeField] float hoverPunchAngle = 5f;
+    [SerializeField] float hoverTransition = 0.15f;
+    [SerializeField] ButtonUI hoverCard;
 
     [SerializeField] private GameObject cardSlot;
     [SerializeField] private Transform cardHolder;
@@ -74,13 +79,31 @@ public class CardHolder : MonoBehaviour
         var buttonUI = gameObject.GetComponent<ButtonUI>();
         var cardRect = gameObject.GetComponent<RectTransform>();
         var cardCanvas = gameObject.GetComponent<Canvas>();
+        buttonUI.MouseHoverEnter = () =>
+        {
+            hoverCard = buttonUI;
+
+            if (draggingCard == null)
+            {
+                cardRect.DOScale(scaleWhenHover, 0.1f).SetEase(Ease.OutBack);
+                DOTween.Kill(2, true);
+                cardRect.DOPunchRotation(Vector3.forward * hoverPunchAngle, hoverTransition, 20, 1).SetId(2);
+            }
+        };
+        buttonUI.MouseHoverExit = () =>
+        {
+            hoverCard = null;
+            if (draggingCard != buttonUI)
+                cardRect.DOScale(Vector2.one, 0.1f).SetEase(Ease.OutBack);
+        };
         buttonUI.MouseDragBegin = () =>
         {
             draggingCard = buttonUI;
 
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             offset = mousePosition - (Vector2)gameObject.transform.position;
-            cardRect.DOScale(scaleWhenDragging, 0.1f);
+            cardRect.DOScale(scaleWhenDragging * 1.1f, 0.1f).SetEase(Ease.OutBack); 
+            // Không hiểu sáo đoạn này scaleWhenDragging = Vector2(1.25f, 1.25f) nhưng khi game chạy lại là Vector2(1.05f, 1.05f) nên phải * 1.2f
 
             // Change Card To First Layer
             cardCanvas.overrideSorting = true;
@@ -165,13 +188,16 @@ public class CardHolder : MonoBehaviour
         Transform crossedParent = cards[index].transform.parent;
 
         cards[index].transform.SetParent(focusedParent);
+        DOTween.Kill(2, true);
         if (selectedCards.Contains(cards[index]))
         {
             cards[index].GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 50f), 0.1f).SetUpdate(false);
+            cards[index].GetComponent<RectTransform>().DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
         }
         else
         {
-            cards[index].GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f);
+            cards[index].GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f).SetId(3);
+            cards[index].GetComponent<RectTransform>().DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
         }
 
         //cards[index].transform.localPosition = cards[index].selected ? new Vector3(0, cards[index].selectionOffset, 0) : Vector3.zero;
@@ -189,7 +215,7 @@ public class CardHolder : MonoBehaviour
 
     void ApplyCardIdleTilt()
     {
-        float frequency = 1.5f;  
+        float frequency = 1.5f;
         float amplitude = 2.5f;
 
         for (int i = 0; i < cards.Count; i++)

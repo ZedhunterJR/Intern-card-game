@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class ButtonUI : MonoBehaviour, IPointerClickHandler, IDragHandler, IDropHandler,
-    IEndDragHandler, IBeginDragHandler
+    IEndDragHandler, IBeginDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Debug")]
     public bool interactable = true;
@@ -17,6 +17,8 @@ public class ButtonUI : MonoBehaviour, IPointerClickHandler, IDragHandler, IDrop
     public Action MouseDrag = null;
     public Action MouseDragEnd = null;
     public Action MouseDrop = null;
+    public Action MouseHoverEnter = null;
+    public Action MouseHoverExit = null;
 
     private Image buttonImage;
 
@@ -67,6 +69,16 @@ public class ButtonUI : MonoBehaviour, IPointerClickHandler, IDragHandler, IDrop
         MouseDrop?.Invoke();
     }
 
+    public virtual void OnPointerEnter(PointerEventData eventData)
+    {
+        MouseHoverEnter?.Invoke();
+    }
+
+    public virtual void OnPointerExit(PointerEventData eventData)
+    {
+        MouseHoverExit?.Invoke();
+    }
+
     public void SetInteractable(bool value)
     {
         interactable = value;
@@ -91,5 +103,7 @@ public class ButtonUI : MonoBehaviour, IPointerClickHandler, IDragHandler, IDrop
         MouseDrag = null;
         MouseDragEnd = null;
         MouseDrop = null;
+        MouseHoverEnter = null;
+        MouseHoverExit = null;
     }
 }
