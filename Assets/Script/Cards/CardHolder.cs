@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using System;
 
 public class CardHolder : MonoBehaviour
 {
@@ -21,6 +23,9 @@ public class CardHolder : MonoBehaviour
     [SerializeField] float hoverPunchAngle = 5f;
     [SerializeField] float hoverTransition = 0.15f;
     [SerializeField] ButtonUI hoverCard;
+
+    [Header("Discard Parameters")]
+    [SerializeField] Transform discardTransform; 
 
     [SerializeField] private GameObject cardSlot;
     [SerializeField] private Transform cardHolder;
@@ -246,6 +251,10 @@ public class CardHolder : MonoBehaviour
         {
             var cardTransform = card.transform;
             var cardRect = card.GetComponent<RectTransform>();
+            var cardParentTransform = cardTransform.parent;
+            var cardParentRect = cardParentTransform.GetComponent<RectTransform>();
+
+            cardParentTransform.SetParent(discardTransform);
 
             Vector3 targetRotation = new Vector3(cardTransform.rotation.eulerAngles.x, 90f, 90f);
             cardRect.DORotate(targetRotation, 0.5f, RotateMode.FastBeyond360).SetEase(Ease.OutCubic);
@@ -253,6 +262,20 @@ public class CardHolder : MonoBehaviour
 
             selectedCards.Remove(card);
             this.cards.Remove(card);
+            AnimWhenCardsSlotChange();
+        }
+    }
+
+    void AnimWhenCardsSlotChange()
+    {
+        foreach (var card in cards)
+        {
+            var cardRect = card.GetComponent<RectTransform>();
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(cardHolder.GetComponent<RectTransform>());
+            Vector3 targetPos = card.transform.localPosition;
+            cardRect.DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
+            cardRect.DOAnchorPos(Vector2.zero, 0.3f).SetEase(Ease.OutCubic);
         }
     }
     #endregion
