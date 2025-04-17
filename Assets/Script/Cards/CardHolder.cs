@@ -262,8 +262,10 @@ public class CardHolder : MonoBehaviour
 
             selectedCards.Remove(card);
             this.cards.Remove(card);
-            AnimWhenCardsSlotChange();
+
         }
+
+        AnimWhenCardsSlotChange();
     }
 
     void AnimWhenCardsSlotChange()
