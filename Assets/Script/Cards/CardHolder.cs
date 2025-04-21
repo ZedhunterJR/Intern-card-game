@@ -74,11 +74,6 @@ public class CardHolder : MonoBehaviour
             SwapCheck();
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            DiscardCard(selectedCards);
-        }
-
         ApplyCardIdleTilt();
     }
     #endregion
@@ -241,43 +236,6 @@ public class CardHolder : MonoBehaviour
 
             Quaternion targetRotation = Quaternion.Euler(tiltX, tiltY, tiltZ);
             card.transform.rotation = Quaternion.Lerp(card.transform.rotation, targetRotation, Time.deltaTime * 5f);
-        }
-    }
-
-    // Card Discard
-    void DiscardCard(List<ButtonUI> cards)
-    {
-        foreach (var card in cards.ToArray())
-        {
-            var cardTransform = card.transform;
-            var cardRect = card.GetComponent<RectTransform>();
-            var cardParentTransform = cardTransform.parent;
-            var cardParentRect = cardParentTransform.GetComponent<RectTransform>();
-
-            cardParentTransform.SetParent(discardTransform);
-
-            Vector3 targetRotation = new Vector3(cardTransform.rotation.eulerAngles.x, 90f, 90f);
-            cardRect.DORotate(targetRotation, 0.5f, RotateMode.FastBeyond360).SetEase(Ease.OutCubic);
-            cardRect.DOAnchorPos(new Vector2(1000, cardRect.anchoredPosition.y), 0.3f);
-
-            selectedCards.Remove(card);
-            this.cards.Remove(card);
-
-        }
-
-        AnimWhenCardsSlotChange();
-    }
-
-    void AnimWhenCardsSlotChange()
-    {
-        foreach (var card in cards)
-        {
-            var cardRect = card.GetComponent<RectTransform>();
-
-            LayoutRebuilder.ForceRebuildLayoutImmediate(cardHolder.GetComponent<RectTransform>());
-            Vector3 targetPos = card.transform.localPosition;
-            cardRect.DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
-            cardRect.DOAnchorPos(Vector2.zero, 0.3f).SetEase(Ease.OutCubic);
         }
     }
     #endregion

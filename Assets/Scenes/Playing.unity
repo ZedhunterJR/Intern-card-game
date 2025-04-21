@@ -720,7 +720,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedCards: []
+  scaleWhenDragging: {x: 1.15, y: 1.15}
   draggingCard: {fileID: 0}
+  scaleWhenHover: {x: 1.15, y: 1.15}
+  hoverPunchAngle: 5
+  hoverTransition: 0.15
+  hoverCard: {fileID: 0}
+  discardTransform: {fileID: 0}
   cardSlot: {fileID: 3736175457334129866, guid: c2117543c7c9fa54689102c98b6b00a2, type: 3}
   cardHolder: {fileID: 1494703523}
   cardsToSpawn: 7
