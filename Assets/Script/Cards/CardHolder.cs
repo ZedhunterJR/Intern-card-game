@@ -5,6 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using System;
+using System.Security.Cryptography;
 
 public class CardHolder : MonoBehaviour
 {
@@ -23,9 +24,6 @@ public class CardHolder : MonoBehaviour
     [SerializeField] float hoverPunchAngle = 5f;
     [SerializeField] float hoverTransition = 0.15f;
     [SerializeField] ButtonUI hoverCard;
-
-    [Header("Discard Parameters")]
-    [SerializeField] Transform discardTransform; 
 
     [SerializeField] private GameObject cardSlot;
     [SerializeField] private Transform cardHolder;
@@ -74,7 +72,7 @@ public class CardHolder : MonoBehaviour
             SwapCheck();
         }
 
-        ApplyCardIdleTilt();
+        //ApplyCardIdleTilt();
     }
     #endregion
 
@@ -107,7 +105,7 @@ public class CardHolder : MonoBehaviour
 
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             offset = mousePosition - (Vector2)gameObject.transform.position;
-            cardRect.DOScale(scaleWhenDragging * 1.1f, 0.1f).SetEase(Ease.OutBack); 
+            cardRect.DOScale(scaleWhenDragging * 1.1f, 0.1f).SetEase(Ease.OutBack);
             // Không hiểu sáo đoạn này scaleWhenDragging = Vector2(1.25f, 1.25f) nhưng khi game chạy lại là Vector2(1.05f, 1.05f) nên phải * 1.2f
 
             // Change Card To First Layer
@@ -193,7 +191,7 @@ public class CardHolder : MonoBehaviour
         Transform crossedParent = cards[index].transform.parent;
 
         cards[index].transform.SetParent(focusedParent);
-        DOTween.Kill(2, true);
+        DOTween.Kill(3, true);
         if (selectedCards.Contains(cards[index]))
         {
             cards[index].GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 50f), 0.1f).SetUpdate(false);
@@ -210,7 +208,6 @@ public class CardHolder : MonoBehaviour
 
         bool swapIsRight = ParentIndex(cards[index]) > ParentIndex(draggingCard);
         //cards[index].cardVisual.Swap(swapIsRight ? -1 : 1);
-
         //Updated Visual Indexes
         foreach (ButtonUI card in cards)
         {

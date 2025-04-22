@@ -57,6 +57,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card
       objectReference: {fileID: 0}
+    - target: {fileID: 1162940364705655977, guid: 93b731f3a52c6db4e9075e50a001421b, type: 3}
+      propertyPath: m_OverrideSorting
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7935945135476835712, guid: 93b731f3a52c6db4e9075e50a001421b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
