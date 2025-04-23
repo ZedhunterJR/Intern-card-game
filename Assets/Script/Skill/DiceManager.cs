@@ -11,8 +11,9 @@ public class DiceManager : Singleton<DiceManager>
     [SerializeField] int baseDiceNum = 5;
     private int currentDiceNum;
 
+    [SerializeField] Transform[] diceHolders;
     [SerializeField] GameObject dicePrefabs;
-    [SerializeField] Transform diceHolder;
+    //[SerializeField] Transform diceHolder;
     public List<Dice> diceList;
     public List<ButtonUI> diceFace;
     
@@ -36,7 +37,7 @@ public class DiceManager : Singleton<DiceManager>
     {
         for (int i = 0; i < baseDiceNum; i++)
         {
-            Dice dice = Instantiate(dicePrefabs, diceHolder).GetComponent<Dice>();
+            Dice dice = Instantiate(dicePrefabs, diceHolders[i]).GetComponent<Dice>();
             diceList.Add(dice);
         }
 
