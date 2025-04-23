@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3500845480795457902}
   - component: {fileID: 1674057892152944813}
   m_Layer: 5
-  m_Name: Dice Place
+  m_Name: diceplace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1057,7 +1057,7 @@ GameObject:
   - component: {fileID: 5993114129616665847}
   m_Layer: 5
   m_Name: CardSkill
-  m_TagString: Untagged
+  m_TagString: CardSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

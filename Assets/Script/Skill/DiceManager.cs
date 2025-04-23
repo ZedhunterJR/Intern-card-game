@@ -16,14 +16,16 @@ public class DiceManager : Singleton<DiceManager>
     //[SerializeField] Transform diceHolder;
     public List<Dice> diceList;
     public List<ButtonUI> diceFace;
-    
+
     // var for reroll
     [SerializeField] List<Dice> selectedDice;
+    public List<Dice> SelectedDice;
 
     // var for dragging 
     [SerializeField] ButtonUI draggingDice;
     public ButtonUI DraggingDice => draggingDice;
     Vector3 offset;
+    ButtonUI targetCard = null;
     #endregion
 
     #region Unity Methods
@@ -75,6 +77,7 @@ public class DiceManager : Singleton<DiceManager>
         var diceRect = dice.GetComponent<RectTransform>();
         var diceCanvas = dice.GetComponent<Canvas>();
         var diceOutline = dice.GetComponent<Outline>();
+        var diceGraphic = dice.GetComponent<GraphicRaycaster>();
         buttonUI.ClickFunc = () =>
         {
             if (draggingDice == null)
@@ -104,6 +107,7 @@ public class DiceManager : Singleton<DiceManager>
             draggingDice = buttonUI;
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             offset = mousePosition - (Vector2)dice.transform.position;
+            diceGraphic.enabled = false;
 
             diceCanvas.overrideSorting = true;
             diceCanvas.sortingLayerName = "Interact";

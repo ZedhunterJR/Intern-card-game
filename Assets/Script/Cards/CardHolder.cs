@@ -156,6 +156,42 @@ public class CardHolder : Singleton<CardHolder>
                 cardRect.DOAnchorPosY((transform.position.y + 50f), 0.3f).SetUpdate(false);
             }*/
         };
+        buttonUI.MouseDrop = () =>
+        {
+            if (draggingCard != null)
+            {
+                Debug.Log($"Thả card [{draggingCard.name}] vào [{obj.name}]");
+            }
+            else if (diceManager.DraggingDice != null)
+            {
+                var droppedDice = diceManager.DraggingDice;
+
+                Debug.Log($"Thả dice [{droppedDice.name}] vào card [{obj.name}]");
+
+                // fit dice to card 
+                var diceplaceTransform = obj.transform.Find("diceplace");
+                droppedDice.transform.SetParent(diceplaceTransform);
+                droppedDice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f);
+                var diceTransfrom = droppedDice.GetComponent<RectTransform>();
+                DOTween.To(() => diceTransfrom.offsetMin, x => diceTransfrom.offsetMin = x, Vector2.zero, 0.1f);
+                DOTween.To(() => diceTransfrom.offsetMax, x => diceTransfrom.offsetMax = x, Vector2.zero, 0.3f);
+
+                var droppedDiceCanvas = droppedDice.GetComponent<Canvas>();
+                droppedDiceCanvas.overrideSorting = false;
+
+                // Disable outline components
+                var diceOutline = droppedDice.GetComponent<Outline>();
+                diceOutline.enabled = false;
+
+                // Remove frome SelectedDiceList 
+                var diceComp = droppedDice.GetComponent<Dice>();
+                if (diceManager.SelectedDice.Contains(diceComp))
+                    diceManager.SelectedDice.Remove(diceComp);
+
+                var diceGraphicRaycaster = diceComp.GetComponent<GraphicRaycaster>();
+                diceGraphicRaycaster.enabled = true;
+            }
+        };
     }
 
     Vector3 ClampScreen(Vector3 position)
