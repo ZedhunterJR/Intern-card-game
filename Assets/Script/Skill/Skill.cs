@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
-    public int diceFace = -1;
+    public Dice diceFace;
 
     public List<SkillCondition> skillPosCondition;
     public Func<List<Skill>, bool> activateCondition = (skill) =>
@@ -13,7 +13,7 @@ public class Skill : MonoBehaviour
         var sum = 0; 
         foreach (var sk in skill)
         {
-            sum += sk.diceFace;
+            sum += sk.diceFace.currentFace;
         }
         if (sum > 5)
             return true;

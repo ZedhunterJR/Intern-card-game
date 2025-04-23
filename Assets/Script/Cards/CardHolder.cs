@@ -30,9 +30,16 @@ public class CardHolder : Singleton<CardHolder>
     [Header("Spawn Setting")]
     [SerializeField] private int cardsToSpawn = 7;
     public List<GameObject> cards;
+
+    // Ref
+    private DiceManager diceManager;
     #endregion
 
     #region Unity Methods
+    private void Awake()
+    {
+        diceManager = DiceManager.Instance;        
+    }
 
     private void Start()
     {
@@ -83,7 +90,7 @@ public class CardHolder : Singleton<CardHolder>
         var cardCanvas = obj.GetComponent<Canvas>();
         buttonUI.MouseHoverEnter = () =>
         {
-            if (draggingCard != null)
+            if (draggingCard != null || diceManager.DraggingDice != null)
                 return;
 
             hoverCard = obj;
@@ -121,10 +128,6 @@ public class CardHolder : Singleton<CardHolder>
             cardCanvas.overrideSorting = true;
             cardCanvas.sortingLayerName = "Interact";
             cardCanvas.sortingOrder = 1;
-
-        };
-        buttonUI.MouseDrag = () =>
-        {
         };
         buttonUI.MouseDragEnd = () =>
         {
@@ -136,6 +139,9 @@ public class CardHolder : Singleton<CardHolder>
 
             //selectedCards.Remove(buttonUI);
             cardCanvas.overrideSorting = false;
+        };
+        buttonUI.MouseDrag = () =>
+        {
         };
         buttonUI.ClickFunc = () =>
         {
