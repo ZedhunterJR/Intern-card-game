@@ -24,7 +24,6 @@ public class DiceManager : Singleton<DiceManager>
     [SerializeField] ButtonUI draggingDice;
     public ButtonUI DraggingDice => draggingDice;
     Vector3 offset;
-    Vector3 previousPosition;
     #endregion
 
     #region Unity Methods
@@ -103,7 +102,6 @@ public class DiceManager : Singleton<DiceManager>
         buttonUI.MouseDragBegin = () =>
         {
             draggingDice = buttonUI;
-            previousPosition = draggingDice.transform.position;
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             offset = mousePosition - (Vector2)dice.transform.position;
 
@@ -114,7 +112,7 @@ public class DiceManager : Singleton<DiceManager>
         buttonUI.MouseDragEnd = () =>
         {
             draggingDice = null;
-            diceRect.DOMove(previousPosition, 0.3f).SetUpdate(false);
+            diceRect.DOAnchorPos(Vector2.zero, 0.3f).SetUpdate(false);
 
             diceCanvas.overrideSorting = false;
         };
