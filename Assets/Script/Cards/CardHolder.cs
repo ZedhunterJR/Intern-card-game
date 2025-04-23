@@ -5,32 +5,31 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using System;
-using System.Security.Cryptography;
 
 public class CardHolder : MonoBehaviour
 {
     #region Register variable
     [Header("Card Dragging")]
     private Vector3 offset;
-    [SerializeField] List<ButtonUI> selectedCards = new();
+    //[SerializeField] List<ButtonUI> selectedCards = new();
     [SerializeField] Vector2 scaleWhenDragging = new Vector2(1.25f, 1.25f);
     private float rotationAmount = 20f;
     private float rotationSpeed = 20f;
     private Vector2 rotationDelta;
-    [SerializeField] ButtonUI draggingCard;
+    [SerializeField] GameObject draggingCard;
 
     [Header("Hover Parameters")]
     [SerializeField] Vector2 scaleWhenHover = new Vector2(1.15f, 1.15f);
     [SerializeField] float hoverPunchAngle = 5f;
     [SerializeField] float hoverTransition = 0.15f;
-    [SerializeField] ButtonUI hoverCard;
+    [SerializeField] GameObject hoverCard;
 
     [SerializeField] private GameObject cardSlot;
     [SerializeField] private Transform cardHolder;
 
     [Header("Spawn Setting")]
     [SerializeField] private int cardsToSpawn = 7;
-    public List<ButtonUI> cards;
+    public List<GameObject> cards;
     #endregion
 
     #region Unity Methods
@@ -40,14 +39,14 @@ public class CardHolder : MonoBehaviour
         for (int i = 0; i <= cardsToSpawn; i++)
         {
             var card = Instantiate(cardSlot, cardHolder);
-            cards.Add(card.GetComponentInChildren<ButtonUI>());
+            cards.Add(card.transform.GetChild(0).gameObject);
         }
 
         int cardCount = 0;
 
         foreach (var card in cards)
         {
-            AddCardEvent(card.gameObject);
+            AddCardEvent(card);
 
             card.name = cardCount.ToString();
             cardCount++;
@@ -77,14 +76,14 @@ public class CardHolder : MonoBehaviour
     #endregion
 
     #region Methods
-    void AddCardEvent(GameObject gameObject)
+    void AddCardEvent(GameObject obj)
     {
-        var buttonUI = gameObject.GetComponent<ButtonUI>();
-        var cardRect = gameObject.GetComponent<RectTransform>();
-        var cardCanvas = gameObject.GetComponent<Canvas>();
+        var buttonUI = obj.GetComponent<ButtonUI>();
+        var cardRect = obj.GetComponent<RectTransform>();
+        var cardCanvas = obj.GetComponent<Canvas>();
         buttonUI.MouseHoverEnter = () =>
         {
-            hoverCard = buttonUI;
+            hoverCard = obj;
 
             if (draggingCard == null)
             {
@@ -111,10 +110,10 @@ public class CardHolder : MonoBehaviour
         };
         buttonUI.MouseDragBegin = () =>
         {
-            draggingCard = buttonUI;
+            draggingCard = obj;
 
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            offset = mousePosition - (Vector2)gameObject.transform.position;
+            offset = mousePosition - (Vector2)obj.transform.position;
             cardRect.DOScale(scaleWhenDragging * 1.1f, 0.1f).SetEase(Ease.OutBack);
             // Không hiểu sáo đoạn này scaleWhenDragging = Vector2(1.25f, 1.25f) nhưng khi game chạy lại là Vector2(1.05f, 1.05f) nên phải * 1.2f
 
@@ -134,12 +133,12 @@ public class CardHolder : MonoBehaviour
             cardRect.DOAnchorPos(Vector2.zero, 0.3f).SetUpdate(false);
             cardRect.DORotate(Vector2.zero, 0.3f).SetUpdate(false);
 
-            selectedCards.Remove(buttonUI);
+            //selectedCards.Remove(buttonUI);
             cardCanvas.overrideSorting = false;
         };
         buttonUI.ClickFunc = () =>
         {
-            if (selectedCards.Contains(buttonUI))
+            /*if (selectedCards.Contains(buttonUI))
             {
                 selectedCards.Remove(buttonUI);
                 cardRect.DOAnchorPos(Vector2.zero, 0.3f / 2).SetUpdate(false);
@@ -148,7 +147,7 @@ public class CardHolder : MonoBehaviour
             {
                 selectedCards.Add(buttonUI);
                 cardRect.DOAnchorPosY((transform.position.y + 50f), 0.3f).SetUpdate(false);
-            }
+            }*/
         };
     }
 
@@ -190,7 +189,7 @@ public class CardHolder : MonoBehaviour
         }
     }
 
-    static int ParentIndex(ButtonUI card)
+    static int ParentIndex(GameObject card)
     {
         return card.transform.parent.GetSiblingIndex();
     }
@@ -202,7 +201,9 @@ public class CardHolder : MonoBehaviour
 
         cards[index].transform.SetParent(focusedParent);
         DOTween.Kill(3, true);
-        if (selectedCards.Contains(cards[index]))
+        cards[index].GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f).SetId(3);
+        cards[index].GetComponent<RectTransform>().DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
+        /*if (selectedCards.Contains(cards[index]))
         {
             cards[index].GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 50f), 0.1f).SetUpdate(false);
             cards[index].GetComponent<RectTransform>().DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
@@ -211,7 +212,7 @@ public class CardHolder : MonoBehaviour
         {
             cards[index].GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f).SetId(3);
             cards[index].GetComponent<RectTransform>().DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
-        }
+        }*/
 
         //cards[index].transform.localPosition = cards[index].selected ? new Vector3(0, cards[index].selectionOffset, 0) : Vector3.zero;
         draggingCard.transform.SetParent(crossedParent);
@@ -219,7 +220,7 @@ public class CardHolder : MonoBehaviour
         bool swapIsRight = ParentIndex(cards[index]) > ParentIndex(draggingCard);
         //cards[index].cardVisual.Swap(swapIsRight ? -1 : 1);
         //Updated Visual Indexes
-        foreach (ButtonUI card in cards)
+        foreach (var card in cards)
         {
             //card.cardVisual.UpdateIndex(transform.childCount);
         }

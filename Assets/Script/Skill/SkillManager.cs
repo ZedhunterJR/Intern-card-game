@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkillManager : Singleton<SkillManager>
 {
-    public List<Skill> SkillList;
+    public List<GameObject> SkillCardList;
     public Skill SkillBaseOnCondition(Skill skill, SkillCondition condition)
     {
         switch (condition)
@@ -13,6 +13,8 @@ public class SkillManager : Singleton<SkillManager>
         }
         return skill;
     }
+
+
 }
 public enum SkillCondition
 {
