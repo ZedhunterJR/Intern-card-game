@@ -5,6 +5,11 @@ using UnityEngine;
 public class SkillManager : Singleton<SkillManager>
 {
     public List<GameObject> SkillCardList;
+
+    private void Start()
+    {
+        SkillCardList = CardHolder.Instance.cards;
+    }
     public Skill SkillBaseOnCondition(Skill skill, SkillCondition condition)
     {
         switch (condition)
