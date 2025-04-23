@@ -6,7 +6,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System;
 
-public class CardHolder : MonoBehaviour
+public class CardHolder : Singleton<CardHolder>
 {
     #region Register variable
     [Header("Card Dragging")]
@@ -83,30 +83,30 @@ public class CardHolder : MonoBehaviour
         var cardCanvas = obj.GetComponent<Canvas>();
         buttonUI.MouseHoverEnter = () =>
         {
+            if (draggingCard != null)
+                return;
+
             hoverCard = obj;
+            cardRect.DOScale(scaleWhenHover, 0.1f).SetEase(Ease.OutBack);
+            DOTween.Kill(2, true);
+            cardRect.DOPunchRotation(Vector3.forward * hoverPunchAngle, hoverTransition, 20, 1).SetId(2);
+            cardRect.DOAnchorPosY((transform.position.y + 50f), 0.3f).SetUpdate(false).SetId(2);
 
-            if (draggingCard == null)
-            {
-                cardRect.DOScale(scaleWhenHover, 0.1f).SetEase(Ease.OutBack);
-                DOTween.Kill(2, true);
-                cardRect.DOPunchRotation(Vector3.forward * hoverPunchAngle, hoverTransition, 20, 1).SetId(2);
-                cardRect.DOAnchorPosY((transform.position.y + 50f), 0.3f).SetUpdate(false).SetId(2);
-
-                cardCanvas.overrideSorting = true;
-                cardCanvas.sortingLayerName = "Interact";
-                cardCanvas.sortingOrder = 1;
-            }
+            cardCanvas.overrideSorting = true;
+            cardCanvas.sortingLayerName = "Interact";
+            cardCanvas.sortingOrder = 1;
+            
         };
         buttonUI.MouseHoverExit = () =>
         {
-            hoverCard = null;
-            if (draggingCard != buttonUI)
-            {
-                cardRect.DOScale(Vector2.one, 0.1f).SetEase(Ease.OutBack);
-                cardRect.DOAnchorPos(Vector2.zero, 0.3f).SetUpdate(false);
+            if (draggingCard != null)
+                return;
 
-                cardCanvas.overrideSorting = false;
-            }
+            hoverCard = null;
+            cardRect.DOScale(Vector2.one, 0.1f).SetEase(Ease.OutBack);
+            cardRect.DOAnchorPos(Vector2.zero, 0.3f).SetUpdate(false);
+            cardCanvas.overrideSorting = false;
+            
         };
         buttonUI.MouseDragBegin = () =>
         {
@@ -128,6 +128,7 @@ public class CardHolder : MonoBehaviour
         };
         buttonUI.MouseDragEnd = () =>
         {
+            //print("what");
             draggingCard = null;
             cardRect.DOScale(Vector2.one, 0.1f);
             cardRect.DOAnchorPos(Vector2.zero, 0.3f).SetUpdate(false);
@@ -199,32 +200,31 @@ public class CardHolder : MonoBehaviour
         Transform focusedParent = draggingCard.transform.parent;
         Transform crossedParent = cards[index].transform.parent;
 
+        // Swap transforms in hierarchy
         cards[index].transform.SetParent(focusedParent);
-        DOTween.Kill(3, true);
-        cards[index].GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f).SetId(3);
-        cards[index].GetComponent<RectTransform>().DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
-        /*if (selectedCards.Contains(cards[index]))
-        {
-            cards[index].GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 50f), 0.1f).SetUpdate(false);
-            cards[index].GetComponent<RectTransform>().DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
-        }
-        else
-        {
-            cards[index].GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f).SetId(3);
-            cards[index].GetComponent<RectTransform>().DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
-        }*/
-
-        //cards[index].transform.localPosition = cards[index].selected ? new Vector3(0, cards[index].selectionOffset, 0) : Vector3.zero;
         draggingCard.transform.SetParent(crossedParent);
 
+        // Animate the swapped card
+        DOTween.Kill(3, true);
+        var rt = cards[index].GetComponent<RectTransform>();
+        rt.DOAnchorPos(Vector2.zero, 0.1f).SetId(3);
+        rt.DOPunchRotation(Vector3.forward * 15, hoverTransition, 5, 1).SetId(3);
+
+        // Swap in the list
+        int dragIndex = cards.IndexOf(draggingCard);
+        (cards[dragIndex], cards[index]) = (cards[index], cards[dragIndex]);
+
+        // Optional: reassign layout/visual order
         bool swapIsRight = ParentIndex(cards[index]) > ParentIndex(draggingCard);
         //cards[index].cardVisual.Swap(swapIsRight ? -1 : 1);
-        //Updated Visual Indexes
+
         foreach (var card in cards)
         {
-            //card.cardVisual.UpdateIndex(transform.childCount);
+            // Update visual index or position based on new order
+            //card.cardVisual.UpdateIndex(...);
         }
     }
+
 
     void ApplyCardIdleTilt()
     {
