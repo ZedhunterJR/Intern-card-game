@@ -91,13 +91,23 @@ public class CardHolder : MonoBehaviour
                 cardRect.DOScale(scaleWhenHover, 0.1f).SetEase(Ease.OutBack);
                 DOTween.Kill(2, true);
                 cardRect.DOPunchRotation(Vector3.forward * hoverPunchAngle, hoverTransition, 20, 1).SetId(2);
+                cardRect.DOAnchorPosY((transform.position.y + 50f), 0.3f).SetUpdate(false).SetId(2);
+
+                cardCanvas.overrideSorting = true;
+                cardCanvas.sortingLayerName = "Interact";
+                cardCanvas.sortingOrder = 1;
             }
         };
         buttonUI.MouseHoverExit = () =>
         {
             hoverCard = null;
             if (draggingCard != buttonUI)
+            {
                 cardRect.DOScale(Vector2.one, 0.1f).SetEase(Ease.OutBack);
+                cardRect.DOAnchorPos(Vector2.zero, 0.3f).SetUpdate(false);
+
+                cardCanvas.overrideSorting = false;
+            }
         };
         buttonUI.MouseDragBegin = () =>
         {
