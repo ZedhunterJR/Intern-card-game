@@ -106,6 +106,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -134,10 +147,10 @@ TextureImporter:
       name: skill_card_1
       rect:
         serializedVersion: 2
-        x: 66
-        y: 130
-        width: 12
-        height: 12
+        x: 49
+        y: 129
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,10 +168,10 @@ TextureImporter:
       name: skill_card_2
       rect:
         serializedVersion: 2
-        x: 50
-        y: 112
-        width: 44
-        height: 16
+        x: 66
+        y: 130
+        width: 11
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,9 +189,9 @@ TextureImporter:
       name: skill_card_3
       rect:
         serializedVersion: 2
-        x: 50
-        y: 96
-        width: 44
+        x: 51
+        y: 112
+        width: 38
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -197,9 +210,9 @@ TextureImporter:
       name: skill_card_4
       rect:
         serializedVersion: 2
-        x: 50
-        y: 80
-        width: 44
+        x: 51
+        y: 95
+        width: 38
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -208,8 +221,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e761df5d2d767394b9f757fca3e7ba37
-      internalID: 903840777
+      spriteID: 450a6279e6c0afc4f9c19479f10263d0
+      internalID: -652274682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: skill_card_5
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 78
+        width: 38
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34ed9108e1aa27e499d24b215864d4a2
+      internalID: -1287613175
       vertices: []
       indices: 
       edges: []
@@ -229,7 +263,8 @@ TextureImporter:
       skill_card_1: -167290775
       skill_card_2: -2035937987
       skill_card_3: 1858727575
-      skill_card_4: 903840777
+      skill_card_4: -652274682
+      skill_card_5: -1287613175
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
