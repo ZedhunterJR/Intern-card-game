@@ -1055,6 +1055,7 @@ GameObject:
   - component: {fileID: 4944861378738566773}
   - component: {fileID: 7746908285380908152}
   - component: {fileID: 5993114129616665847}
+  - component: {fileID: 3527315272080094935}
   m_Layer: 5
   m_Name: CardSkill
   m_TagString: CardSkill
@@ -1195,6 +1196,21 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   clickSprite: {fileID: 0}
   disabledSprite: {fileID: 0}
+--- !u!114 &3527315272080094935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489885818483110042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb3060b23bd47f844958ae6ae99b816f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dicePlace: {fileID: 3500845480795457902}
+  diceFace: {fileID: 0}
+  skillPosCondition: 
 --- !u!1 &8552777612950969799
 GameObject:
   m_ObjectHideFlags: 0

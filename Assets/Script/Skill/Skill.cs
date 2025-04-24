@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
+    [SerializeField] private Transform dicePlace;
+
     public Dice diceFace;
 
     public List<SkillCondition> skillPosCondition;
@@ -43,6 +45,11 @@ public class Skill : MonoBehaviour
                 skillEffect?.Invoke(skillList);
             }
         }
+    }
+    public void AddDice(Dice dice)
+    {
+        dice.transform.SetParent(dicePlace);
+        diceFace = dice;
     }
 }
 

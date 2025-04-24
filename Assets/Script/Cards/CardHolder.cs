@@ -90,14 +90,14 @@ public class CardHolder : Singleton<CardHolder>
         var cardCanvas = obj.GetComponent<Canvas>();
         buttonUI.MouseHoverEnter = () =>
         {
-            if (draggingCard != null || diceManager.DraggingDice != null)
+            if (draggingCard != null)
                 return;
 
             hoverCard = obj;
             cardRect.DOScale(scaleWhenHover, 0.1f).SetEase(Ease.OutBack);
             DOTween.Kill(2, true);
             cardRect.DOPunchRotation(Vector3.forward * hoverPunchAngle, hoverTransition, 20, 1).SetId(2);
-            cardRect.DOAnchorPosY((transform.position.y + 50f), 0.3f).SetUpdate(false).SetId(2);
+            cardRect.DOAnchorPosY((transform.position.y + 10f), 0.3f).SetUpdate(false).SetId(2);
 
             cardCanvas.overrideSorting = true;
             cardCanvas.sortingLayerName = "Interact";
@@ -156,6 +156,7 @@ public class CardHolder : Singleton<CardHolder>
                 cardRect.DOAnchorPosY((transform.position.y + 50f), 0.3f).SetUpdate(false);
             }*/
         };
+        /*
         buttonUI.MouseDrop = () =>
         {
             if (draggingCard != null)
@@ -191,7 +192,7 @@ public class CardHolder : Singleton<CardHolder>
                 var diceGraphicRaycaster = diceComp.GetComponent<GraphicRaycaster>();
                 diceGraphicRaycaster.enabled = true;
             }
-        };
+        };*/
     }
 
     Vector3 ClampScreen(Vector3 position)

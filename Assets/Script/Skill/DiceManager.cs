@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Runtime.Serialization.Formatters;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class DiceManager : Singleton<DiceManager>
 {
@@ -25,7 +26,9 @@ public class DiceManager : Singleton<DiceManager>
     [SerializeField] ButtonUI draggingDice;
     public ButtonUI DraggingDice => draggingDice;
     Vector3 offset;
-    ButtonUI targetCard = null;
+
+    private Dictionary<Dice, Skill> skillDicePair = new();
+
     #endregion
 
     #region Unity Methods
@@ -115,10 +118,60 @@ public class DiceManager : Singleton<DiceManager>
         };
         buttonUI.MouseDragEnd = () =>
         {
-            draggingDice = null;
-            diceRect.DOAnchorPos(Vector2.zero, 0.3f).SetUpdate(false);
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            {
+                position = Input.mousePosition
+            };
 
-            diceCanvas.overrideSorting = false;
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+
+            Skill found = null;
+            foreach (RaycastResult result in results)
+            {
+                Skill card = result.gameObject.GetComponent<Skill>();
+                if (card != null)
+                {
+                    found = card;
+                    break;
+                }
+            }
+
+            if (found == null || found.diceFace != null)
+            {
+                ReturnDice(dice);
+                diceCanvas.overrideSorting = false;
+            }
+            else
+            {
+                // Set skill dice face 
+                found.AddDice(dice);
+                skillDicePair[dice] = found;
+
+                draggingDice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f);
+                var diceTransfrom = draggingDice.GetComponent<RectTransform>();
+                DOTween.To(() => diceTransfrom.offsetMin, x => diceTransfrom.offsetMin = x, Vector2.zero, 0.1f);
+                DOTween.To(() => diceTransfrom.offsetMax, x => diceTransfrom.offsetMax = x, Vector2.zero, 0.3f);
+
+                var droppedDiceCanvas = draggingDice.GetComponent<Canvas>();
+                droppedDiceCanvas.overrideSorting = false;
+
+                // Disable outline components
+                var diceOutline = draggingDice.GetComponent<Outline>();
+                diceOutline.enabled = false;
+
+                // Remove frome SelectedDiceList 
+                var diceComp = draggingDice.GetComponent<Dice>();
+                if (SelectedDice.Contains(diceComp))
+                    SelectedDice.Remove(diceComp);
+
+
+                var diceGraphicRaycaster = diceComp.GetComponent<GraphicRaycaster>();
+                diceGraphicRaycaster.enabled = true;
+            }
+
+            draggingDice = null;
+            diceGraphic.enabled = true;
         };
     }
 
@@ -134,6 +187,27 @@ public class DiceManager : Singleton<DiceManager>
 
         return clampPosition;
     }
+    public void ReturnDice(Dice dice)
+    {
+        Transform toReturn = null;
+        for (int i = 0; i < diceHolders.Length; i++)
+        {
+            if (diceHolders[i].childCount == 0)
+            {
+                toReturn = diceHolders[i];
+                break;
+            }
+        }
+        if (toReturn == null) return;
+
+        if (skillDicePair.TryGetValue(dice, out Skill s))
+        {
+            s.diceFace = null;
+            skillDicePair.Remove(dice);
+        }
+        dice.transform.SetParent(toReturn);
+        dice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.2f);
+    }
 
     public void RerollDices(List<Dice> diceList)
     {
@@ -147,5 +221,6 @@ public class DiceManager : Singleton<DiceManager>
     {
 
     }
+
     #endregion
 }
