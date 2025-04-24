@@ -85,6 +85,8 @@ public class DiceManager : Singleton<DiceManager>
         {
             if (draggingDice == null)
             {
+                if (skillDicePair.TryGetValue(dice, out var c))
+                    return;
                 if (selectedDice.Contains(dice))
                 {
                     selectedDice.Remove(dice);
