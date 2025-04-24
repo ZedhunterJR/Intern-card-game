@@ -31,15 +31,9 @@ public class CardHolder : Singleton<CardHolder>
     [SerializeField] private int cardsToSpawn = 7;
     public List<GameObject> cards;
 
-    // Ref
-    private DiceManager diceManager;
     #endregion
 
     #region Unity Methods
-    private void Awake()
-    {
-        diceManager = DiceManager.Instance;        
-    }
 
     private void Start()
     {
@@ -58,6 +52,8 @@ public class CardHolder : Singleton<CardHolder>
             card.name = cardCount.ToString();
             cardCount++;
         }
+
+        GameManager.Instance.TestBasicDeck(cards);
     }
 
     private void Update()

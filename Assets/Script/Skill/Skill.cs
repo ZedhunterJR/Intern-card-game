@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Skill : MonoBehaviour
 {
@@ -10,45 +11,17 @@ public class Skill : MonoBehaviour
     public Dice diceFace;
 
     public List<SkillCondition> skillPosCondition;
-    public Func<List<Skill>, bool> activateCondition = (skill) =>
-    {
-        var sum = 0; 
-        foreach (var sk in skill)
-        {
-            sum += sk.diceFace.currentFace;
-        }
-        if (sum > 5)
-            return true;
-        return false;
-    };
+    public string activateCondition;
 
-
-    public Action<List<Skill>> skillEffect = (skill) =>
-    {
-        
-    };
-
-    public void ActivateSkill()
-    {
-
-        List<Skill> skillList = new();
-        foreach (SkillCondition skillCondition in skillPosCondition)
-        {
-            var sk = SkillManager.Instance.SkillBaseOnCondition(this, skillCondition);
-            skillList.Add(sk);
-        }
-
-        if (activateCondition != null)
-        {
-            if (activateCondition(skillList))
-            {
-                skillEffect?.Invoke(skillList);
-            }
-        }
-    }
+    public string skillEffect;
     public void AddDice(Dice dice)
     {
         dice.transform.SetParent(dicePlace);
+        dice.transform.localScale = Vector3.one;
+        dice.transform.localRotation = Quaternion.identity;
+        //var diceTransfrom = dice.GetComponent<RectTransform>();
+        //DOTween.To(() => diceTransfrom.offsetMin, x => diceTransfrom.offsetMin = x, Vector2.zero, 0.1f);
+        //DOTween.To(() => diceTransfrom.offsetMax, x => diceTransfrom.offsetMax = x, Vector2.zero, 0.1f);
         diceFace = dice;
     }
 }

@@ -137,21 +137,31 @@ public class DiceManager : Singleton<DiceManager>
                 }
             }
 
-            if (found == null || found.diceFace != null)
+            if (found == null)
             {
                 ReturnDice(dice);
                 diceCanvas.overrideSorting = false;
             }
             else
             {
+                if (skillDicePair.TryGetValue(dice, out Skill s))
+                {
+                    s.diceFace = null;
+                    skillDicePair.Remove(dice);
+                }
+                if (found.diceFace != null)
+                {
+                    ReturnDice(found.diceFace);
+                }
+
                 // Set skill dice face 
                 found.AddDice(dice);
                 skillDicePair[dice] = found;
 
                 draggingDice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f);
-                var diceTransfrom = draggingDice.GetComponent<RectTransform>();
-                DOTween.To(() => diceTransfrom.offsetMin, x => diceTransfrom.offsetMin = x, Vector2.zero, 0.1f);
-                DOTween.To(() => diceTransfrom.offsetMax, x => diceTransfrom.offsetMax = x, Vector2.zero, 0.3f);
+                //var diceTransfrom = draggingDice.GetComponent<RectTransform>();
+                //DOTween.To(() => diceTransfrom.offsetMin, x => diceTransfrom.offsetMin = x, Vector2.zero, 0.1f);
+                //DOTween.To(() => diceTransfrom.offsetMax, x => diceTransfrom.offsetMax = x, Vector2.zero, 0.3f);
 
                 var droppedDiceCanvas = draggingDice.GetComponent<Canvas>();
                 droppedDiceCanvas.overrideSorting = false;
