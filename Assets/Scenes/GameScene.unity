@@ -393,7 +393,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 167883197}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1459860768}
+        m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
+        m_MethodName: PlaySkill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &167883197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2130,6 +2142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1459860767}
   - component: {fileID: 1459860766}
+  - component: {fileID: 1459860768}
   m_Layer: 0
   m_Name: CardManager
   m_TagString: Untagged
@@ -2174,6 +2187,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1764402575}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1459860768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459860765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88959384dac48ac4daa5c0a8e0feae02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillCardList: []
 --- !u!1 &1764402574
 GameObject:
   m_ObjectHideFlags: 0
@@ -2183,6 +2209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1764402575}
+  - component: {fileID: 1764402576}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2207,6 +2234,18 @@ Transform:
   - {fileID: 1846990922}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1764402576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764402574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ac4cbba7131234d8ad350fc68acbb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1846990921
 GameObject:
   m_ObjectHideFlags: 0
