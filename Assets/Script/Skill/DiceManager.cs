@@ -164,6 +164,11 @@ public class DiceManager : Singleton<DiceManager>
                 found.AddDice(dice);
                 skillDicePair[dice] = found;
 
+                if (selectedDice.Contains(draggingDice.GetComponent<Dice>()))
+                {
+                    selectedDice.Remove(draggingDice.GetComponent<Dice>());
+                }
+
                 draggingDice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f);
 
                 var droppedDiceCanvas = draggingDice.GetComponent<Canvas>();
@@ -177,7 +182,6 @@ public class DiceManager : Singleton<DiceManager>
                 var diceComp = draggingDice.GetComponent<Dice>();
                 if (SelectedDice.Contains(diceComp))
                     SelectedDice.Remove(diceComp);
-
 
                 var diceGraphicRaycaster = diceComp.GetComponent<GraphicRaycaster>();
                 diceGraphicRaycaster.enabled = true;
@@ -224,9 +228,14 @@ public class DiceManager : Singleton<DiceManager>
 
     public void RerollAction()
     {
-        if (!isRolling)
+        if (!isRolling && selectedDice.Count != 0)
         {
             StartCoroutine(RerollAnim());
+        }
+        else
+        {
+            DOTween.Kill(2, true);
+            diceHolderContain.DOPunchRotation(Vector3.forward * 5f, 0.15f, 20, 1).SetId(2);
         }
     }
 
@@ -238,7 +247,7 @@ public class DiceManager : Singleton<DiceManager>
           .WaitForCompletion();
 
         float[] shakeHeights = { 15f, 5f, 12f, 5f };
-        float[] shakeDurations = { 0.2f, 0.2f, 0.16f, 0.16f };
+        float[] shakeDurations = { 0.1f, 0.1f, 0.08f, 0.08f };
         Sequence shakeSeq = DOTween.Sequence();
         for (int i = 0; i < shakeHeights.Length; i++)
         {
@@ -251,7 +260,7 @@ public class DiceManager : Singleton<DiceManager>
         RerollDices(selectedDice);
         yield return shakeSeq.WaitForCompletion();
 
-        yield return diceHolderLid.DOAnchorPos(new Vector2(-200, 5), 1.2f)
+        yield return diceHolderLid.DOAnchorPos(new Vector2(-200, 5), 0.8f)
         .SetEase(Ease.InCubic)
         .WaitForCompletion();
 
