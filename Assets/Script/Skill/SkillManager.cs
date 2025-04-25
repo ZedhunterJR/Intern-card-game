@@ -14,11 +14,6 @@ public class SkillManager : Singleton<SkillManager>
         }
         return skillList;
     }
-    private readonly Dictionary<string, float> conditionMultiplier = new()
-    {
-        { "c1", 1f },
-        { "c2", 1.5f }
-    };
 
     private void Start()
     {
@@ -30,9 +25,9 @@ public class SkillManager : Singleton<SkillManager>
         var skillList = Skills();
         foreach (var s in skillList)
         {
-            if (CheckCondition(s, s.skillPosCondition, s.activateCondition))
+            if (CheckCondition(s))
             {
-                CalculatePoint(s, s.skillPosCondition, s.skillEffect, s.activateCondition);
+                CalculatePoint(s);
             }
             else
             {
@@ -41,9 +36,11 @@ public class SkillManager : Singleton<SkillManager>
         }
     }
 
-    public bool CheckCondition(Skill current, List<SkillCondition> skillConditions, string id)
+    public bool CheckCondition(Skill current)
     {
-        var skills = GetSkillsBasedOnSkillCondition(current, skillConditions);
+        var posCons = current.skillPosCondition;
+        var skills = GetSkillsBasedOnSkillCondition(current, posCons);
+        string id = current.activateCondition.id;
         switch (id)
         {
             case "c1":
@@ -75,9 +72,11 @@ public class SkillManager : Singleton<SkillManager>
         }
         return false;
     }
-    public void CalculatePoint(Skill current, List<SkillCondition> skillConditions, string id, string condtion)
+    public void CalculatePoint(Skill current)
     {
-        var skills = GetSkillsBasedOnSkillCondition(current, skillConditions);
+        var posCons = current.skillPosCondition;
+        var skills = GetSkillsBasedOnSkillCondition(current, posCons);
+        string id = current.skillEffect.id;
         float finalPoint = 0;
         switch (id)
         {
@@ -90,8 +89,8 @@ public class SkillManager : Singleton<SkillManager>
                     finalPoint = current.diceFace.currentFace * 2;
                 break;
         }
-        float mulCon = conditionMultiplier[condtion];
-        finalPoint *= mulCon * CalculateMul(skillConditions);
+        float mulCon = current.Multipler;
+        finalPoint *= mulCon;
 
         Debug.Log($"{current.name} diem la: {finalPoint}");
     }
@@ -153,10 +152,6 @@ public class SkillManager : Singleton<SkillManager>
         return result;
     }
 
-    public float CalculateMul(List<SkillCondition> skillConditions)
-    {
-        return 1 + (skillConditions.Count - 1) * 0.2f;
-    }
 }
 public enum SkillCondition
 {

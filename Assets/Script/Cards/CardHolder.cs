@@ -25,10 +25,10 @@ public class CardHolder : Singleton<CardHolder>
     [SerializeField] GameObject hoverCard;
 
     [SerializeField] private GameObject cardSlot;
-    [SerializeField] private Transform cardHolder;
+    [SerializeField] private Transform[] cardHolders;
 
     [Header("Spawn Setting")]
-    [SerializeField] private int cardsToSpawn = 7;
+    //[SerializeField] private int cardsToSpawn = 7;
     public List<GameObject> cards;
 
     #endregion
@@ -37,10 +37,10 @@ public class CardHolder : Singleton<CardHolder>
 
     private void Start()
     {
-        for (int i = 0; i <= cardsToSpawn; i++)
+        for (int i = 0; i < cardHolders.Length; i++)
         {
-            var card = Instantiate(cardSlot, cardHolder);
-            cards.Add(card.transform.GetChild(0).gameObject);
+            var card = Instantiate(cardSlot, cardHolders[i]);
+            cards.Add(card);
         }
 
         int cardCount = 0;

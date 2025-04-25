@@ -13,18 +13,16 @@ public class GameManager : Singleton<GameManager>
             var skill = item.GetComponent<Skill>();
             if (count < 4)
             {
-                skill.skillPosCondition.Add(SkillCondition.Current);
-                skill.activateCondition = "c1";
-                skill.skillEffect = "e1";
+                skill.ChangeSkillPosCondition(new() { SkillCondition.Current });
+                skill.ChangeActivateCondition(Global.Instance.Conditions["c1"]);
+                skill.ChangeEffect(Global.Instance.Effects["e1"]);
                 count++;
             }
             else
             {
-                skill.skillPosCondition.Add(SkillCondition.Left);
-                skill.skillPosCondition.Add(SkillCondition.Right);
-                skill.activateCondition = "c2";
-                skill.skillEffect = "e3";
-                item.GetComponent<Image>().color = Color.red;
+                skill.ChangeSkillPosCondition(new() { SkillCondition.Left, SkillCondition.Right });
+                skill.ChangeActivateCondition(Global.Instance.Conditions["c2"]);
+                skill.ChangeEffect(Global.Instance.Effects["e3"]);
             }
         }
     }

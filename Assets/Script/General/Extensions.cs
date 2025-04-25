@@ -5,6 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using Random = UnityEngine.Random;
 using System.Linq;
+using System.Globalization;
 
 public static class Extensions
 {
@@ -12,10 +13,36 @@ public static class Extensions
     {
         return flag.GetComponent(typeof(T)) != null;
     }
-    public static string DecimalFormat(this float val, int decimalPlaces)
+    public static string DecimalFormat(this float val, int decimalPlaces, int minDecimalPlaces = 0)
     {
-        return val.ToString("F" + decimalPlaces);
+        string result;
+
+        if (val == Mathf.Floor(val))
+        {
+            result = ((int)val).ToString(CultureInfo.InvariantCulture);
+            if (minDecimalPlaces > 0)
+                result += "." + new string('0', minDecimalPlaces);
+        }
+        else
+        {
+            result = val.ToString("F" + decimalPlaces, CultureInfo.InvariantCulture)
+                        .TrimEnd('0').TrimEnd('.');
+
+            int currentDecimalIndex = result.IndexOf('.');
+            int currentDecimalCount = currentDecimalIndex >= 0 ? result.Length - currentDecimalIndex - 1 : 0;
+
+            if (minDecimalPlaces > currentDecimalCount)
+            {
+                if (currentDecimalIndex == -1)
+                    result += ".";
+
+                result += new string('0', minDecimalPlaces - currentDecimalCount);
+            }
+        }
+
+        return result;
     }
+
     public static Transform Clear(this Transform transform)
     {
         foreach (Transform child in transform)
