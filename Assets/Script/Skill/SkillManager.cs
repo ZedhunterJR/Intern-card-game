@@ -17,7 +17,14 @@ public class SkillManager : Singleton<SkillManager>
     private readonly Dictionary<string, float> conditionMultiplier = new()
     {
         { "c1", 1f },
-        { "c2", 1.5f }
+        { "c2", 1.1f },
+        { "c3", 1.2f },
+        { "c4", 1.2f },
+        { "c5", 1.1f },
+        { "c6", 1f },
+        { "c7", 1.5f },
+        { "c8", 1.5f },
+        { "c9", 2f },
     };
 
     private void Start()
