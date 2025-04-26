@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
             var skill = item.GetComponent<Skill>();
             if (count < 4)
             {
-                skill.ChangeSkillPosCondition(new() { SkillCondition.Current });
+                skill.ChangeSkillPosCondition(new() { SkillCondition.Fourth, SkillCondition.Fifth });
                 skill.ChangeActivateCondition(Global.Instance.Conditions["c1"]);
                 skill.ChangeEffect(Global.Instance.Effects["e1"]);
                 count++;

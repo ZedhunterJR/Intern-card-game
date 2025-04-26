@@ -96,16 +96,16 @@ public class Skill : MonoBehaviour
             positionArrows[avai].sprite = posArrowDict["3rd"];
             taken.Remove(avai);
         }
-        if (skillPosCondition.Contains(SkillCondition.Fourth))
-        {
-            int avai = taken[0];
-            positionArrows[avai].sprite = posArrowDict["4th"];
-            taken.Remove(avai);
-        }
         if (skillPosCondition.Contains(SkillCondition.Fifth))
         {
-            int avai = taken[0];
+            int avai = taken[^1];
             positionArrows[avai].sprite = posArrowDict["5th"];
+            taken.Remove(avai);
+        }
+        if (skillPosCondition.Contains(SkillCondition.Fourth))
+        {
+            int avai = taken[^1];
+            positionArrows[avai].sprite = posArrowDict["4th"];
             taken.Remove(avai);
         }
 
