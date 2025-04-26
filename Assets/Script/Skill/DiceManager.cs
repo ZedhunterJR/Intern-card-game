@@ -238,7 +238,7 @@ public class DiceManager : Singleton<DiceManager>
     IEnumerator RerollAnim()
     {
         isRolling = true;
-        yield return diceHolderLid.DOAnchorPos(new Vector2(5, 5), 1.2f)
+        yield return diceHolderLid.DOAnchorPos(new Vector2(0, 0), 1.2f)
           .SetEase(Ease.OutCubic)
           .WaitForCompletion();
 
@@ -250,13 +250,13 @@ public class DiceManager : Singleton<DiceManager>
             float targetY = shakeHeights[i];
             float duration = shakeDurations[i];
 
-            shakeSeq.Append(diceHolderLid.DOAnchorPosY(targetY, duration));
-            shakeSeq.Join(diceHolderContain.DOAnchorPosY(targetY, duration));
+            //shakeSeq.Append(diceHolderLid.DOAnchorPosY(targetY, duration));
+            shakeSeq.Append(diceHolderContain.DOAnchorPosY(targetY, duration));
         }
         RerollDices(selectedDice);
         yield return shakeSeq.WaitForCompletion();
 
-        yield return diceHolderLid.DOAnchorPos(new Vector2(-200, 5), 0.8f)
+        yield return diceHolderLid.DOAnchorPos(new Vector2(-200, 0), 0.8f)
         .SetEase(Ease.InCubic)
         .WaitForCompletion();
 

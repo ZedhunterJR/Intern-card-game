@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +18,7 @@ public class Global
     public Dictionary<string, ConditionClause> Conditions = new()
     {
         { "c1", new("c1", "[has] 1 dice", "#ffcd00".HexColor()) },
-        { "c2", new("c2", "[has] >=2 same dice face", "#ff8200".HexColor(), 1.2f) }
+        { "c2", new("c2", "[has] ≥2 same dice face", "#ff8200".HexColor(), 1.2f) }
     };
     public Dictionary<string, EffectClause> Effects = new()
     {
