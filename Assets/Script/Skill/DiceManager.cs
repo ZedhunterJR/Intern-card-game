@@ -5,6 +5,7 @@ using DG.Tweening;
 using System.Runtime.Serialization.Formatters;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class DiceManager : Singleton<DiceManager>
 {
@@ -19,10 +20,15 @@ public class DiceManager : Singleton<DiceManager>
     public List<ButtonUI> diceFace;
 
     // var for reroll
+    [Header("Reroll Parameters")]
     [SerializeField] List<Dice> selectedDice;
     public List<Dice> SelectedDice;
+    [SerializeField] bool isRolling = false;
+    [SerializeField] RectTransform diceHolderLid;
+    [SerializeField] RectTransform diceHolderContain;
 
     // var for dragging 
+    [Header("Dragging Parameters")]
     [SerializeField] ButtonUI draggingDice;
     public ButtonUI DraggingDice => draggingDice;
     Vector3 offset;
@@ -66,10 +72,6 @@ public class DiceManager : Singleton<DiceManager>
             draggingDice.transform.position = ClampScreen(draggingDice.transform.position);
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RerollDices(selectedDice);
-        }
     }
     #endregion
 
@@ -85,8 +87,6 @@ public class DiceManager : Singleton<DiceManager>
         {
             if (draggingDice == null)
             {
-                if (skillDicePair.TryGetValue(dice, out var c))
-                    return;
                 if (selectedDice.Contains(dice))
                 {
                     selectedDice.Remove(dice);
@@ -160,10 +160,12 @@ public class DiceManager : Singleton<DiceManager>
                 found.AddDice(dice);
                 skillDicePair[dice] = found;
 
+                if (selectedDice.Contains(draggingDice.GetComponent<Dice>()))
+                {
+                    selectedDice.Remove(draggingDice.GetComponent<Dice>());
+                }
+
                 draggingDice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.1f);
-                //var diceTransfrom = draggingDice.GetComponent<RectTransform>();
-                //DOTween.To(() => diceTransfrom.offsetMin, x => diceTransfrom.offsetMin = x, Vector2.zero, 0.1f);
-                //DOTween.To(() => diceTransfrom.offsetMax, x => diceTransfrom.offsetMax = x, Vector2.zero, 0.3f);
 
                 var droppedDiceCanvas = draggingDice.GetComponent<Canvas>();
                 droppedDiceCanvas.overrideSorting = false;
@@ -176,7 +178,6 @@ public class DiceManager : Singleton<DiceManager>
                 var diceComp = draggingDice.GetComponent<Dice>();
                 if (SelectedDice.Contains(diceComp))
                     SelectedDice.Remove(diceComp);
-
 
                 var diceGraphicRaycaster = diceComp.GetComponent<GraphicRaycaster>();
                 diceGraphicRaycaster.enabled = true;
@@ -219,6 +220,47 @@ public class DiceManager : Singleton<DiceManager>
         }
         dice.transform.SetParent(toReturn);
         dice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.2f);
+    }
+
+    public void RerollAction()
+    {
+        if (!isRolling && selectedDice.Count != 0)
+        {
+            StartCoroutine(RerollAnim());
+        }
+        else
+        {
+            DOTween.Kill(2, true);
+            diceHolderContain.DOPunchRotation(Vector3.forward * 5f, 0.15f, 20, 1).SetId(2);
+        }
+    }
+
+    IEnumerator RerollAnim()
+    {
+        isRolling = true;
+        yield return diceHolderLid.DOAnchorPos(new Vector2(5, 5), 1.2f)
+          .SetEase(Ease.OutCubic)
+          .WaitForCompletion();
+
+        float[] shakeHeights = { 15f, 5f, 12f, 5f };
+        float[] shakeDurations = { 0.1f, 0.1f, 0.08f, 0.08f };
+        Sequence shakeSeq = DOTween.Sequence();
+        for (int i = 0; i < shakeHeights.Length; i++)
+        {
+            float targetY = shakeHeights[i];
+            float duration = shakeDurations[i];
+
+            shakeSeq.Append(diceHolderLid.DOAnchorPosY(targetY, duration));
+            shakeSeq.Join(diceHolderContain.DOAnchorPosY(targetY, duration));
+        }
+        RerollDices(selectedDice);
+        yield return shakeSeq.WaitForCompletion();
+
+        yield return diceHolderLid.DOAnchorPos(new Vector2(-200, 5), 0.8f)
+        .SetEase(Ease.InCubic)
+        .WaitForCompletion();
+
+        isRolling = false;
     }
 
     public void RerollDices(List<Dice> diceList)
