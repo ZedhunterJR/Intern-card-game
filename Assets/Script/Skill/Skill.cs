@@ -12,8 +12,7 @@ public class Skill : MonoBehaviour
     [SerializeField] private Transform dicePlace;
     [SerializeField] private Transform multPanel;
     [SerializeField] private Image[] positionArrows;
-    [SerializeField] private Sprite[] positionArrowSprites;
-    [SerializeField] private string[] positionArrowHelpers;
+
     [SerializeField] private Transform conditionPanel;
     [SerializeField] private Transform effectPanel;
 
@@ -23,26 +22,17 @@ public class Skill : MonoBehaviour
     [HideInInspector] public EffectClause skillEffect;
 
     [HideInInspector] public float cardMultiplier = 1f;
-    public float Multipler 
-    { 
+    public float Multipler
+    {
         get
         {
             float multPos = Global.Instance.CalculatePosMul(skillPosCondition);
-            float conPos = activateCondition != null? activateCondition.multiplier : 1f;
+            float conPos = activateCondition != null ? activateCondition.multiplier : 1f;
             return multPos * conPos * cardMultiplier;
-        } 
-    }
-
-    //private
-    private Dictionary<string, Sprite> posArrowDict = new Dictionary<string, Sprite>();
-
-    private void Awake()
-    {
-        for (int i = 0; i < positionArrowHelpers.Length; i++)
-        {
-            posArrowDict[positionArrowHelpers[i]] = positionArrowSprites[i];
         }
     }
+
+
     public void AddDice(Dice dice)
     {
         dice.transform.SetParent(dicePlace);
@@ -55,62 +45,7 @@ public class Skill : MonoBehaviour
     }
 
     #region graphic
-    public void ChangeSkillPosCondition(List<SkillCondition> positions)
-    {
-        foreach (var item in positionArrows)
-        {
-            item.sprite = posArrowDict["blank"];
-        }
-        List<int> taken = new List<int>() { 0, 1, 2, 3, 4 };
-        skillPosCondition = positions;
-        if (skillPosCondition.Contains(SkillCondition.Left))
-        {
-            positionArrows[0].sprite = posArrowDict["left"];
-            taken.Remove(0);
-        }
-        if (skillPosCondition.Contains(SkillCondition.Right))
-        {
-            positionArrows[4].sprite = posArrowDict["right"];
-            taken.Remove(4);
-        }
-        if (skillPosCondition.Contains(SkillCondition.Current))
-        {
-            positionArrows[2].sprite = posArrowDict["this"];
-            taken.Remove(2);
-        }
-        if (skillPosCondition.Contains(SkillCondition.First))
-        {
-            int avai = taken[0];
-            positionArrows[avai].sprite = posArrowDict["1st"];
-            taken.Remove(avai);
-        }
-        if (skillPosCondition.Contains(SkillCondition.Second))
-        {
-            int avai = taken[0];
-            positionArrows[avai].sprite = posArrowDict["2nd"];
-            taken.Remove(avai);
-        }
-        if (skillPosCondition.Contains(SkillCondition.Third))
-        {
-            int avai = taken[0];
-            positionArrows[avai].sprite = posArrowDict["3rd"];
-            taken.Remove(avai);
-        }
-        if (skillPosCondition.Contains(SkillCondition.Fifth))
-        {
-            int avai = taken[^1];
-            positionArrows[avai].sprite = posArrowDict["5th"];
-            taken.Remove(avai);
-        }
-        if (skillPosCondition.Contains(SkillCondition.Fourth))
-        {
-            int avai = taken[^1];
-            positionArrows[avai].sprite = posArrowDict["4th"];
-            taken.Remove(avai);
-        }
 
-        UpdateMultPanel();
-    }
     public void ChangeActivateCondition(ConditionClause con)
     {
         activateCondition = con;
@@ -147,6 +82,19 @@ public class Skill : MonoBehaviour
     public void UpdateMultPanel()
     {
         multPanel.GetComponentInChildren<TextMeshProUGUI>().text = Multipler.DecimalFormat(2, 1) + "x";
+    }
+    public void ChangeSkillPosCondition(List<SkillCondition> conditions)
+    {
+        Global.Instance.UpdatePositionArrowGraphic(conditions, positionArrows);
+        skillPosCondition = conditions;
+        UpdateMultPanel();
+    }
+
+    public void ReUpdate()
+    {
+        ChangeSkillPosCondition(skillPosCondition);
+        ChangeActivateCondition(activateCondition);
+        ChangeEffect(skillEffect);
     }
     #endregion
 }

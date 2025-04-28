@@ -8,6 +8,7 @@ public class ButtonUI : MonoBehaviour, IPointerClickHandler, IDragHandler, IDrop
 {
     [Header("Debug")]
     public bool interactable = true;
+    public bool isHover = false;
     //public float timerHover = 0;
 
     public Action ClickFunc = null;
@@ -71,11 +72,13 @@ public class ButtonUI : MonoBehaviour, IPointerClickHandler, IDragHandler, IDrop
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
+        isHover = true;
         MouseHoverEnter?.Invoke();
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
+        isHover = false;
         MouseHoverExit?.Invoke();
     }
 

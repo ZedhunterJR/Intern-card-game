@@ -84,6 +84,9 @@ public class CardHolder : Singleton<CardHolder>
         var buttonUI = obj.GetComponent<ButtonUI>();
         var cardRect = obj.GetComponent<RectTransform>();
         var cardCanvas = obj.GetComponent<Canvas>();
+        cardCanvas.overrideSorting = true;
+        cardCanvas.sortingLayerName = "Interact";
+        cardCanvas.sortingOrder = 0;
         buttonUI.MouseHoverEnter = () =>
         {
             if (draggingCard != null)

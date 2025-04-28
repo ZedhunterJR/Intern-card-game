@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkillManager : Singleton<SkillManager>
 {
     public List<GameObject> SkillCardList;
-    private List<Skill> Skills()
+    public List<Skill> Skills()
     {
         var skillList = new List<Skill>();
         foreach (var s in SkillCardList)
