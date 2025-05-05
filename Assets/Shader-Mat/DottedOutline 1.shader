@@ -7,6 +7,7 @@ Shader "UI/DottedOutline"
         _Spacing ("Dot Spacing", Float) = 20
         _Thickness ("Line Thickness", Float) = 0.02
         _Speed ("Scroll Speed", Float) = 0.5
+        _AspectRatio ("Aspect Ratio", Float) = 1.0
     }
 
     SubShader
@@ -49,6 +50,7 @@ Shader "UI/DottedOutline"
             float _Spacing;
             float _Thickness;
             float _Speed;
+            float _AspectRatio; // <--- new manual aspect
 
             v2f vert(appdata_t v)
             {
@@ -61,25 +63,22 @@ Shader "UI/DottedOutline"
             fixed4 frag(v2f i) : SV_Target
             {
                 float2 uv = i.uv;
-                float2 aspectUV = uv;
-                aspectUV.x *= _ScreenParams.x / _ScreenParams.y; // squash x to match y
-                // Get aspect ratio based on UV space
-                float aspect = _ScreenParams.x / _ScreenParams.y;
 
-                // Stretch thickness based on aspect
+                float aspect = _AspectRatio;
                 float2 thickness = float2(_Thickness, _Thickness * aspect);
 
-                // Check if we're near the edge (rectangle border)
                 float isBorder =
                     step(uv.x, thickness.x) +
                     step(1.0 - uv.x, thickness.x) +
                     step(uv.y, thickness.y) +
                     step(1.0 - uv.y, thickness.y);
 
-                isBorder = saturate(isBorder); // 0 or 1
+                isBorder = saturate(isBorder);
 
-                // Create a pattern that scrolls
                 float scroll = _Time * _Speed;
+                float2 aspectUV = uv;
+                aspectUV.x *= aspect;
+
                 float patternIndex = floor((aspectUV.x + aspectUV.y + scroll) * _Spacing);
                 float pattern = fmod(patternIndex, 2.0);
 
