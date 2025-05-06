@@ -87,15 +87,18 @@ public class DiceManager : Singleton<DiceManager>
         {
             if (draggingDice == null)
             {
-                if (selectedDice.Contains(dice))
+                if (selectedDice.Contains(dice) && GameManager.Instance.GameStatus == GameStatus.Battle)
                 {
                     selectedDice.Remove(dice);
                     diceOutline.enabled = false;
                 }
                 else
                 {
-                    selectedDice.Add(dice);
-                    diceOutline.enabled = true;
+                    if (GameManager.Instance.GameStatus == GameStatus.Battle)
+                    {
+                        selectedDice.Add(dice);
+                        diceOutline.enabled = true;
+                    }
                 }
             }
         };
@@ -224,7 +227,7 @@ public class DiceManager : Singleton<DiceManager>
 
     public void RerollAction()
     {
-        if (!isRolling && selectedDice.Count != 0)
+        if (!isRolling && selectedDice.Count != 0 && GameManager.Instance.GameStatus == GameStatus.Battle)
         {
             StartCoroutine(RerollAnim());
         }

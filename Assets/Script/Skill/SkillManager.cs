@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class SkillManager : Singleton<SkillManager>
 {
+    // To Spawn Enenmy Test
+    [SerializeField] Transform enemySpawnPlace;
+    [SerializeField] EnemyTest enemyPrefabs;
+    private EnemyTest enemyTest;
+    public EnemyTest EnemyTest => enemyTest;
+
     public List<GameObject> SkillCardList;
     public List<Skill> Skills()
     {
@@ -18,6 +24,9 @@ public class SkillManager : Singleton<SkillManager>
     private void Start()
     {
         SkillCardList = CardHolder.Instance.cards;
+        enemyTest = Instantiate(enemyPrefabs, enemySpawnPlace).GetComponent<EnemyTest>();
+        enemyTest.Init();
+        GameManager.Instance.GameStatus = GameStatus.Battle;
     }
 
     public void PlaySkill()
@@ -27,7 +36,8 @@ public class SkillManager : Singleton<SkillManager>
         {
             if (CheckCondition(s))
             {
-                CalculatePoint(s);
+                var damage = CalculatePoint(s);
+                enemyTest.Damage(damage);
             }
             else
             {
@@ -44,7 +54,7 @@ public class SkillManager : Singleton<SkillManager>
         switch (id)
         {
             case "c1":
-                { 
+                {
                     foreach (var s in skills)
                     {
                         if (s == null)
@@ -52,7 +62,8 @@ public class SkillManager : Singleton<SkillManager>
                         if (s.diceFace != null)
                             return true;
                     }
-                } return false;
+                }
+                return false;
             case "c2":
                 {
                     int same = -1;
@@ -68,11 +79,12 @@ public class SkillManager : Singleton<SkillManager>
                         }
                         same = s.diceFace.currentFace;
                     }
-                } return true;
+                }
+                return true;
         }
         return false;
     }
-    public void CalculatePoint(Skill current)
+    public float CalculatePoint(Skill current)
     {
         var posCons = current.skillPosCondition;
         var skills = GetSkillsBasedOnSkillCondition(current, posCons);
@@ -93,6 +105,8 @@ public class SkillManager : Singleton<SkillManager>
         finalPoint *= mulCon;
 
         Debug.Log($"{current.name} diem la: {finalPoint}");
+
+        return finalPoint;
     }
 
     private List<Skill> GetSkillsBasedOnSkillCondition(Skill skill, List<SkillCondition> skillConditions)

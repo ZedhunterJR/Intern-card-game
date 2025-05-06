@@ -73,11 +73,11 @@ public class ShopManager : Singleton<ShopManager>
         {
             if (selectedShopItem == null)
             {
-                IventoryManager.Instance.OpenIventory(true, CardPartType.Position);
+                //IventoryManager.Instance.OpenIventory(true, CardPartType.Position);
                 selectedShopItem = shopitem.transform;
                 canvas.overrideSorting = true;
                 canvas.sortingLayerName = "Interact";
-                canvas.sortingOrder = 1;
+                canvas.sortingOrder = 10;
             }
             else
             {
@@ -103,12 +103,12 @@ public class ShopManager : Singleton<ShopManager>
                 if (found != null)
                 {
                     found.ChangeSkillPosCondition(pos);
-                    IventoryManager.Instance.OpenIventory(false);
+                    //IventoryManager.Instance.OpenIventory(false);
                     Destroy(shopitem);
                 }
                 else
                 {
-                    IventoryManager.Instance.OpenIventory(false);
+                    //IventoryManager.Instance.OpenIventory(false);
                     selectedShopItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                     canvas.overrideSorting = false;
                 }
@@ -141,11 +141,11 @@ public class ShopManager : Singleton<ShopManager>
         {
             if (selectedShopItem == null)
             {
-                IventoryManager.Instance.OpenIventory(true, CardPartType.Condition);
+                //IventoryManager.Instance.OpenIventory(true, CardPartType.Condition);
                 selectedShopItem = shopitem.transform;
                 canvas.overrideSorting = true;
                 canvas.sortingLayerName = "Interact";
-                canvas.sortingOrder = 1;
+                canvas.sortingOrder = 10;
             }
             else
             {
@@ -171,12 +171,12 @@ public class ShopManager : Singleton<ShopManager>
                 if (found != null)
                 {
                     found.ChangeActivateCondition(con);
-                    IventoryManager.Instance.OpenIventory(false);
+                    //IventoryManager.Instance.OpenIventory(false);
                     Destroy(shopitem);
                 }
                 else
                 {
-                    IventoryManager.Instance.OpenIventory(false);
+                    //IventoryManager.Instance.OpenIventory(false);
                     selectedShopItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                     canvas.overrideSorting = false;
                 }
@@ -209,11 +209,11 @@ public class ShopManager : Singleton<ShopManager>
         {
             if (selectedShopItem == null)
             {
-                IventoryManager.Instance.OpenIventory(true, CardPartType.Condition);
+                //IventoryManager.Instance.OpenIventory(true, CardPartType.Condition);
                 selectedShopItem = shopitem.transform;
                 canvas.overrideSorting = true;
                 canvas.sortingLayerName = "Interact";
-                canvas.sortingOrder = 1;
+                canvas.sortingOrder = 10;
             }
             else
             {
@@ -239,12 +239,12 @@ public class ShopManager : Singleton<ShopManager>
                 if (found != null)
                 {
                     found.ChangeEffect(con);
-                    IventoryManager.Instance.OpenIventory(false);
+                    //IventoryManager.Instance.OpenIventory(false);
                     Destroy(shopitem);
                 }
                 else
                 {
-                    IventoryManager.Instance.OpenIventory(false);
+                    //IventoryManager.Instance.OpenIventory(false);
                     selectedShopItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                     canvas.overrideSorting = false;
                 }
