@@ -271,7 +271,9 @@ public class DiceManager : Singleton<DiceManager>
         foreach (Dice dice in diceList)
         {
             dice.Reroll();
+            dice.GetComponent<Outline>().enabled = false;
         }
+        diceList.Clear();
     }
 
     public void UpdateDiceGraphic(Dice dice)

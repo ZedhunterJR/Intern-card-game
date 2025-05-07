@@ -21,7 +21,6 @@ public class GameManager : Singleton<GameManager>
                 case GameStatus.Pause:
                     break;
                 case GameStatus.Battle:
-                    BattleStart();
                     break;
                 case GameStatus.Shop:
                     ShopOpen();
@@ -35,20 +34,6 @@ public class GameManager : Singleton<GameManager>
     public RectTransform iventoryRect;
 
     private bool isShopOpen = false;
-
-    //related to in battle
-    public int chronoStack = 0;
-    public int magicStack = 0;
-    private void BattleStart()
-    {
-        chronoStack = 0;
-        var cards = SkillManager.Instance.Skills();
-        foreach (var card in cards)
-        {
-            card.SetDisable(false);
-        }
-    }
-
     private void Awake()
     {
         gameStatus = GameStatus.Init;
@@ -79,15 +64,15 @@ public class GameManager : Singleton<GameManager>
             var skill = item.GetComponent<Skill>();
             if (count < 4)
             {
-                skill.ChangeSkillPosCondition(new() { SkillCondition.Fourth, SkillCondition.Fifth });
-                skill.ChangeActivateCondition(Global.Instance.Conditions["c1"]);
+                //skill.ChangeSkillPosCondition(new() { SkillCondition.Fourth, SkillCondition.Fifth });
+                //skill.ChangeActivateCondition(Global.Instance.Conditions["c1"]);
                 skill.ChangeEffect(Global.Instance.Effects["e1"]);
                 count++;
             }
             else
             {
-                skill.ChangeSkillPosCondition(new() { SkillCondition.Left, SkillCondition.Right });
-                skill.ChangeActivateCondition(Global.Instance.Conditions["c2"]);
+                //skill.ChangeSkillPosCondition(new() { SkillCondition.Left, SkillCondition.Right });
+                //skill.ChangeActivateCondition(Global.Instance.Conditions["c2"]);
                 skill.ChangeEffect(Global.Instance.Effects["e3"]);
             }
         }

@@ -10,6 +10,7 @@ public class Dice : MonoBehaviour
     public List<int> diceFaces;
     public List<Sprite> diceSprites;
     [SerializeField] Image diceImage;
+    public bool usedInAttack = false;
     #endregion
 
     #region Unity Methods

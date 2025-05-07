@@ -28,9 +28,9 @@ public class IventoryManager : Singleton<IventoryManager>
         var skillRef = SkillManager.Instance.Skills();
         for (int i = 0; i < skillRef.Count; i++)
         {
-            arraySkill[i].ChangeSkillPosCondition(skillRef[i].skillPosCondition);
-            arraySkill[i].ChangeActivateCondition(skillRef[i].activateCondition);
-            arraySkill[i].ChangeEffect(skillRef[i].skillEffect);
+            //arraySkill[i].ChangeSkillPosCondition(skillRef[i].skillPosCondition);
+            //arraySkill[i].ChangeActivateCondition(skillRef[i].activateCondition);
+            //arraySkill[i].ChangeEffect(skillRef[i].skillEffect);
 
             arraySkill[i].transform.Find("pos_outline").gameObject.SetActive(false);
             arraySkill[i].transform.Find("con_outline").gameObject.SetActive(false);
@@ -54,9 +54,9 @@ public class IventoryManager : Singleton<IventoryManager>
         var skillRef = SkillManager.Instance.Skills();
         for (int i = 0; i < skillRef.Count; i++)
         {
-            skillRef[i].ChangeSkillPosCondition(arraySkill[i].skillPosCondition);
-            skillRef[i].ChangeActivateCondition(arraySkill[i].activateCondition);
-            skillRef[i].ChangeEffect(arraySkill[i].skillEffect);
+            //skillRef[i].ChangeSkillPosCondition(arraySkill[i].skillPosCondition);
+            //skillRef[i].ChangeActivateCondition(arraySkill[i].activateCondition);s
+            //skillRef[i].ChangeEffect(arraySkill[i].skillEffect);
         }
     }
 }
