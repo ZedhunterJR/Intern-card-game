@@ -227,8 +227,10 @@ public class DiceManager : Singleton<DiceManager>
 
     public void RerollAction()
     {
-        if (!isRolling && selectedDice.Count != 0 && GameManager.Instance.GameStatus == GameStatus.Battle)
+        if (!isRolling && selectedDice.Count != 0 && 
+            GameManager.Instance.GameStatus == GameStatus.Battle && GameManager.Instance.NumOfReroll >= 0)
         {
+            GameManager.Instance.SubtractRerolls();
             StartCoroutine(RerollAnim());
         }
         else
@@ -253,7 +255,6 @@ public class DiceManager : Singleton<DiceManager>
             float targetY = shakeHeights[i];
             float duration = shakeDurations[i];
 
-            //shakeSeq.Append(diceHolderLid.DOAnchorPosY(targetY, duration));
             shakeSeq.Append(diceHolderContain.DOAnchorPosY(targetY, duration));
         }
         RerollDices(selectedDice);

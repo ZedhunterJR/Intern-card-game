@@ -12,7 +12,7 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] GameObject shopItemPrefab;
     [SerializeField] Transform[] cardPartSlots;
     //public List<ShopItem> cardPartItem;
-    private int numberOfCardPart = 5;
+    private int numberOfCardPart = 2;
 
     public Transform selectedShopItem;
     private void Update()
@@ -38,12 +38,6 @@ public class ShopManager : Singleton<ShopManager>
         var shopitem = Instantiate(shopItemPrefab, cardPartSlots[slot]);
         var buttonUI = shopitem.GetComponent<ButtonUI>();
         var canvas = shopitem.GetComponent<Canvas>();
-
-        // Update Graphic
-        shopitem.transform.Find("Tag").GetComponentInChildren<TextMeshProUGUI>().text = "Effect";
-        shopitem.transform.Find("Des").GetComponentInChildren<TextMeshProUGUI>().text = con.description;
-        shopitem.transform.Find("Mult").gameObject.SetActive(false);
-        shopitem.transform.Find("Position").gameObject.SetActive(false);
 
         var image = shopitem.GetComponent<Image>();
         image.material = null; // Reset to default
@@ -84,13 +78,10 @@ public class ShopManager : Singleton<ShopManager>
 
                 if (found != null)
                 {
-                    //found.ChangeEffect(con);
-                    //IventoryManager.Instance.OpenIventory(false);
                     Destroy(shopitem);
                 }
                 else
                 {
-                    //IventoryManager.Instance.OpenIventory(false);
                     selectedShopItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                     canvas.overrideSorting = false;
                 }

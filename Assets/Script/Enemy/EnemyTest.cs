@@ -9,6 +9,13 @@ public class EnemyTest : MonoBehaviour
     [SerializeField] EnemyState enemyState;
     [SerializeField] Image healthBar; 
     private float maxHealth;
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     public EnemyState EnemyState
     {
         get { return enemyState; }
@@ -18,8 +25,10 @@ public class EnemyTest : MonoBehaviour
             switch (value)
             {
                 case EnemyState.Idle:
+                    animator.Play("Idle");
                     break;
                 case EnemyState.Attack:
+                    animator.Play("Attack");
                     break;
                 case EnemyState.Die:
                     break;
@@ -50,6 +59,10 @@ public class EnemyTest : MonoBehaviour
         else
         {
             // kiem tra so lan danh bai <= 0 thi EnemyState = Attack
+            if (GameManager.Instance.NumOfTurns <= 0)
+            {
+                GameManager.Instance.GameStatus = GameStatus.Lose;
+            }
         }
     }
 }

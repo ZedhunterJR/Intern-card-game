@@ -8,6 +8,10 @@ using Unity.VisualScripting;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameStatus gameStatus;
+    [SerializeField] private int numOfTurn = 3;
+    public int NumOfTurns => numOfTurn;
+    [SerializeField] private int numOfReroll = 4;
+    public int NumOfReroll => numOfReroll;
     public GameStatus GameStatus
     {
         get { return gameStatus; }
@@ -24,8 +28,11 @@ public class GameManager : Singleton<GameManager>
                     break;
                 case GameStatus.Shop:
                     ShopOpen();
+                    ResetTurnsAndRerolls();
                     break;
-                default:
+                case GameStatus.Lose:
+                    Debug.Log("Thua");
+                    SkillManager.Instance.EnemyTest.EnemyState = EnemyState.Attack;
                     break;
             }
         }
@@ -91,6 +98,21 @@ public class GameManager : Singleton<GameManager>
         gameStatus = GameStatus.Battle;
         SkillManager.Instance.EnemyTest.Init();
     }
+
+    void ResetTurnsAndRerolls()
+    {
+        numOfTurn = 3;
+        numOfReroll = 4;
+    }
+
+    public void SubtractTurns()
+    {
+        numOfTurn -= 1;
+    }
+    public void SubtractRerolls()
+    {
+        numOfReroll -= 1;
+    }
 }
 
 public enum GameStatus
@@ -99,4 +121,5 @@ public enum GameStatus
     Pause, 
     Battle, 
     Shop, 
+    Lose,
 }

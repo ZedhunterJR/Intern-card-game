@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,12 +45,21 @@ public class SkillManager : Singleton<SkillManager>
 
     public void PlayCard()
     {
+        if (GameManager.Instance.GameStatus != GameStatus.Battle)
+        {
+            return;
+        }
+        if (GameManager.Instance.NumOfTurns <= 0)
+        {
+            Debug.Log("Không đủ lượt đánh");
+            return;
+        }
         var playedDices = PlayedDices();
         var pattern = DetectDicePattern(playedDices);
         var mult = 1f;
         var point = 0f;
-        //Process card effect here ->
-        //
+
+        GameManager.Instance.SubtractTurns();
 
         switch (pattern)
         {
@@ -121,6 +130,7 @@ public class SkillManager : Singleton<SkillManager>
         var a = ProcessCardEffect(Skills(), pattern);
         point += a.point;
         mult += a.mult;
+        var total = point * mult;
 
         foreach (var d in playedDices)
         {
@@ -129,7 +139,9 @@ public class SkillManager : Singleton<SkillManager>
                 point += d.currentFace;
             }    
         }    
-        print($"Pattern used: {pattern}. Damage: {point * mult}");
+        print($"Pattern used: {pattern}. Damage: {total}");
+
+        enemyTest.Damage(total);
     }
 
     public (float point, float mult) ProcessCardEffect(List<Skill> skills, DicePattern dicePattern)

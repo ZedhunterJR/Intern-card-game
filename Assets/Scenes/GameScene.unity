@@ -729,7 +729,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1459860768}
         m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
-        m_MethodName: PlaySkill
+        m_MethodName: PlayCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -806,26 +806,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855cc506cc0ee594a845beb6e0332a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionArrowSprites:
-  - {fileID: 2022732839, guid: a518c0c3dbfd8b943b5b951d7852d6e9, type: 3}
-  - {fileID: -170909086, guid: a518c0c3dbfd8b943b5b951d7852d6e9, type: 3}
-  - {fileID: 2044445686, guid: a518c0c3dbfd8b943b5b951d7852d6e9, type: 3}
-  - {fileID: 1386153161, guid: a518c0c3dbfd8b943b5b951d7852d6e9, type: 3}
-  - {fileID: 248309539, guid: a518c0c3dbfd8b943b5b951d7852d6e9, type: 3}
-  - {fileID: 5170908, guid: a518c0c3dbfd8b943b5b951d7852d6e9, type: 3}
-  - {fileID: 1777939774, guid: a518c0c3dbfd8b943b5b951d7852d6e9, type: 3}
-  - {fileID: -785347437, guid: a518c0c3dbfd8b943b5b951d7852d6e9, type: 3}
-  - {fileID: 1162137277, guid: a518c0c3dbfd8b943b5b951d7852d6e9, type: 3}
-  positionArrowHelpers:
-  - left
-  - right
-  - this
-  - 1st
-  - 2nd
-  - 3rd
-  - 4th
-  - 5th
-  - blank
 --- !u!4 &189528425
 Transform:
   m_ObjectHideFlags: 0
@@ -2233,19 +2213,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dicePlace: {fileID: 496790953}
-  multPanel: {fileID: 1199447936}
-  positionArrows:
-  - {fileID: 1214438665}
-  - {fileID: 1617018874}
-  - {fileID: 1895245588}
-  - {fileID: 1615421809}
-  - {fileID: 453404072}
-  conditionPanel: {fileID: 1032171621}
-  effectPanel: {fileID: 1009312667}
   diceFace: {fileID: 0}
-  skillPosCondition: 
   cardMultiplier: 1
   isDisabled: 0
+  cardName: {fileID: 0}
+  cardDes: {fileID: 0}
 --- !u!114 &422209653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4354,19 +4326,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dicePlace: {fileID: 276813081}
-  multPanel: {fileID: 1089443899}
-  positionArrows:
-  - {fileID: 2034423067}
-  - {fileID: 314906818}
-  - {fileID: 1371787133}
-  - {fileID: 846190611}
-  - {fileID: 1114972980}
-  conditionPanel: {fileID: 1304543388}
-  effectPanel: {fileID: 1504000501}
   diceFace: {fileID: 0}
-  skillPosCondition: 
   cardMultiplier: 1
   isDisabled: 0
+  cardName: {fileID: 0}
+  cardDes: {fileID: 0}
 --- !u!114 &795506470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6947,19 +6911,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dicePlace: {fileID: 1633001875}
-  multPanel: {fileID: 219392552}
-  positionArrows:
-  - {fileID: 916377836}
-  - {fileID: 551705205}
-  - {fileID: 1442219052}
-  - {fileID: 1201010857}
-  - {fileID: 2106420451}
-  conditionPanel: {fileID: 206517699}
-  effectPanel: {fileID: 2028493151}
   diceFace: {fileID: 0}
-  skillPosCondition: 
   cardMultiplier: 1
   isDisabled: 0
+  cardName: {fileID: 0}
+  cardDes: {fileID: 0}
 --- !u!114 &1296704242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7193,19 +7149,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dicePlace: {fileID: 509734656}
-  multPanel: {fileID: 895434730}
-  positionArrows:
-  - {fileID: 398299951}
-  - {fileID: 925719705}
-  - {fileID: 1521500183}
-  - {fileID: 515318219}
-  - {fileID: 1258117560}
-  conditionPanel: {fileID: 579464996}
-  effectPanel: {fileID: 1956910928}
   diceFace: {fileID: 0}
-  skillPosCondition: 
   cardMultiplier: 1
   isDisabled: 0
+  cardName: {fileID: 0}
+  cardDes: {fileID: 0}
 --- !u!114 &1317070487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9024,8 +8972,6 @@ MonoBehaviour:
   gameStatus: 0
   shopRect: {fileID: 773698044}
   iventoryRect: {fileID: 0}
-  chronoStack: 0
-  magicStack: 0
 --- !u!1 &1773414461
 GameObject:
   m_ObjectHideFlags: 0
@@ -10844,19 +10790,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dicePlace: {fileID: 3500845480766303890}
-  multPanel: {fileID: 718229124431870434}
-  positionArrows:
-  - {fileID: 463872690892969274}
-  - {fileID: 1785816716994119357}
-  - {fileID: 1047643279150483586}
-  - {fileID: 7430666589334613379}
-  - {fileID: 6261539126711863430}
-  conditionPanel: {fileID: 7881574724361987222}
-  effectPanel: {fileID: 8122602433945075953}
   diceFace: {fileID: 0}
-  skillPosCondition: 
   cardMultiplier: 1
   isDisabled: 0
+  cardName: {fileID: 0}
+  cardDes: {fileID: 0}
 --- !u!222 &3538187965325967881
 CanvasRenderer:
   m_ObjectHideFlags: 0
