@@ -66,6 +66,8 @@ public class SkillManager : Singleton<SkillManager>
                 return false;
             case "c2":
                 {
+                    if (posCons.Count < 2)
+                        return false;
                     int same = -1;
                     foreach (var s in skills)
                     {
@@ -81,6 +83,157 @@ public class SkillManager : Singleton<SkillManager>
                     }
                 }
                 return true;
+            case "c3":
+                {
+                    foreach (var s in skills)
+                    {
+                        if (s.diceFace == null)
+                            return true;
+                    }
+                }
+                return false;
+            case "c4":
+                {
+                    int sum = 0;
+                    foreach (var s in skills)
+                    {
+                        if (s.diceFace != null)
+                            sum += s.diceFace.currentFace;
+                    }
+                    if (sum >= 6)
+                        return true;
+                }
+                return false;
+            case "c5":
+                {
+                    if (posCons.Count < 2)
+                        return false;
+                    int count = 0;
+                    foreach (var s in skills)
+                    {
+                        if (s.diceFace != null)
+                            count++;
+                    }
+                    if (count >= 2)
+                        return true;
+                }
+                return false;
+            case "c6":
+                {
+                    int count = 0;
+                    foreach (var s in skills)
+                    {
+                        if (s.diceFace != null)
+                        {
+                            if (s.diceFace.currentFace % 2 == 1)
+                                count++;
+                        }
+                    }
+                    if (count >= 1)
+                        return true;
+                }
+                return false;
+            case "c7":
+                {
+                    foreach (var s in skills)
+                    {
+                        if (s.diceFace != null)
+                        {
+                            if (s.diceFace.currentFace == 6)
+                                return true;
+                        }
+                    }
+                }
+                return false;
+            case "c8":
+                {
+                    int sum = 0;
+                    foreach (var s in skills)
+                    {
+                        if (s.diceFace != null)
+                            sum += s.diceFace.currentFace;
+                    }
+                    if (sum >= 10)
+                        return true;
+                }
+                return false;
+            case "c9":
+                {
+                    int count = 0;
+                    foreach (var s in skills)
+                    {
+                        if (s.diceFace != null)
+                        {
+                            if (s.diceFace.currentFace > 4)
+                                count++;
+                        }
+                    }
+                    if (count >= 3)
+                        return true;
+                }
+                return false;
+            case "c10":
+                {
+                    int sum = 0;
+                    foreach (var s in skills)
+                    {
+                        if (s.diceFace != null)
+                            sum += s.diceFace.currentFace;
+                    }
+                    if (sum >= 20)
+                        return true;
+                }
+                return false;
+            case "c11":
+                {
+
+                }
+                return false;
+            case "c12":
+                {
+
+                }
+                return false;
+            case "c13":
+                {
+
+                }
+                return false;
+            case "c14":
+                {
+
+                }
+                return false;
+            case "c15":
+                {
+
+                }
+                return false;
+            case "c16":
+                {
+
+                }
+                return false;
+            case "c17":
+                {
+
+                }
+                return false;
+            case "c18":
+                {
+
+                }
+                return false;
+            case "c19":
+                {
+
+                }
+                return false;
+            case "c20":
+                {
+
+                }
+                return false;
         }
         return false;
     }
@@ -166,6 +319,12 @@ public class SkillManager : Singleton<SkillManager>
         return result;
     }
 
+    public void ConsumeCard(Skill skill)
+    {
+        //reset the card to basic effect
+        //also an animation for whenever something is changed in a card
+        skill.ChangeEffect(Global.Instance.Effects["e1"]);
+    }
 }
 public enum SkillCondition
 {

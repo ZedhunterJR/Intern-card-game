@@ -38,7 +38,7 @@ public class Global : Singleton<Global>
         { "c17", new("c17", "has [sum] < 7", "#ffcd00".HexColor() , 3f) },
         { "c18", new("c18", "has [hi] < 4", "#ffcd00".HexColor() , 3f) },
         { "c19", new("c19", "eachhas value 3", "#ffcd00".HexColor() , 3f) },
-        { "c20", new("c18", "eachhas [empty]", "#ffcd00".HexColor() , 3f) },
+        { "c20", new("c20", "eachhas [empty]", "#ffcd00".HexColor() , 3f) },
     };
     public Dictionary<string, EffectClause> Effects = new()
     {

@@ -21,6 +21,7 @@ public class GameManager : Singleton<GameManager>
                 case GameStatus.Pause:
                     break;
                 case GameStatus.Battle:
+                    BattleStart();
                     break;
                 case GameStatus.Shop:
                     ShopOpen();
@@ -34,6 +35,19 @@ public class GameManager : Singleton<GameManager>
     public RectTransform iventoryRect;
 
     private bool isShopOpen = false;
+
+    //related to in battle
+    public int chronoStack = 0;
+    public int magicStack = 0;
+    private void BattleStart()
+    {
+        chronoStack = 0;
+        var cards = SkillManager.Instance.Skills();
+        foreach (var card in cards)
+        {
+            card.SetDisable(false);
+        }
+    }
 
     private void Awake()
     {

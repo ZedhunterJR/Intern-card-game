@@ -22,6 +22,19 @@ public class Skill : MonoBehaviour
     [HideInInspector] public EffectClause skillEffect;
 
     [HideInInspector] public float cardMultiplier = 1f;
+    [HideInInspector] public bool isDisabled = false;
+    public void SetDisable(bool disable)
+    {
+        isDisabled = disable;
+        if (disable)
+        {
+            //animation to disable card and shit
+        }
+        else
+        {
+            //same but to enable card
+        }
+    }
     public float Multipler
     {
         get

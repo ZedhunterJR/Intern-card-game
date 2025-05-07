@@ -2245,6 +2245,7 @@ MonoBehaviour:
   diceFace: {fileID: 0}
   skillPosCondition: 
   cardMultiplier: 1
+  isDisabled: 0
 --- !u!114 &422209653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4365,6 +4366,7 @@ MonoBehaviour:
   diceFace: {fileID: 0}
   skillPosCondition: 
   cardMultiplier: 1
+  isDisabled: 0
 --- !u!114 &795506470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6957,6 +6959,7 @@ MonoBehaviour:
   diceFace: {fileID: 0}
   skillPosCondition: 
   cardMultiplier: 1
+  isDisabled: 0
 --- !u!114 &1296704242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7202,6 +7205,7 @@ MonoBehaviour:
   diceFace: {fileID: 0}
   skillPosCondition: 
   cardMultiplier: 1
+  isDisabled: 0
 --- !u!114 &1317070487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9020,6 +9024,8 @@ MonoBehaviour:
   gameStatus: 0
   shopRect: {fileID: 773698044}
   iventoryRect: {fileID: 0}
+  chronoStack: 0
+  magicStack: 0
 --- !u!1 &1773414461
 GameObject:
   m_ObjectHideFlags: 0
@@ -10850,6 +10856,7 @@ MonoBehaviour:
   diceFace: {fileID: 0}
   skillPosCondition: 
   cardMultiplier: 1
+  isDisabled: 0
 --- !u!222 &3538187965325967881
 CanvasRenderer:
   m_ObjectHideFlags: 0
