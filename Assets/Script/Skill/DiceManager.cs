@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -22,7 +22,7 @@ public class DiceManager : Singleton<DiceManager>
     // var for reroll
     [Header("Reroll Parameters")]
     [SerializeField] List<Dice> selectedDice;
-    public List<Dice> SelectedDice;
+    public List<Dice> SelectedDice => selectedDice;
     [SerializeField] bool isRolling = false;
     [SerializeField] RectTransform diceHolderLid;
     [SerializeField] RectTransform diceHolderContain;
@@ -205,6 +205,8 @@ public class DiceManager : Singleton<DiceManager>
     }
     public void ReturnDice(Dice dice)
     {
+        if (dice == null) return;
+
         Transform toReturn = null;
         for (int i = 0; i < diceHolders.Length; i++)
         {
@@ -227,11 +229,11 @@ public class DiceManager : Singleton<DiceManager>
 
     public void RerollAction()
     {
-        if (!isRolling && selectedDice.Count != 0 && 
+        if (!isRolling && selectedDice.Count != 0 &&
             GameManager.Instance.GameStatus == GameStatus.Battle && GameManager.Instance.NumOfReroll >= 0)
         {
             GameManager.Instance.SubtractRerolls();
-            StartCoroutine(RerollAnim());
+            StartCoroutine(RerollAnim(selectedDice));
         }
         else
         {
@@ -240,7 +242,7 @@ public class DiceManager : Singleton<DiceManager>
         }
     }
 
-    IEnumerator RerollAnim()
+    public IEnumerator RerollAnim(List<Dice> diceList, bool isPress = true)
     {
         isRolling = true;
         yield return diceHolderLid.DOAnchorPos(new Vector2(0, 0), 1.2f)
@@ -257,7 +259,7 @@ public class DiceManager : Singleton<DiceManager>
 
             shakeSeq.Append(diceHolderContain.DOAnchorPosY(targetY, duration));
         }
-        RerollDices(selectedDice);
+        RerollDices(diceList, isPress);
         yield return shakeSeq.WaitForCompletion();
 
         yield return diceHolderLid.DOAnchorPos(new Vector2(-200, 0), 0.8f)
@@ -267,14 +269,15 @@ public class DiceManager : Singleton<DiceManager>
         isRolling = false;
     }
 
-    public void RerollDices(List<Dice> diceList)
+    public void RerollDices(List<Dice> diceList, bool isPress)
     {
         foreach (Dice dice in diceList)
         {
             dice.Reroll();
             dice.GetComponent<Outline>().enabled = false;
         }
-        diceList.Clear();
+        if (isPress == true)
+            diceList.Clear();
     }
 
     public void UpdateDiceGraphic(Dice dice)

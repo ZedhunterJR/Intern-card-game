@@ -11,6 +11,7 @@ public class Dice : MonoBehaviour
     public List<Sprite> diceSprites;
     [SerializeField] Image diceImage;
     public bool usedInAttack = false;
+    public GameObject lockDice;
     #endregion
 
     #region Unity Methods

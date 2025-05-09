@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
+  isHover: 0
   normalSprite: {fileID: 0}
   clickSprite: {fileID: 0}
   disabledSprite: {fileID: 0}
@@ -118,6 +119,8 @@ MonoBehaviour:
   - {fileID: 817435730, guid: 60b9ade549dc82941a17de764ad379e1, type: 3}
   - {fileID: 132394252, guid: 60b9ade549dc82941a17de764ad379e1, type: 3}
   diceImage: {fileID: 0}
+  usedInAttack: 0
+  lockDice: {fileID: 0}
 --- !u!223 &6445276083002187023
 Canvas:
   m_ObjectHideFlags: 0

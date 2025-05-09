@@ -45,28 +45,10 @@ public class Skill : MonoBehaviour
         dice.transform.SetParent(dicePlace);
         dice.transform.localScale = Vector3.one;
         dice.transform.localRotation = Quaternion.identity;
-        //var diceTransfrom = dice.GetComponent<RectTransform>();
-        //DOTween.To(() => diceTransfrom.offsetMin, x => diceTransfrom.offsetMin = x, Vector2.zero, 0.1f);
-        //DOTween.To(() => diceTransfrom.offsetMax, x => diceTransfrom.offsetMax = x, Vector2.zero, 0.1f);
         diceFace = dice;
     }
 
     #region graphic
-
-    //public void ChangeActivateCondition(ConditionClause con)
-    //{
-    //    activateCondition = con;
-
-    //    var image = conditionPanel.GetComponent<Image>();
-    //    image.material = null; // Reset to default
-    //    Material runtimeHueMaterial = new Material(Shader.Find("Custom/UIHueFromColor"));
-    //    runtimeHueMaterial.color = activateCondition.color;
-    //    image.material = runtimeHueMaterial; // Apply new instance
-
-    //    conditionPanel.GetComponentInChildren<TextMeshProUGUI>().text = activateCondition.description;
-
-    //    UpdateMultPanel();
-    //}
     public void ChangeEffect(EffectClause effect)
     {
         skillEffect = effect;
@@ -80,19 +62,14 @@ public class Skill : MonoBehaviour
         cardName.text = effect.name;
         cardDes.text = effect.description;
     }
-
-    //public void ChangeSkillPosCondition(List<SkillCondition> conditions)
-    //{
-    //    Global.Instance.UpdatePositionArrowGraphic(conditions, positionArrows);
-    //    skillPosCondition = conditions;
-    //    UpdateMultPanel();
-    //}
-
     public void ReUpdate()
     {
-        //ChangeSkillPosCondition(skillPosCondition);
-        //ChangeActivateCondition(activateCondition);
-        //ChangeEffect(skillEffect);
+    }
+
+    // after player play card 
+    public void ReturnDicesToHolder()
+    {
+        DiceManager.Instance.ReturnDice(diceFace);
     }
     #endregion
 }

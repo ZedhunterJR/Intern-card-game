@@ -43,6 +43,26 @@ public class SkillManager : Singleton<SkillManager>
         GameManager.Instance.GameStatus = GameStatus.Battle;
     }
 
+    public void ReturnDicesToHolderAfterPlayed()
+    {
+        foreach (var card in SkillCardList)
+        {
+            var cardScript = card.GetComponent<Skill>();
+            cardScript.ReturnDicesToHolder();
+        }
+
+        switch (GameManager.Instance.GameStatus)
+        {
+            case GameStatus.Battle:
+                StartCoroutine(DiceManager.Instance.RerollAnim(DiceManager.Instance.diceList, false));
+                break;
+            case GameStatus.Shop:
+                break;
+            default:
+                break;
+        }
+    }
+
     public void PlayCard()
     {
         if (GameManager.Instance.GameStatus != GameStatus.Battle)
@@ -142,6 +162,8 @@ public class SkillManager : Singleton<SkillManager>
         print($"Pattern used: {pattern}. Damage: {total}");
 
         enemyTest.Damage(total);
+
+        ReturnDicesToHolderAfterPlayed();
     }
 
     public (float point, float mult) ProcessCardEffect(List<Skill> skills, DicePattern dicePattern)
