@@ -97,6 +97,7 @@ public class GameManager : Singleton<GameManager>
         shopRect.DOAnchorPos(new Vector2(15, 500f), 0.5f).SetEase(Ease.OutCubic);
         gameStatus = GameStatus.Battle;
         SkillManager.Instance.EnemyTest.Init();
+        SkillManager.Instance.ReturnDicesToHolderAfterPlayed();
     }
 
     void ResetTurnsAndRerolls()

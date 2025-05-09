@@ -173,6 +173,7 @@ public class DiceManager : Singleton<DiceManager>
                 var droppedDiceCanvas = draggingDice.GetComponent<Canvas>();
                 droppedDiceCanvas.overrideSorting = false;
 
+
                 // Disable outline components
                 var diceOutline = draggingDice.GetComponent<Outline>();
                 diceOutline.enabled = false;
@@ -225,6 +226,7 @@ public class DiceManager : Singleton<DiceManager>
         }
         dice.transform.SetParent(toReturn);
         dice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.2f);
+        //dice.GetComponent<GraphicRaycaster>().enabled = true;
     }
 
     public void RerollAction()
@@ -237,8 +239,11 @@ public class DiceManager : Singleton<DiceManager>
         }
         else
         {
-            DOTween.Kill(2, true);
-            diceHolderContain.DOPunchRotation(Vector3.forward * 5f, 0.15f, 20, 1).SetId(2);
+            if (!isRolling)
+            {
+                DOTween.Kill(2, true);
+                diceHolderContain.DOPunchRotation(Vector3.forward * 5f, 0.15f, 20, 1).SetId(2);
+            }
         }
     }
 
