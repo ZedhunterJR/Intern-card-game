@@ -12,7 +12,7 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] GameObject shopItemPrefab;
     [SerializeField] Transform[] cardPartSlots;
     //public List<ShopItem> cardPartItem;
-    private int numberOfCardPart = 2;
+    private int numberOfCardPart = 5;
 
     public Transform selectedShopItem;
     private void Update()
@@ -34,7 +34,7 @@ public class ShopManager : Singleton<ShopManager>
 
     void EffectItem(int slot)
     {
-        var con = Global.Instance.Effects.GetRandomValue();
+        var effect = Global.Instance.Effects.GetRandomValue();
         var shopitem = Instantiate(shopItemPrefab, cardPartSlots[slot]);
         var buttonUI = shopitem.GetComponent<ButtonUI>();
         var canvas = shopitem.GetComponent<Canvas>();
@@ -42,8 +42,11 @@ public class ShopManager : Singleton<ShopManager>
         var image = shopitem.GetComponent<Image>();
         image.material = null; // Reset to default
         Material runtimeHueMaterial = new Material(Shader.Find("Custom/UIHueFromColor"));
-        runtimeHueMaterial.color = con.color;
+        runtimeHueMaterial.color = effect.color;
         image.material = runtimeHueMaterial; // Apply new instance
+
+        var title = shopitem.transform.Find("title").GetComponent<TextMeshProUGUI>();
+        title.text = effect.name;
 
         buttonUI.ClickFunc = () =>
         {
@@ -79,6 +82,7 @@ public class ShopManager : Singleton<ShopManager>
                 if (found != null)
                 {
                     Destroy(shopitem);
+                    found.ChangeEffect(effect);
                 }
                 else
                 {
