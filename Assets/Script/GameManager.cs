@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Unity.VisualScripting;
+using TMPro;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -12,6 +13,9 @@ public class GameManager : Singleton<GameManager>
     public int NumOfTurns => numOfTurn;
     [SerializeField] private int numOfReroll = 4;
     public int NumOfReroll => numOfReroll;
+
+    [SerializeField] TextMeshProUGUI turnsNum;
+    [SerializeField] TextMeshProUGUI rerollsNum;
     public GameStatus GameStatus
     {
         get { return gameStatus; }
@@ -44,6 +48,12 @@ public class GameManager : Singleton<GameManager>
     private void Awake()
     {
         gameStatus = GameStatus.Init;
+        UpdateUIForTurnAndReroll(numOfTurn, numOfReroll);
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void Update()
@@ -104,15 +114,24 @@ public class GameManager : Singleton<GameManager>
     {
         numOfTurn = 3;
         numOfReroll = 4;
+        UpdateUIForTurnAndReroll(numOfTurn, numOfReroll);
     }
 
     public void SubtractTurns()
     {
         numOfTurn -= 1;
+        UpdateUIForTurnAndReroll(numOfTurn, numOfReroll);
     }
     public void SubtractRerolls()
     {
         numOfReroll -= 1;
+        UpdateUIForTurnAndReroll(numOfTurn, numOfReroll);
+    }
+
+    public void UpdateUIForTurnAndReroll(int numOfTurn, int numOfReroll)
+    {
+        turnsNum.text = numOfTurn.ToString();
+        rerollsNum.text = numOfReroll.ToString();
     }
 }
 
