@@ -2356,7 +2356,14 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  v0: 0
+  v1: 0
+  v2: 0
+  s0: 
+  s1: 
+  s2: 
   cardImage: {fileID: 0}
+  informationPanel: {fileID: 0}
 --- !u!114 &422209653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4428,7 +4435,14 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  v0: 0
+  v1: 0
+  v2: 0
+  s0: 
+  s1: 
+  s2: 
   cardImage: {fileID: 0}
+  informationPanel: {fileID: 0}
 --- !u!114 &795506470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7014,7 +7028,14 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  v0: 0
+  v1: 0
+  v2: 0
+  s0: 
+  s1: 
+  s2: 
   cardImage: {fileID: 0}
+  informationPanel: {fileID: 0}
 --- !u!114 &1296704242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7253,7 +7274,14 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  v0: 0
+  v1: 0
+  v2: 0
+  s0: 
+  s1: 
+  s2: 
   cardImage: {fileID: 0}
+  informationPanel: {fileID: 0}
 --- !u!114 &1317070487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7936,7 +7964,7 @@ MonoBehaviour:
   draggingCard: {fileID: 0}
   scaleWhenHover: {x: 1.1, y: 1.1}
   hoverPunchAngle: 5
-  hoverTransition: 0.15
+  hoverTransition: 0.21
   hoverCard: {fileID: 0}
   cardSlot: {fileID: 8489885818483110042, guid: 019c44d9095a7d748847a57849e0020b, type: 3}
   cardHolders:
@@ -11047,7 +11075,14 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  v0: 0
+  v1: 0
+  v2: 0
+  s0: 
+  s1: 
+  s2: 
   cardImage: {fileID: 0}
+  informationPanel: {fileID: 0}
 --- !u!222 &3538187965325967881
 CanvasRenderer:
   m_ObjectHideFlags: 0

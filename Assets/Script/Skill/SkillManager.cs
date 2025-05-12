@@ -213,6 +213,8 @@ public class SkillManager : Singleton<SkillManager>
             a.Value?.Invoke();
         }
         ReturnDicesToHolderAfterPlayed();
+
+        enemyTest.Damage(100);
     }
 
     public void ProcessCardEffect(Skill skill, int index)
