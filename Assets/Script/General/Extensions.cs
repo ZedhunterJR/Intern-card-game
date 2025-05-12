@@ -303,5 +303,10 @@ public static class Extensions
         animator.Play(stateName, layer, normalizedTime);
         return true; // Animation played successfully
     }
+    public static T GetRandomEnum<T>() where T : System.Enum
+    {
+        T[] values = (T[])System.Enum.GetValues(typeof(T));
+        return values[Random.Range(0, values.Length)];
+    }
 
 }

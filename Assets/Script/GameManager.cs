@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using Unity.VisualScripting;
+using System;
 using TMPro;
 
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameStatus gameStatus;
 
+    public Dictionary<(Skill, string), Action> startRoundActionHelpers = new();
     public int maxNumOfTurn, maxNumOfReroll;
     public int CurrentNumOfTurn { get; private set; }
     public int CurrentNumOfReroll { get; private set; }
@@ -47,6 +48,10 @@ public class GameManager : Singleton<GameManager>
                 case GameStatus.Pause:
                     break;
                 case GameStatus.Battle:
+                    foreach (var helper in startRoundActionHelpers)
+                    {
+                        helper.Value?.Invoke();
+                    }
                     SetTurns(maxNumOfTurn, true);
                     SetRerolls(maxNumOfReroll, true);
                     break;

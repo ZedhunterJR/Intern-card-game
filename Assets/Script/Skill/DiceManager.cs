@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
+using System;
 
 public class DiceManager : Singleton<DiceManager>
 {
@@ -34,6 +35,9 @@ public class DiceManager : Singleton<DiceManager>
     Vector3 offset;
 
     private Dictionary<Dice, Skill> skillDicePair = new();
+
+    //dunno
+    public Func<int> DiceRerollListener = null;
 
     #endregion
 
