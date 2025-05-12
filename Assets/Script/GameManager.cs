@@ -128,11 +128,6 @@ public class GameManager : Singleton<GameManager>
         SkillManager.Instance.ReturnDicesToHolderAfterPlayed();
     }
     
-
-    public void UpdateUIForTurnAndReroll(int numOfTurn, int numOfReroll)
-    {
-        
-    }
 }
 
 public enum GameStatus
