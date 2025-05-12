@@ -198,7 +198,15 @@ public class SkillManager : Singleton<SkillManager>
         }*/
 
 
-        enemyTest.Damage(1);
+        while (visualPointQueue.Count > 0)
+        {
+            var q = visualPointQueue.Dequeue();
+            if (q.dicePattern != DicePattern.None)
+                print("queueing " + q.dicePattern.ToString());
+            else
+                print($"point: {q.point}, mult: {q.mult}");
+        }
+
 
         foreach (var a in actionHelpers)
         {
