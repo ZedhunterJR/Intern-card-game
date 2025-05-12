@@ -19,8 +19,14 @@ public class Skill : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI cardName;
     [SerializeField] private TextMeshProUGUI cardDes;
+
+    //for specific card effect
+    [HideInInspector] public float v0, v1, v2;
+    [HideInInspector] public string s0, s1, s2;
+
     [SerializeField] private Image cardImage;
     public GameObject informationPanel;
+
     public void SetDisable(bool disable)
     {
         isDisabled = disable;
@@ -50,10 +56,11 @@ public class Skill : MonoBehaviour
         diceFace = dice;
     }
 
-    #region graphic
     public void ChangeEffect(EffectClause effect, Sprite effectSprite = null)
     {
+        SkillManager.Instance.RemoveEffectFromSkill(this, skillEffect);
         skillEffect = effect;
+        SkillManager.Instance.AddEffectToSkill(this, skillEffect);
 
         var mainImage = GetComponent<Image>();
         mainImage.material = null; // Reset to default
@@ -74,6 +81,5 @@ public class Skill : MonoBehaviour
     {
         DiceManager.Instance.ReturnDice(diceFace);
     }
-    #endregion
 }
 
