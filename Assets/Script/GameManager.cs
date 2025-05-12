@@ -62,11 +62,13 @@ public class GameManager : Singleton<GameManager>
     }
     public RectTransform shopRect;
     public RectTransform iventoryRect;
+    DataSpriteManager dataSpriteManager;
 
     private bool isShopOpen = false;
     private void Awake()
     {
         gameStatus = GameStatus.Init;
+        dataSpriteManager = DataSpriteManager.Instance;
     }
 
     private void Start()
@@ -101,14 +103,14 @@ public class GameManager : Singleton<GameManager>
             {
                 //skill.ChangeSkillPosCondition(new() { SkillCondition.Fourth, SkillCondition.Fifth });
                 //skill.ChangeActivateCondition(Global.Instance.Conditions["c1"]);
-                skill.ChangeEffect(Global.Instance.Effects["e1"]);
+                skill.ChangeEffect(Global.Instance.Effects["e1"], dataSpriteManager.EffectSprites["e1"]);
                 count++;
             }
             else
             {
                 //skill.ChangeSkillPosCondition(new() { SkillCondition.Left, SkillCondition.Right });
                 //skill.ChangeActivateCondition(Global.Instance.Conditions["c2"]);
-                skill.ChangeEffect(Global.Instance.Effects["e3"]);
+                skill.ChangeEffect(Global.Instance.Effects["e3"], dataSpriteManager.EffectSprites["e3"]);
             }
         }
     }

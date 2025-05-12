@@ -8,7 +8,7 @@ public class Global : Singleton<Global>
 
     private void Awake()
     {
-        
+
     }
 
     public Dictionary<string, EffectClause> Effects = new()
@@ -72,8 +72,9 @@ public class EffectClause
     public int cost;
     public Color color;
     public Rarity rarity;
+    public Sprite sprite;
 
-    public EffectClause(string id, string name, string description, Color color, int cost, Rarity rarity = Rarity.Common)
+    public EffectClause(string id, string name, string description, Color color, int cost, Rarity rarity = Rarity.Common, Sprite sprite = null)
     {
         this.id = id;
         this.name = name;
@@ -81,6 +82,8 @@ public class EffectClause
         this.cost = cost;
         this.color = color;
         this.rarity = rarity;
+        this.sprite = sprite;
+        this.sprite = sprite;
     }
 }
 

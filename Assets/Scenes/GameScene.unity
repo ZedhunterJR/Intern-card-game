@@ -1100,8 +1100,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.035}
   m_AnchorMax: {x: 1, y: 0.725}
-  m_AnchoredPosition: {x: 0, y: -0.6199951}
-  m_SizeDelta: {x: 0, y: -1.7399998}
+  m_AnchoredPosition: {x: 0, y: -10.25}
+  m_SizeDelta: {x: 0, y: -21.02}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &250675568
 MonoBehaviour:
@@ -1647,7 +1647,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.683, y: 0.526}
   m_AnchorMax: {x: 0.85, y: 0.799}
-  m_AnchoredPosition: {x: -0.060001373, y: -0.44000244}
+  m_AnchoredPosition: {x: -0.05999756, y: -0.44000244}
   m_SizeDelta: {x: -0.62999916, y: -0.12999916}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &346030891
@@ -2356,6 +2356,7 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  cardImage: {fileID: 0}
 --- !u!114 &422209653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4427,6 +4428,7 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  cardImage: {fileID: 0}
 --- !u!114 &795506470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7012,6 +7014,7 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  cardImage: {fileID: 0}
 --- !u!114 &1296704242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7250,6 +7253,7 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  cardImage: {fileID: 0}
 --- !u!114 &1317070487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9027,6 +9031,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1764402575}
   - component: {fileID: 1764402576}
+  - component: {fileID: 1764402577}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -9072,6 +9077,18 @@ MonoBehaviour:
   rerollsNum: {fileID: 346030891}
   shopRect: {fileID: 773698044}
   iventoryRect: {fileID: 0}
+--- !u!114 &1764402577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764402574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372aabc258267714ebf5bfe01b4ba2af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1773414461
 GameObject:
   m_ObjectHideFlags: 0
@@ -11030,6 +11047,7 @@ MonoBehaviour:
   isDisabled: 0
   cardName: {fileID: 0}
   cardDes: {fileID: 0}
+  cardImage: {fileID: 0}
 --- !u!222 &3538187965325967881
 CanvasRenderer:
   m_ObjectHideFlags: 0

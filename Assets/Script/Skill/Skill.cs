@@ -19,6 +19,7 @@ public class Skill : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI cardName;
     [SerializeField] private TextMeshProUGUI cardDes;
+    [SerializeField] private Image cardImage;
     public void SetDisable(bool disable)
     {
         isDisabled = disable;
@@ -49,7 +50,7 @@ public class Skill : MonoBehaviour
     }
 
     #region graphic
-    public void ChangeEffect(EffectClause effect)
+    public void ChangeEffect(EffectClause effect, Sprite effectSprite = null)
     {
         skillEffect = effect;
 
@@ -61,6 +62,7 @@ public class Skill : MonoBehaviour
 
         cardName.text = effect.name;
         cardDes.text = effect.description;
+        cardImage.sprite = effectSprite;
     }
     public void ReUpdate()
     {
