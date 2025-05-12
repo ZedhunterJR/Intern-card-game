@@ -59,7 +59,7 @@ public class EnemyTest : MonoBehaviour
         else
         {
             // kiem tra so lan danh bai <= 0 thi EnemyState = Attack
-            if (GameManager.Instance.NumOfTurns <= 0)
+            if (GameManager.Instance.CurrentNumOfTurn <= 0)
             {
                 GameManager.Instance.GameStatus = GameStatus.Lose;
             }

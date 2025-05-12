@@ -1647,7 +1647,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.683, y: 0.526}
   m_AnchorMax: {x: 0.85, y: 0.799}
-  m_AnchoredPosition: {x: -0.060001373, y: -0.43999863}
+  m_AnchoredPosition: {x: -0.060001373, y: -0.44000244}
   m_SizeDelta: {x: -0.62999916, y: -0.12999916}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &346030891
@@ -9066,8 +9066,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStatus: 0
-  numOfTurn: 3
-  numOfReroll: 4
+  maxNumOfTurn: 3
+  maxNumOfReroll: 4
+  turnsNum: {fileID: 1884609766}
+  rerollsNum: {fileID: 346030891}
   shopRect: {fileID: 773698044}
   iventoryRect: {fileID: 0}
 --- !u!1 &1773414461

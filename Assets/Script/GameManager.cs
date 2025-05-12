@@ -9,10 +9,26 @@ using TMPro;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameStatus gameStatus;
-    [SerializeField] private int numOfTurn = 3;
-    public int NumOfTurns => numOfTurn;
-    [SerializeField] private int numOfReroll = 4;
-    public int NumOfReroll => numOfReroll;
+
+    public int maxNumOfTurn, maxNumOfReroll;
+    public int CurrentNumOfTurn { get; private set; }
+    public int CurrentNumOfReroll { get; private set; }
+    public void SetTurns(int value = -1, bool set = false)
+    {
+        if (!set)
+            CurrentNumOfTurn += value;
+        else
+            CurrentNumOfTurn = value;
+        turnsNum.text = CurrentNumOfTurn.ToString();
+    }
+    public void SetRerolls(int value = -1, bool set = false)
+    {
+        if (!set)
+            CurrentNumOfReroll += value;
+        else
+            CurrentNumOfReroll = value;
+        rerollsNum.text = CurrentNumOfReroll.ToString();
+    }
 
     [SerializeField] TextMeshProUGUI turnsNum;
     [SerializeField] TextMeshProUGUI rerollsNum;
@@ -25,14 +41,17 @@ public class GameManager : Singleton<GameManager>
             switch (value)
             {
                 case GameStatus.Init:
+                    //temp
+                    gameStatus = GameStatus.Battle;
                     break;
                 case GameStatus.Pause:
                     break;
                 case GameStatus.Battle:
+                    SetTurns(maxNumOfTurn, true);
+                    SetRerolls(maxNumOfReroll, true);
                     break;
                 case GameStatus.Shop:
                     ShopOpen();
-                    ResetTurnsAndRerolls();
                     break;
                 case GameStatus.Lose:
                     Debug.Log("Thua");
@@ -48,7 +67,6 @@ public class GameManager : Singleton<GameManager>
     private void Awake()
     {
         gameStatus = GameStatus.Init;
-        UpdateUIForTurnAndReroll(numOfTurn, numOfReroll);
     }
 
     private void Start()
@@ -109,29 +127,11 @@ public class GameManager : Singleton<GameManager>
         SkillManager.Instance.EnemyTest.Init();
         SkillManager.Instance.ReturnDicesToHolderAfterPlayed();
     }
-
-    void ResetTurnsAndRerolls()
-    {
-        numOfTurn = 3;
-        numOfReroll = 4;
-        UpdateUIForTurnAndReroll(numOfTurn, numOfReroll);
-    }
-
-    public void SubtractTurns()
-    {
-        numOfTurn -= 1;
-        UpdateUIForTurnAndReroll(numOfTurn, numOfReroll);
-    }
-    public void SubtractRerolls()
-    {
-        numOfReroll -= 1;
-        UpdateUIForTurnAndReroll(numOfTurn, numOfReroll);
-    }
+    
 
     public void UpdateUIForTurnAndReroll(int numOfTurn, int numOfReroll)
     {
-        turnsNum.text = numOfTurn.ToString();
-        rerollsNum.text = numOfReroll.ToString();
+        
     }
 }
 
