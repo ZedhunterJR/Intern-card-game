@@ -123,7 +123,7 @@ public class SkillManager : Singleton<SkillManager>
 
         playedSkills = Skills();
         diceInPlayed = PlayedDices(out extraDices);
-        visualPointQueue.Enqueue(new(dicePattern: DetectDicePattern(diceInPlayed)));
+        EnqueuePattern(DetectDicePattern(AllPlayedDices()));
         for (int i = 0; i< 5; i++)
         {
             ProcessCardEffect(playedSkills[i], i);
@@ -597,6 +597,7 @@ public class SkillManager : Singleton<SkillManager>
 
     public void RemoveEffectFromSkill(Skill skill, EffectClause effect)
     {
+        if (effect == null) return;
         switch (effect.id)
         {
             case "e10":
