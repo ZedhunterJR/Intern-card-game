@@ -15,6 +15,12 @@ public class ShopManager : Singleton<ShopManager>
     private int numberOfCardPart = 5;
 
     public Transform selectedShopItem;
+    private DataSpriteManager dataSpriteManager;
+    private void Awake()
+    {
+        dataSpriteManager = DataSpriteManager.Instance;
+    }
+
     private void Update()
     {
         if (selectedShopItem != null)
@@ -46,7 +52,9 @@ public class ShopManager : Singleton<ShopManager>
         image.material = runtimeHueMaterial; // Apply new instance
 
         var title = shopitem.transform.Find("title").GetComponent<TextMeshProUGUI>();
+        var effectImage = shopitem.transform.Find("image").GetComponent<Image>();
         title.text = effect.name;
+        effectImage.sprite = dataSpriteManager.EffectSprites[effect.id];
 
         buttonUI.ClickFunc = () =>
         {
@@ -82,7 +90,7 @@ public class ShopManager : Singleton<ShopManager>
                 if (found != null)
                 {
                     Destroy(shopitem);
-                    found.ChangeEffect(effect);
+                    found.ChangeEffect(effect, dataSpriteManager.EffectSprites[effect.id]);
                 }
                 else
                 {

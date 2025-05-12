@@ -84,6 +84,7 @@ public class CardHolder : Singleton<CardHolder>
         var buttonUI = obj.GetComponent<ButtonUI>();
         var cardRect = obj.GetComponent<RectTransform>();
         var cardCanvas = obj.GetComponent<Canvas>();
+        var cardSkill = obj.GetComponent<Skill>();
         cardCanvas.overrideSorting = true;
         cardCanvas.sortingLayerName = "Interact";
         cardCanvas.sortingOrder = 0;
@@ -101,7 +102,7 @@ public class CardHolder : Singleton<CardHolder>
             cardCanvas.overrideSorting = true;
             cardCanvas.sortingLayerName = "Interact";
             cardCanvas.sortingOrder = 1;
-            
+            cardSkill.informationPanel.SetActive(true);
         };
         buttonUI.MouseHoverExit = () =>
         {
@@ -112,7 +113,7 @@ public class CardHolder : Singleton<CardHolder>
             cardRect.DOScale(Vector2.one, 0.1f).SetEase(Ease.OutBack);
             cardRect.DOAnchorPos(Vector2.zero, 0.3f).SetUpdate(false);
             cardCanvas.overrideSorting = false;
-            
+            cardSkill.informationPanel.SetActive(false);
         };
         buttonUI.MouseDragBegin = () =>
         {

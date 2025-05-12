@@ -23,6 +23,10 @@ public class Skill : MonoBehaviour
     //for specific card effect
     [HideInInspector] public float v0, v1, v2;
     [HideInInspector] public string s0, s1, s2;
+
+    [SerializeField] private Image cardImage;
+    public GameObject informationPanel;
+
     public void SetDisable(bool disable)
     {
         isDisabled = disable;
@@ -52,7 +56,7 @@ public class Skill : MonoBehaviour
         diceFace = dice;
     }
 
-    public void ChangeEffect(EffectClause effect)
+    public void ChangeEffect(EffectClause effect, Sprite effectSprite = null)
     {
         SkillManager.Instance.RemoveEffectFromSkill(this, skillEffect);
         skillEffect = effect;
@@ -66,6 +70,7 @@ public class Skill : MonoBehaviour
 
         cardName.text = effect.name;
         cardDes.text = effect.description;
+        cardImage.sprite = effectSprite;
     }
     public void ReUpdate()
     {
