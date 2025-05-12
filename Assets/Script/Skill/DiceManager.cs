@@ -232,9 +232,9 @@ public class DiceManager : Singleton<DiceManager>
     public void RerollAction()
     {
         if (!isRolling && selectedDice.Count != 0 &&
-            GameManager.Instance.GameStatus == GameStatus.Battle && GameManager.Instance.NumOfReroll >= 0)
+            GameManager.Instance.GameStatus == GameStatus.Battle && GameManager.Instance.CurrentNumOfReroll >= 0)
         {
-            GameManager.Instance.SubtractRerolls();
+            GameManager.Instance.SetRerolls();
             StartCoroutine(RerollAnim(selectedDice));
         }
         else

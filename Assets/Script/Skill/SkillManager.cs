@@ -69,7 +69,7 @@ public class SkillManager : Singleton<SkillManager>
         {
             return;
         }
-        if (GameManager.Instance.NumOfTurns <= 0)
+        if (GameManager.Instance.CurrentNumOfTurn <= 0)
         {
             Debug.Log("Không đủ lượt đánh");
             return;
@@ -79,7 +79,7 @@ public class SkillManager : Singleton<SkillManager>
         var mult = 1f;
         var point = 0f;
 
-        GameManager.Instance.SubtractTurns();
+        GameManager.Instance.SetTurns();
 
         switch (pattern)
         {
