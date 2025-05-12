@@ -20,6 +20,7 @@ public class Skill : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cardName;
     [SerializeField] private TextMeshProUGUI cardDes;
     [SerializeField] private Image cardImage;
+    public GameObject informationPanel;
     public void SetDisable(bool disable)
     {
         isDisabled = disable;
