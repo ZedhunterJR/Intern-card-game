@@ -60,7 +60,7 @@ public class DiceManager : Singleton<DiceManager>
         foreach (var dice in diceList)
         {
             AddDiceEvent(dice);
-            dice.OnStart();
+            dice.StartRound();
             dice.gameObject.name = $"Dice {diceCount}";
             diceCount++;
         }
