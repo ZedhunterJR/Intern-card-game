@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,6 +63,45 @@ public class Global : Singleton<Global>
         { DicePattern.Sequence5, "Sequence of 5" },
         { DicePattern.Sequence6, "Sequence of 6" }
     };
+
+    public float GetPatternPoints(DicePattern pattern)
+    {
+        switch (pattern)
+        {
+            case DicePattern.Single:
+                return 10;
+            case DicePattern.OnePair:
+                return 20;
+            case DicePattern.TwoPair:
+                return 40;
+            case DicePattern.ThreeOfAKind:
+                return 30;
+            case DicePattern.FourOfAKind:
+                return 60;
+            case DicePattern.FiveOfAKind:
+                return 100;
+            case DicePattern.SixOfAKind:
+                return 200;
+            case DicePattern.FullHouse:
+                return 80;
+            case DicePattern.TwoTriplet:
+                return 200;
+            case DicePattern.ThreePair:
+                return 200;
+            case DicePattern.FullSixes:
+                return 200;
+            case DicePattern.Sequence3:
+                return 30;
+            case DicePattern.Sequence4:
+                return 50;
+            case DicePattern.Sequence5:
+                return 80;
+            case DicePattern.Sequence6:
+                return 200;
+            default:
+                return 0;
+        }
+    }
 }
 
 public class EffectClause

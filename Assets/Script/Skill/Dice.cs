@@ -17,6 +17,7 @@ public class Dice : MonoBehaviour
 
     public bool usedInAttack = false;
     public bool includedInPoint = false;
+    public bool hasInit = false;
 
     private void Awake()
     {

@@ -74,7 +74,7 @@ public class SkillManager : Singleton<SkillManager>
         vp.dice = dice;
         visualPointQueue.Enqueue(vp);
     }
-    private List<Dice> diceInPlayed = new();
+    public List<Dice> diceInPlayed = new();
     private List<Dice> extraDices = new();
     private List<Skill> playedSkills = new();
     private List<Dice> AllPlayedDices()
@@ -113,93 +113,29 @@ public class SkillManager : Singleton<SkillManager>
             ProcessCardEffect(playedSkills[i], i);
         }
 
-        GameManager.Instance.SetTurns();
-
-        /*switch (pattern)
+        foreach (var diceValue in diceInPlayed)
         {
-            case DicePattern.Single:
-                point += 10;
-                // Handle Single
-                break;
-            case DicePattern.OnePair:
-                point += 20;
-                // Handle One Pair
-                break;
-            case DicePattern.TwoPair:
-                point += 40;
-                // Handle Two Pair
-                break;
-            case DicePattern.ThreeOfAKind:
-                point += 30;
-                // Handle Three of a Kind
-                break;
-            case DicePattern.FourOfAKind:
-                point += 60;
-                // Handle Four of a Kind
-                break;
-            case DicePattern.FiveOfAKind:
-                point += 100;
-                // Handle Five of a Kind
-                break;
-            case DicePattern.SixOfAKind:
-                point += 200;
-                // Handle Six of a Kind
-                break;
-            case DicePattern.FullHouse:
-                point += 80;
-                // Handle Full House
-                break;
-            case DicePattern.TwoTriplet:
-                point += 200;
-                // Handle Two Triplets
-                break;
-            case DicePattern.ThreePair:
-                point += 200;
-                // Handle Three Pair
-                break;
-            case DicePattern.FullSixes:
-                point += 200;
-                // Handle Full Sixes
-                break;
-            case DicePattern.Sequence3:
-                point += 30;
-                // Handle Sequence of 3
-                break;
-            case DicePattern.Sequence4:
-                point += 50;
-                // Handle Sequence of 4
-                break;
-            case DicePattern.Sequence5:
-                point += 80;
-                // Handle Sequence of 5
-                break;
-            case DicePattern.Sequence6:
-                point += 200;
-                // Handle Sequence of 6
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }*/
-
-
-        while (visualPointQueue.Count > 0)
-        {
-            var q = visualPointQueue.Dequeue();
-            if (q.dicePattern != DicePattern.None)
-                print("queueing " + q.dicePattern.ToString());
-            else
-                print($"point: {q.point}, mult: {q.mult}");
+            if (diceValue != null)
+            {
+                if (diceValue.usedInAttack || diceValue.includedInPoint)
+                {
+                    EnqueuePoint(diceValue.CalculatePoint(), dice: diceValue);
+                }
+            }
         }
 
+        GameManager.Instance.SetTurns();
+
+        StartCoroutine(AttackSequence.Instance.CaculatePointSequence());
 
         foreach (var a in actionHelpers)
         {
             a.Value?.Invoke();
         }
         //after coroutine of point and shit
-        DiceManager.Instance.StartTurn();
+        //DiceManager.Instance.StartTurn();
 
-        enemyTest.Damage(100);
+        //enemyTest.Damage(100);
     }
 
     public void ProcessCardEffect(Skill skill, int index)

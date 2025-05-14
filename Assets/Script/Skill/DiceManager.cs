@@ -12,8 +12,8 @@ using Random = UnityEngine.Random;
 public class DiceManager : Singleton<DiceManager>
 {
     #region Register variable
-    [SerializeField] int baseDiceNum = 5;
-    private int currentDiceNum;
+    [SerializeField] public int baseDiceNum = 5;
+    [HideInInspector] public int currentDiceNum;
 
     [SerializeField] Transform[] diceHolders;
     [SerializeField] GameObject dicePrefabs;
@@ -41,9 +41,9 @@ public class DiceManager : Singleton<DiceManager>
     public Dictionary<(Skill, string), Action<int>> DiceRerollListener = new();
     public Dictionary<DiceType, float> DiceTypeRate = new()
     {
-        { DiceType.Gold, 0.3f }, 
-        { DiceType.Twin, 0.5f }, 
-        { DiceType.Rock, 0.4f },  
+        { DiceType.Gold, 0.3f },
+        { DiceType.Twin, 0.5f },
+        { DiceType.Rock, 0.4f },
         { DiceType.Gem, 1.2f }
     };
     private Dictionary<DiceType, int> currentDiceTypeCount = new();
@@ -58,20 +58,7 @@ public class DiceManager : Singleton<DiceManager>
 
     private void Start()
     {
-        for (int i = 0; i < baseDiceNum; i++)
-        {
-            Dice dice = Instantiate(dicePrefabs, diceHolders[i]).GetComponent<Dice>();
-            diceList.Add(dice);
-        }
 
-        int diceCount = 0;
-
-        foreach (var dice in diceList)
-        {
-            AddDiceEvent(dice);
-            dice.gameObject.name = $"Dice {diceCount}";
-            diceCount++;
-        }
     }
 
     private void Update()
@@ -240,13 +227,39 @@ public class DiceManager : Singleton<DiceManager>
         dice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.2f);
         //dice.GetComponent<GraphicRaycaster>().enabled = true;
     }
+    [ContextMenu("Start Turn")]
     public void StartTurn()
     {
-        var dices = new List<Dice>(skillDicePair.Keys);
+        //var dices = new List<Dice>(skillDicePair.Keys);
 
-        foreach (var d in dices)
+        //foreach (var d in dices)
+        //{
+        //    ReturnDice(d);
+        //}
+        skillDicePair = new();
+        diceList.Clear();
+
+        foreach (var card in SkillManager.Instance.Skills())
         {
-            ReturnDice(d);
+            card.diceFace = null;
+        }
+
+        for (int i = 0; i < currentDiceNum; i++)
+        {
+            var dice = PoolingObject.Instance.GetDiceFromPool();
+            dice.transform.SetParent(diceHolders[i]);
+            dice.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            //dice.gameObject.SetActive(true);
+            diceList.Add(dice);
+        }
+
+        int diceCount = 0;
+
+        foreach (var dice in diceList)
+        {
+            AddDiceEvent(dice);
+            dice.gameObject.name = $"Dice {diceCount}";
+            diceCount++;
         }
         foreach (var d in diceList)
             d.StartRound();
@@ -292,6 +305,10 @@ public class DiceManager : Singleton<DiceManager>
             float duration = shakeDurations[i];
 
             shakeSeq.Append(diceHolderContain.DOAnchorPosY(targetY, duration));
+        }
+        foreach (Dice dice in diceList)
+        {
+            dice.gameObject.SetActive(true);
         }
         RerollDices(diceList);
         yield return shakeSeq.WaitForCompletion();

@@ -54,6 +54,7 @@ public class GameManager : Singleton<GameManager>
                     }
                     SetTurns(maxNumOfTurn, true);
                     SetRerolls(maxNumOfReroll, true);
+                    DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
                     DiceManager.Instance.StartTurn();
                     break;
                 case GameStatus.Shop:
