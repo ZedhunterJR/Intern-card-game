@@ -72,14 +72,5 @@ public class Skill : MonoBehaviour
         cardDes.text = effect.description;
         cardImage.sprite = effectSprite;
     }
-    public void ReUpdate()
-    {
-    }
-
-    // after player play card 
-    public void ReturnDicesToHolder()
-    {
-        DiceManager.Instance.ReturnDice(diceFace);
-    }
 }
 

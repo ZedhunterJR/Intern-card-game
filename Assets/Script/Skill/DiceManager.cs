@@ -37,7 +37,7 @@ public class DiceManager : Singleton<DiceManager>
     private Dictionary<Dice, Skill> skillDicePair = new();
 
     //dunno
-    public Func<int> DiceRerollListener = null;
+    public Dictionary<(Skill, string), Action<int>> DiceRerollListener = null;
 
     #endregion
 
@@ -232,7 +232,16 @@ public class DiceManager : Singleton<DiceManager>
         dice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.2f);
         //dice.GetComponent<GraphicRaycaster>().enabled = true;
     }
+    public void StartTurn()
+    {
+        var dices = new List<Dice>(skillDicePair.Keys);
 
+        foreach (var d in dices)
+        {
+            ReturnDice(d);
+        }
+        StartCoroutine(RerollAnim(diceList, false));
+    }
     public void RerollAction()
     {
         if (!isRolling && selectedDice.Count != 0 &&

@@ -85,7 +85,7 @@ public class Dice : MonoBehaviour
 
     void ChangeImage(int index)
     {
-        diceImage.sprite = diceSprites[index];
+        diceImage.sprite = diceSprites[index - 1];
     }
 
 }

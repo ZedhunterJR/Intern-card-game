@@ -51,26 +51,6 @@ public class SkillManager : Singleton<SkillManager>
         GameManager.Instance.GameStatus = GameStatus.Battle;
     }
 
-    public void ReturnDicesToHolderAfterPlayed()
-    {
-        foreach (var card in SkillCardList)
-        {
-            var cardScript = card.GetComponent<Skill>();
-            cardScript.ReturnDicesToHolder();
-        }
-
-        switch (GameManager.Instance.GameStatus)
-        {
-            case GameStatus.Battle:
-                StartCoroutine(DiceManager.Instance.RerollAnim(DiceManager.Instance.diceList, false));
-                break;
-            case GameStatus.Shop:
-                break;
-            default:
-                break;
-        }
-    }
-
     //related to point/sequencing
     public Queue<VisualPointSeq> visualPointQueue = new(); 
     private void EnqueuePattern(DicePattern patt)
@@ -212,9 +192,10 @@ public class SkillManager : Singleton<SkillManager>
         {
             a.Value?.Invoke();
         }
-        ReturnDicesToHolderAfterPlayed();
+        //after coroutine of point and shit
+        DiceManager.Instance.StartTurn();
 
-        enemyTest.Damage(100);
+        //enemyTest.Damage(100);
     }
 
     public void ProcessCardEffect(Skill skill, int index)

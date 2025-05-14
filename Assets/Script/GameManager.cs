@@ -136,7 +136,7 @@ public class GameManager : Singleton<GameManager>
         SetRerolls(maxNumOfReroll, true);
 
         SkillManager.Instance.EnemyTest.Init();
-        SkillManager.Instance.ReturnDicesToHolderAfterPlayed();
+        //SkillManager.Instance.ReturnDicesToHolderAfterPlayed();
     }
     
 }
