@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using Unity.VisualScripting;
+using System.Text.RegularExpressions;
 
 public class Skill : MonoBehaviour
 {
@@ -69,17 +70,41 @@ public class Skill : MonoBehaviour
         mainImage.material = runtimeHueMaterialMain; // Apply new instance   
 
         cardName.text = effect.name;
-        cardDes.text = effect.description;
+
+        // Thay thế các [v0], [v1], [v2], [s0], [s1], [s2] bằng giá trị tương ứng
+        string description = FormatSkillDescription(effect.description);
+
+        cardDes.text = description;
         cardImage.sprite = effectSprite;
-    }
-    public void ReUpdate()
-    {
     }
 
     // after player play card 
     public void ReturnDicesToHolder()
     {
         DiceManager.Instance.ReturnDice(diceFace);
+    }
+    private string FormatSkillDescription(string rawDescription)
+    {
+        // Mã màu vàng sẫm
+        const string valueColor = "#986801";
+
+        return Regex.Replace(rawDescription, @"\[(v[0-2]|s[0-2])\]", match =>
+        {
+            string token = match.Groups[1].Value;
+            string replacement = token switch
+            {
+                "v0" => v0.ToString(),
+                "v1" => v1.ToString(),
+                "v2" => v2.ToString(),
+                "s0" => s0,
+                "s1" => s1,
+                "s2" => s2,
+                _ => token
+            };
+
+            // Giữ lại ngoặc vuông, và bọc số/chuỗi trong thẻ màu
+            return $"[<color={valueColor}>{replacement}</color>]";
+        });
     }
 }
 
