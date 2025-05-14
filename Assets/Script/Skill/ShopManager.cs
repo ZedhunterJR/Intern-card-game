@@ -10,9 +10,10 @@ using UnityEngine.UI;
 public class ShopManager : Singleton<ShopManager>
 {
     [SerializeField] GameObject shopItemPrefab;
-    [SerializeField] Transform[] cardPartSlots;
+    [SerializeField] Transform cardPart;
+    //[SerializeField] Transform[] cardPartSlots;
     //public List<ShopItem> cardPartItem;
-    private int numberOfCardPart = 5;
+    private int numberOfCardPart = 2;
 
     public Transform selectedShopItem;
     private DataSpriteManager dataSpriteManager;
@@ -33,15 +34,14 @@ public class ShopManager : Singleton<ShopManager>
     {
         for (int i = 0; i < numberOfCardPart; i++)
         {
-            cardPartSlots[i].transform.Clear();
-            EffectItem(i);
+            EffectItem();
         }
     }
 
-    void EffectItem(int slot)
+    void EffectItem()
     {
         var effect = Global.Instance.Effects.GetRandomValue();
-        var shopitem = Instantiate(shopItemPrefab, cardPartSlots[slot]);
+        var shopitem = Instantiate(shopItemPrefab, cardPart);
         var buttonUI = shopitem.GetComponent<ButtonUI>();
         var canvas = shopitem.GetComponent<Canvas>();
 
@@ -53,8 +53,12 @@ public class ShopManager : Singleton<ShopManager>
 
         var title = shopitem.transform.Find("title").GetComponent<TextMeshProUGUI>();
         var effectImage = shopitem.transform.Find("image").GetComponent<Image>();
+        var inforEffect = shopitem.transform.Find("infor").gameObject;
+        var inforCanvas = inforEffect.GetComponent<Canvas>();
+        var desEffect = inforEffect.transform.Find("des").GetComponent<TextMeshProUGUI>();
         title.text = effect.name;
         effectImage.sprite = dataSpriteManager.EffectSprites[effect.id];
+        desEffect.text = effect.description;
 
         buttonUI.ClickFunc = () =>
         {
@@ -65,6 +69,7 @@ public class ShopManager : Singleton<ShopManager>
                 canvas.overrideSorting = true;
                 canvas.sortingLayerName = "Interact";
                 canvas.sortingOrder = 10;
+                inforEffect.SetActive(false);
             }
             else
             {
@@ -100,6 +105,16 @@ public class ShopManager : Singleton<ShopManager>
 
                 selectedShopItem = null;
             }
+        };
+        buttonUI.MouseHoverEnter = () =>
+        {
+            inforEffect.SetActive(true);
+            inforCanvas.overrideSorting = true;
+            inforCanvas.sortingLayerName = "Interact";
+        };
+        buttonUI.MouseHoverExit = () =>
+        {
+            inforEffect.SetActive(false);
         };
     }
 }

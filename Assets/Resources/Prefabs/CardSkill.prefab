@@ -291,7 +291,7 @@ RectTransform:
   m_AnchorMin: {x: -0.33333337, y: 1.0555556}
   m_AnchorMax: {x: 1.3333334, y: 1.3888886}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -43.989998, y: -17.98994}
+  m_SizeDelta: {x: 25.009985, y: -17.98994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &419000793635797830
 CanvasRenderer:
@@ -405,8 +405,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 78.005005, y: -21.005005}
-  m_SizeDelta: {x: 126.01001, y: 12.010012}
+  m_AnchoredPosition: {x: 112.50499, y: -21.005005}
+  m_SizeDelta: {x: 195.00998, y: 12.010012}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2876364818745707009
 CanvasRenderer:
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +50 dmg, decrease by 5 <br> after each attack (min 0). <br> currently [v0]
+  m_text: <span style='color:#00ff00'>+1 dmg</span>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 188c152b80db8544a9a1ae61fe11dd93, type: 2}
   m_sharedMaterial: {fileID: 5796411239485050726, guid: 188c152b80db8544a9a1ae61fe11dd93, type: 2}

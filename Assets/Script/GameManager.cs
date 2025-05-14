@@ -116,21 +116,21 @@ public class GameManager : Singleton<GameManager>
             {
                 //skill.ChangeSkillPosCondition(new() { SkillCondition.Left, SkillCondition.Right });
                 //skill.ChangeActivateCondition(Global.Instance.Conditions["c2"]);
-                skill.ChangeEffect(Global.Instance.Effects["e3"], dataSpriteManager.EffectSprites["e3"]);
+                skill.ChangeEffect(Global.Instance.Effects["e13"], dataSpriteManager.EffectSprites["e13"]);
             }
         }
     }
 
     public void ShopOpen()
     {
-        shopRect.DOAnchorPos(new Vector2(15, 130), 0.5f).SetEase(Ease.OutCubic);
+        shopRect.DOAnchorPos(new Vector2(12, 95), 0.5f).SetEase(Ease.OutCubic);
 
         ShopManager.Instance.Restock();
     }
 
     public void ShopClose()
     {
-        shopRect.DOAnchorPos(new Vector2(15, 500f), 0.5f).SetEase(Ease.OutCubic);
+        shopRect.DOAnchorPos(new Vector2(12, 500f), 0.5f).SetEase(Ease.OutCubic);
         gameStatus = GameStatus.Battle;
 
         SetTurns(maxNumOfTurn, true);
