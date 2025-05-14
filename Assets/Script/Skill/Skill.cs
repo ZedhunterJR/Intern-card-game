@@ -78,11 +78,6 @@ public class Skill : MonoBehaviour
         cardImage.sprite = effectSprite;
     }
 
-    // after player play card 
-    public void ReturnDicesToHolder()
-    {
-        DiceManager.Instance.ReturnDice(diceFace);
-    }
     private string FormatSkillDescription(string rawDescription)
     {
         // Mã màu vàng sẫm
@@ -106,5 +101,6 @@ public class Skill : MonoBehaviour
             return $"[<color={valueColor}>{replacement}</color>]";
         });
     }
+
 }
 

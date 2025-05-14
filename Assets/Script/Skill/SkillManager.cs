@@ -28,18 +28,20 @@ public class SkillManager : Singleton<SkillManager>
     public List<Dice> PlayedDices(out List<Dice> extraDices)
     {
         List<Dice> diceList = new List<Dice>();
+        extraDices = new();
         foreach (var s in Skills())
         {
             if (s.diceFace != null)
             {
                 diceList.Add(s.diceFace);
+                if (s.diceFace.CurrentDiceType == DiceType.Twin)
+                    extraDices.Add(s.diceFace);
             }    
             else
             {
                 diceList.Add(null);
             }
         }
-        extraDices = new();
         return diceList;
     }
 
@@ -49,26 +51,6 @@ public class SkillManager : Singleton<SkillManager>
         enemyTest = Instantiate(enemyPrefabs, enemySpawnPlace).GetComponent<EnemyTest>();
         enemyTest.Init();
         GameManager.Instance.GameStatus = GameStatus.Battle;
-    }
-
-    public void ReturnDicesToHolderAfterPlayed()
-    {
-        foreach (var card in SkillCardList)
-        {
-            var cardScript = card.GetComponent<Skill>();
-            cardScript.ReturnDicesToHolder();
-        }
-
-        switch (GameManager.Instance.GameStatus)
-        {
-            case GameStatus.Battle:
-                StartCoroutine(DiceManager.Instance.RerollAnim(DiceManager.Instance.diceList, false));
-                break;
-            case GameStatus.Shop:
-                break;
-            default:
-                break;
-        }
     }
 
     //related to point/sequencing
@@ -101,7 +83,9 @@ public class SkillManager : Singleton<SkillManager>
         foreach (var dice in diceInPlayed)
         {
             if (dice != null)
+            {
                 re.Add(dice);
+            }
         }
         return re;
     }
@@ -212,9 +196,10 @@ public class SkillManager : Singleton<SkillManager>
         {
             a.Value?.Invoke();
         }
-        ReturnDicesToHolderAfterPlayed();
+        //after coroutine of point and shit
+        DiceManager.Instance.StartTurn();
 
-        enemyTest.Damage(100);
+        //enemyTest.Damage(100);
     }
 
     public void ProcessCardEffect(Skill skill, int index)
@@ -250,7 +235,7 @@ public class SkillManager : Singleton<SkillManager>
                 }
                 break;
             case "e4":
-                //listener
+                EnqueueMult(skill.v0, skill);
                 break;
             case "e5":
                 EnqueuePoint(30 * (GameManager.Instance.maxNumOfTurn - GameManager.Instance.CurrentNumOfTurn), skill);
@@ -353,10 +338,30 @@ public class SkillManager : Singleton<SkillManager>
                 GameManager.Instance.SetTurns();
                 break;
             case "e20":
-                //special dices
+                var eli20 = true;
+                foreach (var d in AllPlayedDices())
+                {
+                    if (d.CurrentDiceType == DiceType.Normal)
+                    {
+                        eli20 = false;
+                        break;
+                    }
+                }
+                if (eli20)
+                    EnqueueMult(2f, skill);
                 break;
             case "e21":
-                //normal dices
+                var eli21 = true;
+                foreach (var d in AllPlayedDices())
+                {
+                    if (d.CurrentDiceType != DiceType.Normal)
+                    {
+                        eli20 = false;
+                        break;
+                    }
+                }
+                if (eli21)
+                    EnqueuePoint(100f, skill);
                 break;
             case "e22":
                 EnqueueMult(skill.v0, skill);
@@ -439,13 +444,16 @@ public class SkillManager : Singleton<SkillManager>
     public DicePattern DetectDicePattern(List<Dice> diceList)
     {
         if (diceList == null || diceList.Count == 0)
-            throw new ArgumentException("Must provide at least one die.");
-
+            throw new ArgumentException("There should be a check to not play when no dice is present");
+        List<int> values = diceList
+            .Where(d => d.currentFace != -1)
+            .Select(d => d.currentFace)
+            .ToList();
+        if (diceList.Count == 0)
+            return DicePattern.None;
         // Reset used flags
         foreach (var die in diceList)
             die.usedInAttack = false;
-
-        List<int> values = diceList.Select(d => d.currentFace).ToList();
 
         var counts = values.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
         var countList = counts.Values.OrderByDescending(v => v).ToList();
@@ -602,6 +610,11 @@ public class SkillManager : Singleton<SkillManager>
         if (effect == null) return;
         switch (effect.id)
         {
+            case "e4":
+                actionHelpers.Remove((skill, "e4"));
+                GameManager.Instance.startRoundActionHelpers.Remove((skill, "e4"));
+                DiceManager.Instance.DiceRerollListener.Remove((skill, "e4"));
+                break;
             case "e10":
                 actionHelpers.Remove((skill, "e10"));
                 break;
@@ -626,6 +639,11 @@ public class SkillManager : Singleton<SkillManager>
     {
         switch (effect.id)
         {
+            case "e4":
+                actionHelpers[(skill, "e4")] = () => skill.v0 = 0;
+                GameManager.Instance.startRoundActionHelpers[(skill, "e4")] = () => skill.v0 = 0;
+                DiceManager.Instance.DiceRerollListener[(skill, "e4")] = (value) => skill.v0 += value;
+                break;
             case "e10":
                 actionHelpers[(skill, "e10")] = () => skill.v0 -= 5;
                 skill.v0 = 50;
@@ -690,16 +708,5 @@ public class VisualPointSeq
         this.point = point;
         this.mult = mult;
         this.dicePattern = dicePattern;
-    }
-}
-
-public class ActionHelper
-{
-    public string id;
-    public Action action;
-    public ActionHelper(string id, Action action)
-    {
-        this.id = id;
-        this.action = action;
     }
 }

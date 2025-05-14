@@ -54,6 +54,7 @@ public class GameManager : Singleton<GameManager>
                     }
                     SetTurns(maxNumOfTurn, true);
                     SetRerolls(maxNumOfReroll, true);
+                    DiceManager.Instance.StartTurn();
                     break;
                 case GameStatus.Shop:
                     ShopOpen();
@@ -136,7 +137,7 @@ public class GameManager : Singleton<GameManager>
         SetRerolls(maxNumOfReroll, true);
 
         SkillManager.Instance.EnemyTest.Init();
-        SkillManager.Instance.ReturnDicesToHolderAfterPlayed();
+        //SkillManager.Instance.ReturnDicesToHolderAfterPlayed();
     }
     
 }

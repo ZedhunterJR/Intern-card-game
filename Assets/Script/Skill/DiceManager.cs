@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 using System;
+using Random = UnityEngine.Random;
 
 public class DiceManager : Singleton<DiceManager>
 {
@@ -37,7 +38,15 @@ public class DiceManager : Singleton<DiceManager>
     private Dictionary<Dice, Skill> skillDicePair = new();
 
     //dunno
-    public Func<int> DiceRerollListener = null;
+    public Dictionary<(Skill, string), Action<int>> DiceRerollListener = new();
+    public Dictionary<DiceType, float> DiceTypeRate = new()
+    {
+        { DiceType.Gold, 0.3f },  // always assign 1, 80% chance for a second
+        { DiceType.Twin, 0.5f },  // 50% chance to assign 1
+        { DiceType.Rock, 0.4f },   // always assign 3, 30% chance for a fourth
+        { DiceType.Gem, 1.2f }
+    };
+    private Dictionary<DiceType, int> currentDiceTypeCount = new();
 
     #endregion
 
@@ -60,7 +69,6 @@ public class DiceManager : Singleton<DiceManager>
         foreach (var dice in diceList)
         {
             AddDiceEvent(dice);
-            dice.OnStart();
             dice.gameObject.name = $"Dice {diceCount}";
             diceCount++;
         }
@@ -232,14 +240,31 @@ public class DiceManager : Singleton<DiceManager>
         dice.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.2f);
         //dice.GetComponent<GraphicRaycaster>().enabled = true;
     }
+    public void StartTurn()
+    {
+        var dices = new List<Dice>(skillDicePair.Keys);
 
+        foreach (var d in dices)
+        {
+            ReturnDice(d);
+        }
+        foreach (var d in diceList)
+            d.StartRound();
+        StartCoroutine(RerollAnim(diceList));
+    }
     public void RerollAction()
     {
         if (!isRolling && selectedDice.Count != 0 &&
             GameManager.Instance.GameStatus == GameStatus.Battle && GameManager.Instance.CurrentNumOfReroll >= 0)
         {
             GameManager.Instance.SetRerolls();
-            StartCoroutine(RerollAnim(selectedDice));
+            StartCoroutine(RerollAnim(new List<Dice>(selectedDice)));
+            foreach (var pair in DiceRerollListener)
+            {
+                pair.Value?.Invoke(selectedDice.Count);
+            }
+            selectedDice.Clear();
+
         }
         else
         {
@@ -251,7 +276,7 @@ public class DiceManager : Singleton<DiceManager>
         }
     }
 
-    public IEnumerator RerollAnim(List<Dice> diceList, bool isPress = true)
+    public IEnumerator RerollAnim(List<Dice> diceList)
     {
         isRolling = true;
         yield return diceHolderLid.DOAnchorPos(new Vector2(0, 0), 1.2f)
@@ -268,7 +293,7 @@ public class DiceManager : Singleton<DiceManager>
 
             shakeSeq.Append(diceHolderContain.DOAnchorPosY(targetY, duration));
         }
-        RerollDices(diceList, isPress);
+        RerollDices(diceList);
         yield return shakeSeq.WaitForCompletion();
 
         yield return diceHolderLid.DOAnchorPos(new Vector2(-200, 0), 0.8f)
@@ -278,15 +303,95 @@ public class DiceManager : Singleton<DiceManager>
         isRolling = false;
     }
 
-    public void RerollDices(List<Dice> diceList, bool isPress)
+    public void RerollDices(List<Dice> diceList)
     {
+        AssignDiceTypesWithOverflow(diceList);
         foreach (Dice dice in diceList)
         {
-            dice.Reroll();
+            RerollIndividualDice(dice);
+            dice.UpdateDiceInternal();
             dice.GetComponent<Outline>().enabled = false;
         }
-        if (isPress == true)
-            diceList.Clear();
+    }
+    private void RerollIndividualDice(Dice dice)
+    {
+        if (dice.CurrentDiceType == DiceType.Normal)
+            dice.includedInPoint = false;
+        if (dice.CurrentDiceType == DiceType.Frozen)
+            return;
+        dice.currentFace = Random.Range(1, 7);
+
+        if (dice.CurrentDiceType == DiceType.Gem)
+            dice.currentFace = 6;
+        if (dice.CurrentDiceType == DiceType.Low)
+            dice.currentFace = Random.Range(1, 4);
+        if (dice.CurrentDiceType == DiceType.High)
+            dice.currentFace = Random.Range(4, 7);
+        if (dice.CurrentDiceType == DiceType.Rock)
+            dice.currentFace = -1;
+
+        //ChangeImage(currentFace);
+    }
+    private void AssignDiceTypesWithOverflow(List<Dice> diceList)
+    {
+        if (diceList == null || diceList.Count == 0)
+            return;
+
+        //currentDiceTypeCount.Clear();
+
+        // Reset all dice to Normal
+        foreach (var dice in diceList)
+        {
+            if (currentDiceTypeCount.TryGetValue(dice.CurrentDiceType, out int count))
+            {
+                count--;
+                if (count <= 0)
+                    currentDiceTypeCount.Remove(dice.CurrentDiceType); // Clean up entry
+                else
+                    currentDiceTypeCount[dice.CurrentDiceType] = count; // Re-assign updated value
+            }
+
+            dice.CurrentDiceType = DiceType.Normal;
+        }
+
+
+        // Make a mutable list of available dice to assign
+        var availableDice = new List<Dice>(diceList.OrderBy(_ => UnityEngine.Random.value));
+
+        foreach (var kvp in DiceTypeRate)
+        {
+            var type = kvp.Key;
+            if (type == DiceType.Normal) continue;
+
+            float rate = kvp.Value;
+            int guaranteed = Mathf.FloorToInt(rate);
+            float chance = rate - guaranteed;
+
+            // Assign guaranteed count
+            for (int i = 0; i < guaranteed && availableDice.Count > 0; i++)
+            {
+                AssignTypeToOne(type, availableDice);
+            }
+
+            // Assign based on remaining fractional chance
+            if (availableDice.Count > 0 && UnityEngine.Random.value <= chance)
+            {
+                AssignTypeToOne(type, availableDice);
+            }
+        }
+
+        // Helper local function
+        void AssignTypeToOne(DiceType typeToAssign, List<Dice> pool)
+        {
+            var die = pool[0];
+            pool.RemoveAt(0);
+            die.CurrentDiceType = typeToAssign;
+
+            if (!currentDiceTypeCount.ContainsKey(typeToAssign))
+                currentDiceTypeCount[typeToAssign] = 0;
+
+            currentDiceTypeCount[typeToAssign]++;
+        }
     }
 
     public void UpdateDiceGraphic(Dice dice)
