@@ -54,6 +54,7 @@ public class GameManager : Singleton<GameManager>
                     }
                     SetTurns(maxNumOfTurn, true);
                     SetRerolls(maxNumOfReroll, true);
+                    DiceManager.Instance.StartTurn();
                     break;
                 case GameStatus.Shop:
                     ShopOpen();
