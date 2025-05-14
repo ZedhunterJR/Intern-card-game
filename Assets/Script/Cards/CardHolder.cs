@@ -102,6 +102,7 @@ public class CardHolder : Singleton<CardHolder>
             cardCanvas.overrideSorting = true;
             cardCanvas.sortingLayerName = "Interact";
             cardCanvas.sortingOrder = 1;
+            cardSkill.UpdatePanelInfor();
             cardSkill.informationPanel.SetActive(true);
         };
         buttonUI.MouseHoverExit = () =>

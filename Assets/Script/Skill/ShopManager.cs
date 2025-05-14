@@ -1,3 +1,4 @@
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -32,11 +33,43 @@ public class ShopManager : Singleton<ShopManager>
     }
     public void Restock()
     {
-        for (int i = 0; i < numberOfCardPart; i++)
+        // 1) Lấy tất cả các card con hiện có
+        List<Transform> cards = new List<Transform>();
+        foreach (Transform child in cardPart.transform)
+            cards.Add(child);
+
+        // 2) Tạo 1 sequence để đồng bộ mọi shake
+        DG.Tweening.Sequence shakeSeq = DOTween.Sequence();
+
+        float shakeDuration = 0.5f;     // tổng thời gian rung
+        Vector3 shakeStrength = new Vector3(10, 10, 0); // biên độ rung
+        int vibrato = 20;               // số lần rung
+        float randomness = 90f;         // độ ngẫu nhiên góc
+
+        foreach (Transform card in cards)
         {
-            EffectItem();
+            // join để mọi card cùng rung song song
+            shakeSeq.Join(
+                card
+                    .DOShakePosition(shakeDuration, shakeStrength, vibrato, randomness)
+                    .SetEase(Ease.Linear)
+            );
+            // hoặc muốn rung xoay:
+            // shakeSeq.Join(card.DOShakeRotation(shakeDuration, new Vector3(0,0,30), vibrato, randomness));
         }
-    }
+
+        // 3) Khi rung xong -> clear và tạo lại
+        shakeSeq.OnComplete(() =>
+        {
+            // Xoá hết card cũ
+            foreach (Transform child in cards)
+                Destroy(child.gameObject);
+
+            // Sinh lại theo số lượng
+            for (int i = 0; i < numberOfCardPart; i++)
+                EffectItem();
+        });
+    }   
 
     void EffectItem()
     {

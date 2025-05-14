@@ -116,7 +116,7 @@ public class GameManager : Singleton<GameManager>
             {
                 //skill.ChangeSkillPosCondition(new() { SkillCondition.Left, SkillCondition.Right });
                 //skill.ChangeActivateCondition(Global.Instance.Conditions["c2"]);
-                skill.ChangeEffect(Global.Instance.Effects["e13"], dataSpriteManager.EffectSprites["e13"]);
+                skill.ChangeEffect(Global.Instance.Effects["e10"], dataSpriteManager.EffectSprites["e10"]);
             }
         }
     }

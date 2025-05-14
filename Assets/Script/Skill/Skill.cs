@@ -78,7 +78,7 @@ public class Skill : MonoBehaviour
         cardImage.sprite = effectSprite;
     }
 
-    private string FormatSkillDescription(string rawDescription)
+    public string FormatSkillDescription(string rawDescription)
     {
         // Mã màu vàng sẫm
         const string valueColor = "#986801";
@@ -102,5 +102,10 @@ public class Skill : MonoBehaviour
         });
     }
 
+    public void UpdatePanelInfor()
+    {
+        var des = FormatSkillDescription(skillEffect.description);
+        cardDes.text = des;
+    }
 }
 

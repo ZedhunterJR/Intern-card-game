@@ -199,7 +199,7 @@ public class SkillManager : Singleton<SkillManager>
         //after coroutine of point and shit
         DiceManager.Instance.StartTurn();
 
-        //enemyTest.Damage(100);
+        enemyTest.Damage(100);
     }
 
     public void ProcessCardEffect(Skill skill, int index)

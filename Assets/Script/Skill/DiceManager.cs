@@ -41,9 +41,9 @@ public class DiceManager : Singleton<DiceManager>
     public Dictionary<(Skill, string), Action<int>> DiceRerollListener = new();
     public Dictionary<DiceType, float> DiceTypeRate = new()
     {
-        { DiceType.Gold, 0.3f },  // always assign 1, 80% chance for a second
-        { DiceType.Twin, 0.5f },  // 50% chance to assign 1
-        { DiceType.Rock, 0.4f },   // always assign 3, 30% chance for a fourth
+        { DiceType.Gold, 0.3f }, 
+        { DiceType.Twin, 0.5f }, 
+        { DiceType.Rock, 0.4f },  
         { DiceType.Gem, 1.2f }
     };
     private Dictionary<DiceType, int> currentDiceTypeCount = new();
