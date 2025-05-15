@@ -33,40 +33,40 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] TextMeshProUGUI turnsNum;
     [SerializeField] TextMeshProUGUI rerollsNum;
-    public GameStatus GameStatus
-    {
-        get { return gameStatus; }
-        set 
-        { 
-            gameStatus = value;
-            switch (value)
-            {
-                case GameStatus.Init:
-                    //temp
-                    gameStatus = GameStatus.Battle;
-                    break;
-                case GameStatus.Pause:
-                    break;
-                case GameStatus.Battle:
-                    foreach (var helper in startRoundActionHelpers)
-                    {
-                        helper.Value?.Invoke();
-                    }
-                    SetTurns(maxNumOfTurn, true);
-                    SetRerolls(maxNumOfReroll, true);
-                    DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
-                    DiceManager.Instance.StartTurn();
-                    break;
-                case GameStatus.Shop:
-                    ShopOpen();
-                    break;
-                case GameStatus.Lose:
-                    Debug.Log("Thua");
-                    SkillManager.Instance.EnemyTest.EnemyState = EnemyState.Attack;
-                    break;
-            }
-        }
-    }
+    public GameStatus GameStatus => gameStatus;
+    //{
+    //    get { return gameStatus; }
+    //    set 
+    //    { 
+    //        gameStatus = value;
+    //        switch (value)
+    //        {
+    //            case GameStatus.Init:
+    //                //temp
+    //                gameStatus = GameStatus.Battle;
+    //                break;
+    //            case GameStatus.Pause:
+    //                break;
+    //            case GameStatus.Battle:
+    //                foreach (var helper in startRoundActionHelpers)
+    //                {
+    //                    helper.Value?.Invoke();
+    //                }
+    //                SetTurns(maxNumOfTurn, true);
+    //                SetRerolls(maxNumOfReroll, true);
+    //                DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
+    //                DiceManager.Instance.StartTurn();
+    //                break;
+    //            case GameStatus.Shop:
+    //                ShopOpen();
+    //                break;
+    //            case GameStatus.Lose:
+    //                Debug.Log("Thua");
+    //                SkillManager.Instance.EnemyTest.EnemyState = EnemyState.Attack;
+    //                break;
+    //        }
+    //    }
+    //}
     public RectTransform shopRect;
     public RectTransform iventoryRect;
     DataSpriteManager dataSpriteManager;
@@ -100,6 +100,41 @@ public class GameManager : Singleton<GameManager>
         } 
             
     }
+
+    public void ChangeGameStatus(GameStatus gameStatus)
+    {
+        if (this.gameStatus != gameStatus)
+        {
+            this.gameStatus = gameStatus;
+            switch (gameStatus)
+            {
+                case GameStatus.Init:
+                    //temp
+                    gameStatus = GameStatus.Battle;
+                    break;
+                case GameStatus.Pause:
+                    break;
+                case GameStatus.Battle:
+                    foreach (var helper in startRoundActionHelpers)
+                    {
+                        helper.Value?.Invoke();
+                    }
+                    SetTurns(maxNumOfTurn, true);
+                    SetRerolls(maxNumOfReroll, true);
+                    DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
+                    DiceManager.Instance.StartTurn();
+                    break;
+                case GameStatus.Shop:
+                    ShopOpen();
+                    break;
+                case GameStatus.Lose:
+                    Debug.Log("Thua");
+                    SkillManager.Instance.EnemyTest.EnemyState = EnemyState.Attack;
+                    break;
+            }
+        }
+    }
+
     public void TestBasicDeck(List<GameObject> listSkill)
     {
         int count = 0;

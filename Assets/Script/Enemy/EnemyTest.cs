@@ -54,14 +54,14 @@ public class EnemyTest : MonoBehaviour
         if (enemyData.hp <= 0)
         {
             enemyState = EnemyState.Die;
-            GameManager.Instance.GameStatus = GameStatus.Shop;
+            GameManager.Instance.ChangeGameStatus(GameStatus.Shop);
         }
         else
         {
             // kiem tra so lan danh bai <= 0 thi EnemyState = Attack
             if (GameManager.Instance.CurrentNumOfTurn <= 0)
             {
-                GameManager.Instance.GameStatus = GameStatus.Lose;
+                GameManager.Instance.ChangeGameStatus(GameStatus.Lose);
             }
         }
     }

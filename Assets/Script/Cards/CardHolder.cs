@@ -129,6 +129,7 @@ public class CardHolder : Singleton<CardHolder>
             cardCanvas.overrideSorting = true;
             cardCanvas.sortingLayerName = "Interact";
             cardCanvas.sortingOrder = 1;
+            cardSkill.informationPanel.SetActive(false);
         };
         buttonUI.MouseDragEnd = () =>
         {

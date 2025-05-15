@@ -29,6 +29,7 @@ public class AttackSequence : Singleton<AttackSequence>
         var point = 0f;
         var mult = 1f;
         var dicePattern = DicePattern.None;
+        var totalDamge = 0f;
 
         while (visualPointQueue.Count > 0)
         {
@@ -43,7 +44,6 @@ public class AttackSequence : Singleton<AttackSequence>
 
                     point += newPoint - oldPoint;
                     paternText.text = q.dicePattern.ToString();
-
                 }
             }
             else
@@ -74,18 +74,30 @@ public class AttackSequence : Singleton<AttackSequence>
             }
             yield return new WaitForSeconds(0.5f);
         }
-        StartCoroutine(DiceAttackSequence());
+        totalDamge = point * mult;
+        Debug.Log($"Total Damage: {totalDamge}");
+        StartCoroutine(DiceAttackSequence(totalDamge));
         yield return null;
     }
 
-    private IEnumerator DiceAttackSequence()
+    private IEnumerator DiceAttackSequence(float totalDamage)
     {
+        var diceUsedCount = 0;
+        foreach (var dice in dicesUse)
+        {
+            if (dice.usedInAttack || dice.includedInPoint) diceUsedCount++;
+        }
+
         foreach (var dice in dicesUse)
         {
             if (dice.usedInAttack || dice.includedInPoint)
             {
                 dice.gameObject.transform.DOMove(enemyPos.position, .5f).OnComplete(() =>
-                    PoolingObject.Instance.ReturnDiceToPool(dice));
+                {
+                    PoolingObject.Instance.ReturnDiceToPool(dice);
+                    
+                    SkillManager.Instance.EnemyTest.Damage(totalDamage / diceUsedCount);
+                });
                 yield return new WaitForSeconds(.5f);
             }
             else

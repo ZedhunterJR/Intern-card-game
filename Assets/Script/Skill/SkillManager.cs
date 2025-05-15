@@ -50,7 +50,7 @@ public class SkillManager : Singleton<SkillManager>
         SkillCardList = CardHolder.Instance.cards;
         enemyTest = Instantiate(enemyPrefabs, enemySpawnPlace).GetComponent<EnemyTest>();
         enemyTest.Init();
-        GameManager.Instance.GameStatus = GameStatus.Battle;
+        GameManager.Instance.ChangeGameStatus(GameStatus.Battle);
     }
 
     //related to point/sequencing
