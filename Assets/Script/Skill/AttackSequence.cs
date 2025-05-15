@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using System.Net;
 
 public class AttackSequence : Singleton<AttackSequence>
 {
     [SerializeField] TextMeshProUGUI paternText;
     [SerializeField] TextMeshProUGUI pointText;
     [SerializeField] TextMeshProUGUI multText;
+    [SerializeField] TextMeshProUGUI totalDamageText;
+    [SerializeField] TextMeshProUGUI totalDamageRoundText;
+    private float totalDamageValue = 0f;
     [SerializeField] Transform floatingHolder;
     [SerializeField] GameObject floatingPrefab;
 
@@ -48,10 +52,16 @@ public class AttackSequence : Singleton<AttackSequence>
             }
             else
             {
+                float oldPoint = point;
+                float oldMult = mult;
+
                 point += q.point;
                 pointText.text = point.ToString();
                 mult += q.mult;
                 multText.text = mult.ToString();
+
+                TextEffectHelper.UpdateTextWithPunchEffect(pointText, oldPoint, point);
+                TextEffectHelper.UpdateTextWithPunchEffect(multText, oldMult, mult);
 
                 Vector3 spawnPos = Vector3.zero;
                 float spawnPointValue = 0f;
@@ -74,7 +84,9 @@ public class AttackSequence : Singleton<AttackSequence>
             }
             yield return new WaitForSeconds(0.5f);
         }
+        var oldTotalDamage = 0f;
         totalDamge = point * mult;
+        TextEffectHelper.UpdateTextWithPunchEffect(totalDamageText, oldTotalDamage, totalDamge);
         Debug.Log($"Total Damage: {totalDamge}");
         StartCoroutine(DiceAttackSequence(totalDamge));
         yield return null;
@@ -107,8 +119,22 @@ public class AttackSequence : Singleton<AttackSequence>
         }
         //yield return new WaitForSeconds(2f);
         DiceManager.Instance.StartTurn();
+        totalDamageValue += totalDamage;
+        totalDamageRoundText.text = totalDamageValue.ToString();
+        yield return new WaitForSeconds(1f);
+        ResetNewTurn();
+    }
 
-
-        yield return null;
+    public void ResetNewTurn()
+    {
+        paternText.text = string.Empty;
+        pointText.text = "0";
+        multText.text = "0";
+        totalDamageText.text = "0";
+    }
+    public void ResetNewRound()
+    {
+        totalDamageValue = 0;
+        totalDamageRoundText.text = "0";
     }
 }

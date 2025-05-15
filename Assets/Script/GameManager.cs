@@ -123,6 +123,7 @@ public class GameManager : Singleton<GameManager>
                     SetRerolls(maxNumOfReroll, true);
                     DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
                     DiceManager.Instance.StartTurn();
+                    AttackSequence.Instance.ResetNewTurn();
                     break;
                 case GameStatus.Shop:
                     ShopOpen();
@@ -173,6 +174,7 @@ public class GameManager : Singleton<GameManager>
         SetRerolls(maxNumOfReroll, true);
 
         SkillManager.Instance.EnemyTest.Init();
+        AttackSequence.Instance.ResetNewRound();
         //SkillManager.Instance.ReturnDicesToHolderAfterPlayed();
     }
     
