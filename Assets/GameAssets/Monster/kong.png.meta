@@ -1,0 +1,1271 @@
+fileFormatVersion: 2
+guid: 8c909381a791b194a8e841bdf9b6a2b5
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: kong_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e5de75411fbf3f48b4a5a36a370c79d
+      internalID: 1403734612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_1
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 512
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7569440ac04011c4eab408840af083aa
+      internalID: -1878827087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_2
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 512
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e56bfab47e8eba244be729a0053b67e8
+      internalID: -648163819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_3
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 512
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d094bf439e0298e4f906643d89156cdc
+      internalID: -651310901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_4
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 512
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25b8c2662834c6946a0ed47f959fd39e
+      internalID: -1615984369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_5
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 512
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23a0b440cd54b7248a8dba499f17c150
+      internalID: -543383161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae5b187414b7e5c4aa506055391327fb
+      internalID: 70197146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_7
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 448
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e165f94e426ad941a34eb7e4c326928
+      internalID: 2049868263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_8
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 448
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5be693b970c78464a9206d337a196029
+      internalID: -595943949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_9
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 448
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 462a36abab7c87f4b950647d29dcb1eb
+      internalID: 1396968699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_10
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 448
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acd446a76ad112b45a4b6078f9888daa
+      internalID: -892509342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_11
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 448
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7960df11aff51b64a842242a1ab5ec25
+      internalID: 577950346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef0a789b1cd69c543b7926932d78d603
+      internalID: 650032890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_13
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 384
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9385624b2e101944b9eaed645a593f7
+      internalID: -373877948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_14
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 384
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32b637accdb760b449979241bf630de2
+      internalID: 319425332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_15
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 384
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a048f6317302a14799c7a9abeda438f
+      internalID: -253934736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_16
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c3c3ec161b2f4a4f8fbfdfc751f87af
+      internalID: -647677689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_17
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 384
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 882dd1226ae3ffb458834f325f23f043
+      internalID: -988109150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcd8f45850aad84419f49489c0073a23
+      internalID: 1144456251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_19
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 320
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6129945122cd20840836b944f4d1777f
+      internalID: 2076414547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_20
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 320
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05737a6ebd913aa40893e1dcf2fbd385
+      internalID: 1950933164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_21
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 320
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6176759cf0a03c545a718691cd98d8ba
+      internalID: -1974967484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_22
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 320
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4241005b1156c76439189870a8c688ff
+      internalID: -443583136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_23
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 320
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaf7c3401899791449c1569209800e01
+      internalID: -1841485981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0be5f9659139bd146b7522332b3f5410
+      internalID: -968226123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_25
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 256
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63aefdb4b83b64a42970b3948dc8abae
+      internalID: 349109023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_26
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 256
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2219169e59bc89d4d9003702ab7dd188
+      internalID: -227638564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_27
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 256
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4eac10602af85247954f2fa8361a2c3
+      internalID: 864890545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_28
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 256
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8d63f0a6cd05c243970624c65f62e42
+      internalID: 1394398076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_29
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 256
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b5c6422190b9b44faa6528f05d01ca6
+      internalID: -1664090528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e49dc51f0eb50d46ac0acef050f83ac
+      internalID: 996202869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_31
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 192
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54f5d98ca6ae3504a9797420a3242b5b
+      internalID: -912500405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_32
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 192
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 027a46d2b5dc8dc488ed1303aad6f3e3
+      internalID: -2044413343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_33
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 192
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68ddd2afb1ca3ae4d8a0aa6a0ff1adb9
+      internalID: 850937564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_34
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f521900beea5f344ba740537258b412
+      internalID: 767482284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_35
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 192
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d766a8d01511bec4f9cb743129dd9496
+      internalID: 1631924505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fded4921560ca242b3088aba01fb61e
+      internalID: 77805564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_37
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 128
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4915fd2cdb78448489b4cc56c06e55f7
+      internalID: 100947029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_38
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 128
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50905f1a2a3c7344799a6f0538447be9
+      internalID: 1827110227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_39
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 128
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db7c3f02415b0334e89a41f9546dfc39
+      internalID: 811198654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_40
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 128
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77324201ecc5fb2468b7bed5ae282a8b
+      internalID: -2116975439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_41
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 128
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e7fedc8a15046242a7ebbaa5f17b4fb
+      internalID: 561348064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6bf4edd00b2c1e4092b378ac8cc1773
+      internalID: 982853275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_43
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 64
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8589d754badf8274a9f3ac47c8d7ef61
+      internalID: -1144315195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_44
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 64
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de97866fdbc1b954aaf4f6707fb8d942
+      internalID: -2067420351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_45
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 64
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dfbedc632dec0e46a2ef25d6cae5da3
+      internalID: -1747792966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_46
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 64
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bbff7a1f46ba1d4eb22fa91eaa91642
+      internalID: 1780408713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_47
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 64
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec22a9f10d645ef48a9d985d0f0df954
+      internalID: 2114809086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ad9d8fd9b467bf4fb8a345797211ebb
+      internalID: 1653149889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_49
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20e59bf011485294683749cf3cf15ec8
+      internalID: -261761354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_50
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a47d6eb790cb75142b468032ff0cffea
+      internalID: -5117914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kong_51
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 144
+        height: 64
+      alignment: 9
+      pivot: {x: 0.4, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 021d75037513dd8468c3b00f609d72f7
+      internalID: -1652618833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      kong_0: 1403734612
+      kong_1: -1878827087
+      kong_10: -892509342
+      kong_11: 577950346
+      kong_12: 650032890
+      kong_13: -373877948
+      kong_14: 319425332
+      kong_15: -253934736
+      kong_16: -647677689
+      kong_17: -988109150
+      kong_18: 1144456251
+      kong_19: 2076414547
+      kong_2: -648163819
+      kong_20: 1950933164
+      kong_21: -1974967484
+      kong_22: -443583136
+      kong_23: -1841485981
+      kong_24: -968226123
+      kong_25: 349109023
+      kong_26: -227638564
+      kong_27: 864890545
+      kong_28: 1394398076
+      kong_29: -1664090528
+      kong_3: -651310901
+      kong_30: 996202869
+      kong_31: -912500405
+      kong_32: -2044413343
+      kong_33: 850937564
+      kong_34: 767482284
+      kong_35: 1631924505
+      kong_36: 77805564
+      kong_37: 100947029
+      kong_38: 1827110227
+      kong_39: 811198654
+      kong_4: -1615984369
+      kong_40: -2116975439
+      kong_41: 561348064
+      kong_42: 982853275
+      kong_43: -1144315195
+      kong_44: -2067420351
+      kong_45: -1747792966
+      kong_46: 1780408713
+      kong_47: 2114809086
+      kong_48: 1653149889
+      kong_49: -261761354
+      kong_5: -543383161
+      kong_50: -5117914
+      kong_51: -1652618833
+      kong_6: 70197146
+      kong_7: 2049868263
+      kong_8: -595943949
+      kong_9: 1396968699
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
