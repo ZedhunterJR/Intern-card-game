@@ -84,6 +84,9 @@ public class DiceManager : Singleton<DiceManager>
         var diceGraphic = dice.GetComponent<GraphicRaycaster>();
         buttonUI.ClickFunc = () =>
         {
+            if (!GameManager.Instance.CanInteract)
+                return;
+
             if (draggingDice == null)
             {
                 if (selectedDice.Contains(dice) && GameManager.Instance.GameStatus == GameStatus.Battle)
@@ -111,6 +114,9 @@ public class DiceManager : Singleton<DiceManager>
         };
         buttonUI.MouseDragBegin = () =>
         {
+            if (!GameManager.Instance.CanInteract)
+                return;
+
             draggingDice = buttonUI;
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             offset = mousePosition - (Vector2)dice.transform.position;
@@ -122,6 +128,9 @@ public class DiceManager : Singleton<DiceManager>
         };
         buttonUI.MouseDragEnd = () =>
         {
+            if (!GameManager.Instance.CanInteract)
+                return;
+
             PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {
                 position = Input.mousePosition
@@ -161,6 +170,7 @@ public class DiceManager : Singleton<DiceManager>
                 // Set skill dice face 
                 found.AddDice(dice);
                 skillDicePair[dice] = found;
+                AttackSequence.Instance.UpdatePatternOnDicePlace();
 
                 if (selectedDice.Contains(draggingDice.GetComponent<Dice>()))
                 {
@@ -243,6 +253,7 @@ public class DiceManager : Singleton<DiceManager>
         {
             card.diceFace = null;
         }
+        SkillManager.Instance.canPlay = true;
 
         for (int i = 0; i < currentDiceNum; i++)
         {

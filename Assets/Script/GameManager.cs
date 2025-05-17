@@ -10,7 +10,9 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameStatus gameStatus;
 
+    public int currentRound = 0;
     public Dictionary<(Skill, string), Action> startRoundActionHelpers = new();
+    public bool CanInteract => (SkillManager.Instance.canPlay && gameStatus == GameStatus.Battle) || gameStatus == GameStatus.Shop;
     public int maxNumOfTurn, maxNumOfReroll;
     public int CurrentNumOfTurn { get; private set; }
     public int CurrentNumOfReroll { get; private set; }
@@ -34,39 +36,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] TextMeshProUGUI turnsNum;
     [SerializeField] TextMeshProUGUI rerollsNum;
     public GameStatus GameStatus => gameStatus;
-    //{
-    //    get { return gameStatus; }
-    //    set 
-    //    { 
-    //        gameStatus = value;
-    //        switch (value)
-    //        {
-    //            case GameStatus.Init:
-    //                //temp
-    //                gameStatus = GameStatus.Battle;
-    //                break;
-    //            case GameStatus.Pause:
-    //                break;
-    //            case GameStatus.Battle:
-    //                foreach (var helper in startRoundActionHelpers)
-    //                {
-    //                    helper.Value?.Invoke();
-    //                }
-    //                SetTurns(maxNumOfTurn, true);
-    //                SetRerolls(maxNumOfReroll, true);
-    //                DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
-    //                DiceManager.Instance.StartTurn();
-    //                break;
-    //            case GameStatus.Shop:
-    //                ShopOpen();
-    //                break;
-    //            case GameStatus.Lose:
-    //                Debug.Log("Thua");
-    //                SkillManager.Instance.EnemyTest.EnemyState = EnemyState.Attack;
-    //                break;
-    //        }
-    //    }
-    //}
+    
     public RectTransform shopRect;
     public RectTransform iventoryRect;
     DataSpriteManager dataSpriteManager;
@@ -80,12 +50,12 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        
+        ChangeGameStatus(GameStatus.Battle);
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.E))
+        /*if (Input.GetKeyUp(KeyCode.E))
         {
             if (!isShopOpen)
             {
@@ -97,7 +67,7 @@ public class GameManager : Singleton<GameManager>
                 isShopOpen = false;
                 ShopClose();
             }    
-        } 
+        } */
             
     }
 
@@ -109,8 +79,6 @@ public class GameManager : Singleton<GameManager>
             switch (gameStatus)
             {
                 case GameStatus.Init:
-                    //temp
-                    gameStatus = GameStatus.Battle;
                     break;
                 case GameStatus.Pause:
                     break;
@@ -124,13 +92,16 @@ public class GameManager : Singleton<GameManager>
                     DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
                     DiceManager.Instance.StartTurn();
                     AttackSequence.Instance.ResetNewTurn();
+                    AttackSequence.Instance.ResetNewRound();
+                    EnemyManager.Instance.SpawnEnemy(currentRound);
+                    currentRound++;
                     break;
                 case GameStatus.Shop:
                     ShopOpen();
                     break;
                 case GameStatus.Lose:
                     Debug.Log("Thua");
-                    SkillManager.Instance.EnemyTest.EnemyState = EnemyState.Attack;
+                    //SkillManager.Instance.EnemyTest.EnemyState = EnemyState.Attack;
                     break;
             }
         }
@@ -153,7 +124,7 @@ public class GameManager : Singleton<GameManager>
             {
                 //skill.ChangeSkillPosCondition(new() { SkillCondition.Left, SkillCondition.Right });
                 //skill.ChangeActivateCondition(Global.Instance.Conditions["c2"]);
-                skill.ChangeEffect(Global.Instance.Effects["e10"], dataSpriteManager.EffectSprites["e10"]);
+                skill.ChangeEffect(Global.Instance.Effects["e2"], dataSpriteManager.EffectSprites["e2"]);
             }
         }
     }
@@ -168,14 +139,7 @@ public class GameManager : Singleton<GameManager>
     public void ShopClose()
     {
         shopRect.DOAnchorPos(new Vector2(12, 500f), 0.5f).SetEase(Ease.OutCubic);
-        gameStatus = GameStatus.Battle;
-
-        SetTurns(maxNumOfTurn, true);
-        SetRerolls(maxNumOfReroll, true);
-
-        SkillManager.Instance.EnemyTest.Init();
-        AttackSequence.Instance.ResetNewRound();
-        //SkillManager.Instance.ReturnDicesToHolderAfterPlayed();
+        ChangeGameStatus(GameStatus.Battle);
     }
     
 }
