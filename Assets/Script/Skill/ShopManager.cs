@@ -212,7 +212,10 @@ public class ShopManager : Singleton<ShopManager>
 
     public void RelicItem()
     {
-        var relicEffect = Global.Instance.Relics.GetRandomValue();
+        var relicKey = Global.Instance.Relics.GetRandomKey();
+        var relicEffect = Global.Instance.Relics[relicKey];
+        Global.Instance.Relics.Remove(relicKey);
+
         var relic = Instantiate(relicPrefab, relicPart);
         var buttonUI = relic.transform.Find("image").GetComponent<ButtonUI>();
 
@@ -276,13 +279,62 @@ public class ShopManager : Singleton<ShopManager>
             }
 
             if (found)
-                TestBuy();
+            {
+                GetRelic(relicEffect.id);
+
+                //temporary 
+                Destroy(relic);
+            }
         };
     }
 
-    void TestBuy()
+    void GetRelic(string id)
     {
-        Debug.Log("test");
+        Debug.Log($"Got {id}");
+
+        switch (id)
+        {
+            case "r1":
+                DiceManager.Instance.baseDiceNum += 1;
+                break;
+            case "r2":
+                DiceManager.Instance.AddOrUpdateDiceRate(DiceType.Gold, 0.2f);
+                break;
+            case "r3":
+                DiceManager.Instance.AddOrUpdateDiceRate(DiceType.Gem, 0.3f);
+                break;
+            case "r4":
+                DiceManager.Instance.AddOrUpdateDiceRate(DiceType.Rock, 0.3f);
+                break;
+            case "r5":
+                GameManager.Instance.maxNumOfReroll += 1;
+                break;
+            case "r6":
+                DiceManager.Instance.AddOrUpdateDiceRate(DiceType.Twin, 0.1f);
+                break;
+            case "r7":
+                SkillManager.Instance.actionHelpers[(GameManager.Instance.NoSkill, "r7")] = () =>
+                {
+                    if (GameManager.Instance.CurrentNumOfTurn == 1)
+                        GameManager.Instance.SetRerolls(5);
+                };
+                break;
+            case "r8":
+                bool r8 = true;
+                SkillManager.Instance.actionHelpers[(GameManager.Instance.NoSkill, "r8")] = () =>
+                {
+                    if (r8)
+                    {
+                        print("you got 5 gold! Please add this effect later when there is economy");
+                        r8 = false;
+                    }
+                };
+                GameManager.Instance.startRoundActionHelpers[(GameManager.Instance.NoSkill, "r8")] = () =>
+                {
+                    r8 = true;
+                };
+                break;
+        }
     }
 
     Vector3 ClampScreen(Vector3 position)

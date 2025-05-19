@@ -46,6 +46,18 @@ public class DiceManager : Singleton<DiceManager>
         { DiceType.Rock, 0.4f },
         { DiceType.Gem, 1.2f }
     };
+    public void AddOrUpdateDiceRate(DiceType type, float value)
+    {
+        if (DiceTypeRate.ContainsKey(type))
+        {
+            DiceTypeRate[type] += value;
+        }
+        else
+        {
+            DiceTypeRate[type] = value;
+        }
+    }
+
     private Dictionary<DiceType, int> currentDiceTypeCount = new();
 
     #endregion

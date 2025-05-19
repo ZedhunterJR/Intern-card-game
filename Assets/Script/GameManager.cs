@@ -9,6 +9,7 @@ using TMPro;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameStatus gameStatus;
+    public Skill NoSkill = null;
 
     public int currentRound = 0;
     public Dictionary<(Skill, string), Action> startRoundActionHelpers = new();

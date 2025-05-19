@@ -110,12 +110,13 @@ public class SkillManager : Singleton<SkillManager>
 
         GameManager.Instance.SetTurns();
 
-        StartCoroutine(AttackSequence.Instance.CaculatePointSequence());
-
         foreach (var a in actionHelpers)
         {
             a.Value?.Invoke();
         }
+
+        StartCoroutine(AttackSequence.Instance.CaculatePointSequence());
+
         //after coroutine of point and shit
         //DiceManager.Instance.StartTurn();
 
