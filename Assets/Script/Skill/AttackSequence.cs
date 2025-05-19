@@ -153,9 +153,9 @@ public class AttackSequence : Singleton<AttackSequence>
         float.TryParse(pointText.text, out oldPoint);
         TextEffectHelper.UpdateTextWithPunchEffect(pointText, oldPoint, point);
 
-        //float oldMult = 0;
-        //float.TryParse(multText.text, out oldMult);
-        //TextEffectHelper.UpdateTextWithPunchEffect(pointText, oldMult, mult);
+        float oldMult = 1;
+        float.TryParse(multText.text, out oldMult);
+        TextEffectHelper.UpdateTextWithPunchEffect(multText, oldMult, 1);
     }
     public void ResetNewTurn()
     {

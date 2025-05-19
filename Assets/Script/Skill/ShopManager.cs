@@ -212,8 +212,9 @@ public class ShopManager : Singleton<ShopManager>
 
     public void RelicItem()
     {
+        var relicEffect = Global.Instance.Relics.GetRandomValue();
         var relic = Instantiate(relicPrefab, relicPart);
-        var buttonUI = relic.GetComponent<ButtonUI>();
+        var buttonUI = relic.transform.Find("image").GetComponent<ButtonUI>();
 
         // Relic param
         var title = relic.transform.Find("title").GetComponent<TextMeshProUGUI>();
@@ -224,13 +225,13 @@ public class ShopManager : Singleton<ShopManager>
         var price = relic.transform.Find("price").gameObject;
         var priceCanvas = relic.transform.Find("price").GetComponent<Canvas>();
         var priceDes = price.transform.Find("priceDes").GetComponent<TextMeshProUGUI>();
-        var buyButton = relic.transform.Find("buy").GetComponent<Button>();
-        var buyButtonCanvas = relic.transform.Find("buy").GetComponent<Canvas>();
+        var buyButton = relic.transform.Find("buy").gameObject;
+        //var buyButtonCanvas = relic.transform.Find("buy").GetComponent<Canvas>();
 
-        title.text = "testRelic";
-        image.sprite = DataSpriteManager.Instance.GetSpriteCard("test");
-        priceDes.text = "999";
-        buyButton.onClick.AddListener(TestBuy);
+        title.text = relicEffect.name;
+        image.sprite = DataSpriteManager.Instance.GetSpriteCard(relicEffect.id);
+        inforDes.text = $"{relicEffect.description}";
+        priceDes.text = $"${relicEffect.cost}";
 
         buttonUI.MouseHoverEnter = () =>
         {
@@ -238,9 +239,9 @@ public class ShopManager : Singleton<ShopManager>
             inforCanvas.overrideSorting = true;
             inforCanvas.sortingLayerName = "Interact";
 
-            buyButton.gameObject.SetActive(true);
-            buyButtonCanvas.overrideSorting = true;
-            buyButtonCanvas.sortingLayerName = "Interact";
+            buyButton.SetActive(true);
+            //buyButtonCanvas.overrideSorting=true;
+            //buyButtonCanvas.sortingLayerName = "Interact";
 
             price.gameObject.SetActive(true);
             priceCanvas.overrideSorting = true;
@@ -251,6 +252,31 @@ public class ShopManager : Singleton<ShopManager>
             infor.SetActive(false);
             buyButton.gameObject.SetActive(false);
             price.gameObject.SetActive(false);
+        };
+        buttonUI.ClickFunc = () =>
+        {
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            {
+                position = Input.mousePosition
+            };
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+
+            bool found = false;
+            foreach (RaycastResult result in results)
+            {
+                //Debug.Log(result.gameObject.name);
+                if (result.gameObject.tag == "Buy")
+                {
+                    found = true;
+                    break;
+                }
+
+            }
+
+            if (found)
+                TestBuy();
         };
     }
 

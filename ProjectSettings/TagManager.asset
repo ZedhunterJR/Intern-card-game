@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CardSkill
+  - Buy
   layers:
   - Default
   - TransparentFX
