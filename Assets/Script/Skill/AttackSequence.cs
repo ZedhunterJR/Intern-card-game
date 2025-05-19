@@ -19,12 +19,11 @@ public class AttackSequence : Singleton<AttackSequence>
     [SerializeField] Transform enemyPos;
 
     public Queue<VisualPointSeq> visualPointQueue;
-    public List<Dice> dicesUse;
+    public List<Dice> dicesUse => SkillManager.Instance.diceInPlayed;
 
     private void Start()
     {
         visualPointQueue = SkillManager.Instance.visualPointQueue;
-        dicesUse = DiceManager.Instance.diceList;
     }
 
     public IEnumerator CaculatePointSequence()
@@ -94,40 +93,73 @@ public class AttackSequence : Singleton<AttackSequence>
 
     private IEnumerator DiceAttackSequence(float totalDamage)
     {
-        var diceUsedCount = 0;
+        List<Dice> diceToLaunch = new List<Dice>();
+        List<Dice> allDices = new(DiceManager.Instance.diceList);
         foreach (var dice in dicesUse)
         {
-            if (dice.usedInAttack || dice.includedInPoint) diceUsedCount++;
-        }
-
-        foreach (var dice in dicesUse)
-        {
+            if (dice == null) continue;
             if (dice.usedInAttack || dice.includedInPoint)
             {
-                dice.gameObject.transform.DOMove(enemyPos.position, .5f).OnComplete(() =>
-                {
-                    PoolingObject.Instance.ReturnDiceToPool(dice);
-                    
-                    SkillManager.Instance.EnemyTest.Damage(totalDamage / diceUsedCount);
-                });
-                yield return new WaitForSeconds(.5f);
-            }
-            else
-            {
-                PoolingObject.Instance.ReturnDiceToPool(dice);
+                diceToLaunch.Add(dice);
+                allDices.Remove(dice);
             }
         }
-        //yield return new WaitForSeconds(2f);
-        DiceManager.Instance.StartTurn();
-        totalDamageValue += totalDamage;
-        totalDamageRoundText.text = totalDamageValue.ToString();
+
+        var enemyTakeDmgFlag = 0;
+        //remove anim, add later
+        foreach (var dice in allDices)
+        {
+            PoolingObject.Instance.ReturnDiceToPool(dice);
+        }
+        for (int i = 0; i < diceToLaunch.Count; i++)
+        {
+            var die = diceToLaunch[i]; // capture reference directly
+            die.gameObject.transform.DOMove(enemyPos.position, 0.5f);
+
+            yield return new WaitForSeconds(0.5f);
+            if (enemyTakeDmgFlag == 0)
+                enemyTakeDmgFlag = EnemyManager.Instance.TakeDamage(totalDamage / diceToLaunch.Count);
+            totalDamageValue += totalDamage / diceToLaunch.Count;
+            totalDamageRoundText.text = totalDamageValue.DecimalFormat(2);
+
+            PoolingObject.Instance.ReturnDiceToPool(die);
+        }
+
         yield return new WaitForSeconds(1f);
+        if (enemyTakeDmgFlag == 0)
+            DiceManager.Instance.StartTurn();
         ResetNewTurn();
     }
 
+    public void UpdatePatternOnDicePlace()
+    {
+        var dices = SkillManager.Instance.PlayedDices(out var extra);
+        var toDetect = new List<Dice>(extra);
+        foreach (var dice in dices)
+        {
+            if (dice != null)
+            {
+                toDetect.Add(dice);
+            }
+        }
+        DicePattern patt = SkillManager.Instance.DetectDicePattern(toDetect);
+
+        paternText.text = patt.ToString();
+        var point = Global.Instance.GetPatternPoints(patt);
+
+        pointText.text = point.DecimalFormat(2);
+
+        float oldPoint = 0;
+        float.TryParse(pointText.text, out oldPoint);
+        TextEffectHelper.UpdateTextWithPunchEffect(pointText, oldPoint, point);
+
+        //float oldMult = 0;
+        //float.TryParse(multText.text, out oldMult);
+        //TextEffectHelper.UpdateTextWithPunchEffect(pointText, oldMult, mult);
+    }
     public void ResetNewTurn()
     {
-        paternText.text = string.Empty;
+        paternText.text = DicePattern.None.ToString();
         pointText.text = "0";
         multText.text = "0";
         totalDamageText.text = "0";

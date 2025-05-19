@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Animations;
 using DG.Tweening;
 using Random = UnityEngine.Random;
 using System.Linq;

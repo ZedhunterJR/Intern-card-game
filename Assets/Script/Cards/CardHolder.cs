@@ -118,6 +118,9 @@ public class CardHolder : Singleton<CardHolder>
         };
         buttonUI.MouseDragBegin = () =>
         {
+            if (!GameManager.Instance.CanInteract)
+                return;
+
             draggingCard = obj;
 
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -133,6 +136,9 @@ public class CardHolder : Singleton<CardHolder>
         };
         buttonUI.MouseDragEnd = () =>
         {
+            if (!GameManager.Instance.CanInteract)
+                return;
+
             //print("what");
             draggingCard = null;
             cardRect.DOScale(Vector2.one, 0.1f);

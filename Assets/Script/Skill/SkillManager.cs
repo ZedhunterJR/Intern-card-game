@@ -7,12 +7,6 @@ using UnityEngine;
 
 public class SkillManager : Singleton<SkillManager>
 {
-    // To Spawn Enenmy Test
-    [SerializeField] Transform enemySpawnPlace;
-    [SerializeField] EnemyTest enemyPrefabs;
-    private EnemyTest enemyTest;
-    public EnemyTest EnemyTest => enemyTest;
-
     public Dictionary<(Skill, string), Action> actionHelpers = new();
 
     public List<GameObject> SkillCardList;
@@ -48,9 +42,7 @@ public class SkillManager : Singleton<SkillManager>
     private void Start()
     {
         SkillCardList = CardHolder.Instance.cards;
-        enemyTest = Instantiate(enemyPrefabs, enemySpawnPlace).GetComponent<EnemyTest>();
-        enemyTest.Init();
-        GameManager.Instance.ChangeGameStatus(GameStatus.Battle);
+        //GameManager.Instance.ChangeGameStatus(GameStatus.Battle);
     }
 
     //related to point/sequencing
@@ -90,23 +82,15 @@ public class SkillManager : Singleton<SkillManager>
         return re;
     }
     private DicePattern currentDicePattern;
+    public bool canPlay = true;
     public void PlayCard()
     {
-        //you shouldn't see the play/reroll button during shopping anyway
-        if (GameManager.Instance.GameStatus != GameStatus.Battle)
-        {
-            return;
-        }
-        //will add a timeout for sequencing point, during which cannot press play
-        if (GameManager.Instance.CurrentNumOfTurn <= 0)
-        {
-            Debug.Log("Không đủ lượt đánh");
-            return;
-        }
-
+        if (!canPlay) return;
+        canPlay = false;
 
         playedSkills = Skills();
         diceInPlayed = PlayedDices(out extraDices);
+
         EnqueuePattern(DetectDicePattern(AllPlayedDices()));
         for (int i = 0; i< 5; i++)
         {
@@ -380,12 +364,12 @@ public class SkillManager : Singleton<SkillManager>
     public DicePattern DetectDicePattern(List<Dice> diceList)
     {
         if (diceList == null || diceList.Count == 0)
-            throw new ArgumentException("There should be a check to not play when no dice is present");
+            return DicePattern.None;
         List<int> values = diceList
             .Where(d => d.currentFace != -1)
             .Select(d => d.currentFace)
             .ToList();
-        if (diceList.Count == 0)
+        if (values.Count == 0)
             return DicePattern.None;
         // Reset used flags
         foreach (var die in diceList)
