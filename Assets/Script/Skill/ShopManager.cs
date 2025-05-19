@@ -222,75 +222,111 @@ public class ShopManager : Singleton<ShopManager>
         var buttonUI = relic.transform.Find("image").GetComponent<ButtonUI>();
 
         // Relic param
-        var title = relic.transform.Find("title").GetComponent<TextMeshProUGUI>();
-        var image = relic.transform.Find("image").GetComponent<Image>();
         var infor = relic.transform.Find("infor").gameObject;
         var inforCanvas = relic.transform.Find("infor").GetComponent<Canvas>();
+        var inforTitle = infor.transform.Find("title").GetComponent<TextMeshProUGUI>();
         var inforDes = infor.transform.Find("des").GetComponent<TextMeshProUGUI>();
-        var price = relic.transform.Find("price").gameObject;
-        var priceCanvas = relic.transform.Find("price").GetComponent<Canvas>();
-        var priceDes = price.transform.Find("priceDes").GetComponent<TextMeshProUGUI>();
-        var buyButton = relic.transform.Find("buy").gameObject;
-        //var buyButtonCanvas = relic.transform.Find("buy").GetComponent<Canvas>();
 
-        title.text = relicEffect.name;
-        image.sprite = DataSpriteManager.Instance.GetSpriteCard(relicEffect.id);
-        inforDes.text = $"{relicEffect.description}";
-        priceDes.text = $"${relicEffect.cost}";
+        var relicImage = relic.transform.Find("image").GetComponent<Image>();
+        var priceValue = relic.transform.Find("price").transform.Find("priceValue").GetComponent<TextMeshProUGUI>();
+        var buyButton = relic.transform.Find("buy").gameObject;
+        var buy = relic.transform.Find("buy").GetComponent<Button>();
+
+        bool hasClicked = false;
+        // ToanVu Handle
+        inforTitle.text = relicEffect.name;
+        inforDes.text = relicEffect.description;
+        relicImage.sprite = DataSpriteManager.Instance.GetSpriteCard(relicEffect.id);
+        priceValue.text = $"${relicEffect.cost}";
+
+        buy.onClick.AddListener(() => GetRelic(relicEffect.id, relic));
 
         buttonUI.MouseHoverEnter = () =>
         {
-            infor.SetActive(true);
-            inforCanvas.overrideSorting = true;
-            inforCanvas.sortingLayerName = "Interact";
-
-            buyButton.SetActive(true);
-            //buyButtonCanvas.overrideSorting=true;
-            //buyButtonCanvas.sortingLayerName = "Interact";
-
-            price.gameObject.SetActive(true);
-            priceCanvas.overrideSorting = true;
-            priceCanvas.sortingLayerName = "Interact";
+            if (selectedShopItem == null)
+            {
+                infor.SetActive(true);
+                inforCanvas.overrideSorting = true;
+                inforCanvas.sortingLayerName = "Interact";
+            }
         };
         buttonUI.MouseHoverExit = () =>
         {
             infor.SetActive(false);
-            buyButton.gameObject.SetActive(false);
-            price.gameObject.SetActive(false);
         };
         buttonUI.ClickFunc = () =>
         {
-            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            Debug.Log(hasClicked);
+            hasClicked = !hasClicked;
+            if (hasClicked)
             {
-                position = Input.mousePosition
-            };
-
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(pointerData, results);
-
-            bool found = false;
-            foreach (RaycastResult result in results)
-            {
-                //Debug.Log(result.gameObject.name);
-                if (result.gameObject.tag == "Buy")
-                {
-                    found = true;
-                    break;
-                }
-
+                buyButton.SetActive(true);
             }
-
-            if (found)
+            else
             {
-                GetRelic(relicEffect.id);
-
-                //temporary 
-                Destroy(relic);
+                buyButton.SetActive(false);
             }
         };
+        /*
+        //title.text = relicEffect.name;
+        //image.sprite = DataSpriteManager.Instance.GetSpriteCard(relicEffect.id);
+        //inforDes.text = $"{relicEffect.description}";
+        //priceDes.text = $"${relicEffect.cost}";
+
+        //buttonUI.MouseHoverEnter = () =>
+        //{
+        //    infor.SetActive(true);
+        //    inforCanvas.overrideSorting = true;
+        //    inforCanvas.sortingLayerName = "Interact";
+
+        //    buyButton.SetActive(true);
+        //    //buyButtonCanvas.overrideSorting=true;
+        //    //buyButtonCanvas.sortingLayerName = "Interact";
+
+        //    price.gameObject.SetActive(true);
+        //    priceCanvas.overrideSorting = true;
+        //    priceCanvas.sortingLayerName = "Interact";
+        //};
+        //buttonUI.MouseHoverExit = () =>
+        //{
+        //    infor.SetActive(false);
+        //    buyButton.gameObject.SetActive(false);
+        //    price.gameObject.SetActive(false);
+        //};
+        //buttonUI.ClickFunc = () =>
+        //{
+        //    PointerEventData pointerData = new PointerEventData(EventSystem.current)
+        //    {
+        //        position = Input.mousePosition
+        //    };
+
+        //    List<RaycastResult> results = new List<RaycastResult>();
+        //    EventSystem.current.RaycastAll(pointerData, results);
+
+        //    bool found = false;
+        //    foreach (RaycastResult result in results)
+        //    {
+        //        //Debug.Log(result.gameObject.name);
+        //        if (result.gameObject.tag == "Buy")
+        //        {
+        //            found = true;
+        //            break;
+        //        }
+
+        //    }
+
+        //    if (found)
+        //    {
+        //        GetRelic(relicEffect.id);
+
+        //        //temporary 
+        //        Destroy(relic);
+        //    }
+        //};
+        */
     }
 
-    void GetRelic(string id)
+    void GetRelic(string id, GameObject relic)
     {
         Debug.Log($"Got {id}");
 
@@ -337,6 +373,8 @@ public class ShopManager : Singleton<ShopManager>
                 };
                 break;
         }
+
+        Destroy(relic);
     }
 
     Vector3 ClampScreen(Vector3 position)

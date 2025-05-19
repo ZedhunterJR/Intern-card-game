@@ -4488,7 +4488,7 @@ MonoBehaviour:
   cardPart: {fileID: 250675567}
   relicPart: {fileID: 1500169745}
   relicPrefab: {fileID: 7387727282494590434, guid: a0f7d391db0965c4b92cfe50bc943345, type: 3}
-  selectedShopItem: {fileID: 1021027846394503129, guid: 5ab0434f9a9ca8641ba285a6183381d6, type: 3}
+  selectedShopItem: {fileID: 0}
 --- !u!1 &1356118751
 GameObject:
   m_ObjectHideFlags: 0
@@ -5174,6 +5174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStatus: 0
+  NoSkill: {fileID: 0}
   currentRound: 0
   maxNumOfTurn: 3
   maxNumOfReroll: 4
