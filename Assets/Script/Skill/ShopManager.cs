@@ -212,6 +212,8 @@ public class ShopManager : Singleton<ShopManager>
 
     public void RelicItem()
     {
+        if (Global.Instance.Relics.Count == 0)
+            return;
         var relicKey = Global.Instance.Relics.GetRandomKey();
         var relicEffect = Global.Instance.Relics[relicKey];
         Global.Instance.Relics.Remove(relicKey);
