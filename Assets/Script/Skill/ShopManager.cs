@@ -10,9 +10,10 @@ public class ShopManager : Singleton<ShopManager>
 {
     [SerializeField] GameObject shopItemPrefab;
     [SerializeField] Transform cardPart;
-    //[SerializeField] Transform[] cardPartSlots;
-    //public List<ShopItem> cardPartItem;
     private int numberOfCardPart = 2;
+
+    [SerializeField] Transform relicPart;
+    [SerializeField] GameObject relicPrefab;
 
     public Transform selectedShopItem = null;
     private DataSpriteManager dataSpriteManager;
@@ -92,7 +93,7 @@ public class ShopManager : Singleton<ShopManager>
         var desEffect = inforEffect.transform.Find("des").GetComponent<TextMeshProUGUI>();
 
         title.text = effect.name;
-        effectImage.sprite = dataSpriteManager.EffectSprites[effect.id];
+        effectImage.sprite = dataSpriteManager.GetSpriteCard(effect.id);
         desEffect.text = effect.description;
         priceValueEffect.text = $"${effect.cost}";
 
@@ -134,13 +135,13 @@ public class ShopManager : Singleton<ShopManager>
             if (found != null)
             {
                 Destroy(shopitem);
-                found.ChangeEffect(effect, dataSpriteManager.EffectSprites[effect.id]);
+                found.ChangeEffect(effect, dataSpriteManager.GetSpriteCard(effect.id));
             }
             else
             {
                 //selectedShopItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-                selectedShopItem.DOMove(previourPosItem, 0.3f); 
-                selectedShopItem.GetComponent<RectTransform>().DORotate(Vector3.zero, 0.3f); 
+                selectedShopItem.DOMove(previourPosItem, 0.3f);
+                selectedShopItem.GetComponent<RectTransform>().DORotate(Vector3.zero, 0.3f);
                 canvas.overrideSorting = false;
             }
 
@@ -207,6 +208,55 @@ public class ShopManager : Singleton<ShopManager>
         {
             inforEffect.SetActive(false);
         };
+    }
+
+    public void RelicItem()
+    {
+        var relic = Instantiate(relicPrefab, relicPart);
+        var buttonUI = relic.GetComponent<ButtonUI>();
+
+        // Relic param
+        var title = relic.transform.Find("title").GetComponent<TextMeshProUGUI>();
+        var image = relic.transform.Find("image").GetComponent<Image>();
+        var infor = relic.transform.Find("infor").gameObject;
+        var inforCanvas = relic.transform.Find("infor").GetComponent<Canvas>();
+        var inforDes = infor.transform.Find("des").GetComponent<TextMeshProUGUI>();
+        var price = relic.transform.Find("price").gameObject;
+        var priceCanvas = relic.transform.Find("price").GetComponent<Canvas>();
+        var priceDes = price.transform.Find("priceDes").GetComponent<TextMeshProUGUI>();
+        var buyButton = relic.transform.Find("buy").GetComponent<Button>();
+        var buyButtonCanvas = relic.transform.Find("buy").GetComponent<Canvas>();
+
+        title.text = "testRelic";
+        image.sprite = DataSpriteManager.Instance.GetSpriteCard("test");
+        priceDes.text = "999";
+        buyButton.onClick.AddListener(TestBuy);
+
+        buttonUI.MouseHoverEnter = () =>
+        {
+            infor.SetActive(true);
+            inforCanvas.overrideSorting = true;
+            inforCanvas.sortingLayerName = "Interact";
+
+            buyButton.gameObject.SetActive(true);
+            buyButtonCanvas.overrideSorting = true;
+            buyButtonCanvas.sortingLayerName = "Interact";
+
+            price.gameObject.SetActive(true);
+            priceCanvas.overrideSorting = true;
+            priceCanvas.sortingLayerName = "Interact";
+        };
+        buttonUI.MouseHoverExit = () =>
+        {
+            infor.SetActive(false);
+            buyButton.gameObject.SetActive(false);
+            price.gameObject.SetActive(false);
+        };
+    }
+
+    void TestBuy()
+    {
+        Debug.Log("test");
     }
 
     Vector3 ClampScreen(Vector3 position)

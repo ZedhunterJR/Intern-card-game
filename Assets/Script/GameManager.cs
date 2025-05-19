@@ -117,14 +117,14 @@ public class GameManager : Singleton<GameManager>
             {
                 //skill.ChangeSkillPosCondition(new() { SkillCondition.Fourth, SkillCondition.Fifth });
                 //skill.ChangeActivateCondition(Global.Instance.Conditions["c1"]);
-                skill.ChangeEffect(Global.Instance.Effects["e1"], dataSpriteManager.EffectSprites["e1"]);
+                skill.ChangeEffect(Global.Instance.Effects["e1"], dataSpriteManager.GetSpriteCard("e1"));
                 count++;
             }
             else
             {
                 //skill.ChangeSkillPosCondition(new() { SkillCondition.Left, SkillCondition.Right });
                 //skill.ChangeActivateCondition(Global.Instance.Conditions["c2"]);
-                skill.ChangeEffect(Global.Instance.Effects["e2"], dataSpriteManager.EffectSprites["e2"]);
+                skill.ChangeEffect(Global.Instance.Effects["e2"], dataSpriteManager.GetSpriteCard("e2"));
             }
         }
     }
@@ -134,6 +134,7 @@ public class GameManager : Singleton<GameManager>
         shopRect.DOAnchorPos(new Vector2(12, 95), 0.5f).SetEase(Ease.OutCubic);
 
         ShopManager.Instance.Restock();
+        ShopManager.Instance.RelicItem();
     }
 
     public void ShopClose()

@@ -130,8 +130,9 @@ public class SkillManager : Singleton<SkillManager>
                 EnqueuePoint(1, skill);
                 break;
             case "e2":
-                if (index == 0 && index == 4) return;
-                if (diceInPlayed[index - 1] != null && diceInPlayed[index + 1] != null)
+                if (index == 0 || index == 4) return;
+                Debug.Log(index);
+                if (diceInPlayed[index - 1] != null && diceInPlayed[index + 1] != null) // Effect e2
                 {
                     if (diceInPlayed[index - 1].currentFace == diceInPlayed[index + 1].currentFace)
                         EnqueuePoint(30, skill);
