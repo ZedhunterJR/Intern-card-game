@@ -44,6 +44,17 @@ public class Global : Singleton<Global>
       { "e28", new("e28", "Centering Lotus", "If this card is middle and its dice value is 6,\n<color=#2e7d32>gain 0.5x mult</color>", "#2e7d32".HexColor(), 5, Rarity.Rare) },
       { "e29", new("e29", "Trinity Linked Chain", "If position 2,3,4 form a sequence,\n<color=#2e7d32>+100 dmg</color>", "#cc9966".HexColor(), 10) }
     };
+    public Dictionary<string, Relic> Relics = new Dictionary<string, Relic>()
+    {
+        { "r1", new("r1", "Dice Satchel", "Gain 1 max dice", 20) },
+        { "r2", new("r2", "Treasure Dice", "When roll, 10% to roll a Gold dice (value x10 when calculate damage)", 20) },
+        { "r3", new("r3", "Gem Core", "When roll, 30% to roll a Gem dice (always is value 6)", 20) },
+        { "r4", new("r4", "Dice Golem", "When roll, 20% to roll a Rock dice (does not account for any pattern, but always included in attack and value 20)", 20) },
+        { "r5", new("r5", "Gambler Dice", "Gain 1 max reroll", 20) },
+        { "r6", new("r6", "Pair of Dice", "When roll, 8% to roll a Twin dice (count as 2 dices when used in a pattern)", 20) },
+        { "r7", new("r7", "Void Dice", "If it's the last turn, gain 5 reroll", 20) },
+        { "r8", new("r8", "Snake Eye Dice", "First time value 1 is used in a pattern, gain 5 gold", 20) }
+    };
 
     public readonly Dictionary<DicePattern, string> DisplayNames = new Dictionary<DicePattern, string>
     {
@@ -112,9 +123,8 @@ public class EffectClause
     public int cost;
     public Color color;
     public Rarity rarity;
-    public Sprite sprite;
 
-    public EffectClause(string id, string name, string description, Color color, int cost, Rarity rarity = Rarity.Common, Sprite sprite = null)
+    public EffectClause(string id, string name, string description, Color color, int cost, Rarity rarity = Rarity.Common)
     {
         this.id = id;
         this.name = name;
@@ -122,8 +132,21 @@ public class EffectClause
         this.cost = cost;
         this.color = color;
         this.rarity = rarity;
-        this.sprite = sprite;
-        this.sprite = sprite;
+    }
+}
+public class Relic
+{
+    public string id;
+    public string name;
+    public string description;
+    public int cost;
+
+    public Relic(string id, string name, string description, int cost)
+    {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.cost = cost;
     }
 }
 
