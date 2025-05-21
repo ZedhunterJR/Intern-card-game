@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Spider
   animCon: {fileID: 9100000, guid: e8fde0c6b87d915478f6823561b47a45, type: 2}
-  baseHp: 100
+  baseHp: 200
   dmg: 10
   attackInterval: 2

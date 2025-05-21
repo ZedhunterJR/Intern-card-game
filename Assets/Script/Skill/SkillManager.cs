@@ -132,7 +132,7 @@ public class SkillManager : Singleton<SkillManager>
                 break;
             case "e2":
                 if (index == 0 || index == 4) return;
-                Debug.Log(index);
+                //Debug.Log(index);
                 if (diceInPlayed[index - 1] != null && diceInPlayed[index + 1] != null) // Effect e2
                 {
                     if (diceInPlayed[index - 1].currentFace == diceInPlayed[index + 1].currentFace)
@@ -160,8 +160,8 @@ public class SkillManager : Singleton<SkillManager>
                 EnqueueMult(skill.v0, skill);
                 break;
             case "e5":
-                print("Change this effect!");
-                //EnqueuePoint(30 * (GameManager.Instance.maxNumOfTurn - GameManager.Instance.CurrentNumOfTurn), skill);
+                //print("Change this effect!");
+                EnqueuePoint(30 * skill.v0, skill);
                 break;
             case "e6":
                 if (currentDicePattern == DicePattern.Single)
@@ -219,7 +219,7 @@ public class SkillManager : Singleton<SkillManager>
                 break;
             case "e12":
                 EnqueueMult(0.5f, skill);
-                print("not implemented the disable part");
+                //print("not implemented the disable part");
                 break;
             case "e13":
                 EnqueuePoint(skill.v0, skill);
@@ -238,9 +238,9 @@ public class SkillManager : Singleton<SkillManager>
                     EnqueueMult(0.7f, skill);
                 break;
             case "e15":
-                print("change this effect");
-                //if (GameManager.Instance.CurrentNumOfTurn == 1)
-                    //EnqueueMult(0.7f, skill);
+                //print("change this effect");
+                if (GameManager.Instance.CurrentTurnBeforeEnemyAttack == 1)
+                    EnqueueMult(0.7f, skill);
                 break;
             case "e16":
                 if (Enum.TryParse(skill.s0, out DicePattern patt))
@@ -362,6 +362,82 @@ public class SkillManager : Singleton<SkillManager>
                 }
                 break;
 
+            //batch 2
+            case "e30":
+                EnqueuePoint(20, skill);
+                break;
+            case "e31":
+                if (index == 0 || index == 4) return;
+                //Debug.Log(index);
+                if (diceInPlayed[index - 1] == null && diceInPlayed[index + 1] == null) // Effect e2
+                {
+                    EnqueueMult(0.7f, skill);
+                }
+                break;
+            case "e32":
+                if (diceInPlayed[0] != null && diceInPlayed[4] != null)
+                {
+                    if (diceInPlayed[0].currentFace == diceInPlayed[4].currentFace)
+                        EnqueuePoint(20, skill);
+                }
+                if (diceInPlayed[1] != null && diceInPlayed[3] != null)
+                {
+                    if (diceInPlayed[1].currentFace == diceInPlayed[3].currentFace)
+                        EnqueuePoint(20, skill);
+                }
+                break;
+            case "e33":
+                if (diceInPlayed[1] != null && diceInPlayed[3] != null)
+                {
+                    if (diceInPlayed[1].currentFace % 2 == 1 && diceInPlayed[3].currentFace % 2 == 1)
+                        EnqueueMult(0.5f, skill);
+                }
+                break;
+            case "e34":
+                if (currentDicePattern == DicePattern.Sequence5)
+                    EnqueueMult(1f, skill);
+                break;
+            case "e35":
+                print("later");
+                break;
+            case "e36":
+                bool eli36 = true;
+                foreach (var dice in AllPlayedDices())
+                {
+                    if (dice.currentFace > 3)
+                    {
+                        eli = false;
+                        break;
+                    }
+                }
+                if (eli36)
+                    EnqueueMult(0.5f, skill);
+                break;
+            case "e37":
+                if (GameManager.Instance.currentHp < GameManager.Instance.maxHp / 2f)
+                    EnqueueMult(0.5f, skill);
+                break;
+            case "e38":
+                print("later");
+                break;
+            case "e39":
+                if (index == 0)
+                    if (diceInPlayed[0] != null)
+                        if (diceInPlayed[0].currentFace == 1)
+                        {
+                            EnqueueMult(1f, skill);
+                            EnqueuePoint(1, skill); 
+                        }
+                break;
+            case "e40":
+                if (diceInPlayed[index] != null)
+                    if (diceInPlayed[index].CurrentDiceType != DiceType.Normal)
+                        EnqueuePoint(30, skill);
+                break;
+            case "e41":
+                if (GameManager.Instance.currentHp == GameManager.Instance.maxHp)
+                    EnqueuePoint(20, skill);
+                break;
         }
     }    
 
@@ -539,6 +615,10 @@ public class SkillManager : Singleton<SkillManager>
                 GameManager.Instance.startRoundActionHelpers.Remove((skill, "e4"));
                 DiceManager.Instance.DiceRerollListener.Remove((skill, "e4"));
                 break;
+            case "e5":
+                actionHelpers.Remove((skill, "e5"));
+                GameManager.Instance.startRoundActionHelpers.Remove((skill, "e5"));
+                break;
             case "e10":
                 actionHelpers.Remove((skill, "e10"));
                 break;
@@ -567,6 +647,11 @@ public class SkillManager : Singleton<SkillManager>
                 actionHelpers[(skill, "e4")] = () => skill.v0 = 0;
                 GameManager.Instance.startRoundActionHelpers[(skill, "e4")] = () => skill.v0 = 0;
                 DiceManager.Instance.DiceRerollListener[(skill, "e4")] = (value) => skill.v0 += value;
+                break;
+            case "e5":
+                skill.v0 = 0;
+                actionHelpers[(skill, "e5")] = () => skill.v0 += 30;
+                GameManager.Instance.startRoundActionHelpers[(skill, "e5")] = () => skill.v0 = 0;
                 break;
             case "e10":
                 actionHelpers[(skill, "e10")] = () => skill.v0 -= 5;

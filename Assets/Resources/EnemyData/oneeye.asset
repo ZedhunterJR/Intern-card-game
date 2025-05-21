@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: One Eye
   animCon: {fileID: 9100000, guid: 5a48100bdec7d08459ec6d8c62139fb7, type: 2}
-  baseHp: 50
+  baseHp: 100
   dmg: 15
   attackInterval: 1

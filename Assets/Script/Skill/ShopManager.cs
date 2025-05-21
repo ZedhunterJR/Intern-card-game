@@ -351,7 +351,7 @@ public class ShopManager : Singleton<ShopManager>
                 DiceManager.Instance.AddOrUpdateDiceRate(DiceType.Twin, 0.1f);
                 break;
             case "r7":
-                print("change this effect!");
+                print("Deal with this effect later");
                 /*SkillManager.Instance.actionHelpers[(GameManager.Instance.NoSkill, "r7")] = () =>
                 {
                     if (GameManager.Instance.CurrentNumOfTurn == 1)
@@ -364,7 +364,7 @@ public class ShopManager : Singleton<ShopManager>
                 {
                     if (r8)
                     {
-                        print("you got 5 gold! Please add this effect later when there is economy");
+                        print("not implemented");
                         r8 = false;
                     }
                 };
@@ -372,6 +372,21 @@ public class ShopManager : Singleton<ShopManager>
                 {
                     r8 = true;
                 };
+                break;
+            case "r9":
+                DiceManager.Instance.AddOrUpdateDiceRate(DiceType.Gold, 0.1f);
+                break;
+            case "r10":
+
+                break;
+            case "r11":
+                GameManager.Instance.startRoundActionHelpers[(GameManager.Instance.NoSkill, "r11")] = () =>
+                {
+                    GameManager.Instance.UpdateHp(5);
+                };
+                break;
+            case "r12":
+                GameManager.Instance.turnBeforeEnemyFirstAttack += 1;
                 break;
         }
 

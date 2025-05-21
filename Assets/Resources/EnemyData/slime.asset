@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Slime
   animCon: {fileID: 9100000, guid: 7227d3cc31602434181a8f132a7e7b3b, type: 2}
-  baseHp: 50
+  baseHp: 100
   dmg: 10
   attackInterval: 2

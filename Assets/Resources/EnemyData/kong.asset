@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Kong
   animCon: {fileID: 9100000, guid: 3eee6a00aad78c246999b99ea1c26eb8, type: 2}
-  baseHp: 150
+  baseHp: 300
   dmg: 7
   attackInterval: 2

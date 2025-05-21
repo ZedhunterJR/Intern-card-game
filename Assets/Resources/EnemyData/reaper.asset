@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Reaper
   animCon: {fileID: 9100000, guid: 48368feceaad5614fbb0a6dbca0c00c3, type: 2}
-  baseHp: 120
+  baseHp: 240
   dmg: 30
   attackInterval: 4
