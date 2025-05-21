@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Dragon
   animCon: {fileID: 9100000, guid: b7f165e83a1222a4b919315ec43f7426, type: 2}
-  baseHp: 200
+  baseHp: 400
   dmg: 15
   attackInterval: 2

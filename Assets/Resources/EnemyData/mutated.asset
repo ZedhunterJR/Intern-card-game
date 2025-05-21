@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Mutated
   animCon: {fileID: 9100000, guid: a5a1a9256c4ea4745b45f71f4e7ff077, type: 2}
-  baseHp: 120
+  baseHp: 240
   dmg: 20
   attackInterval: 3
