@@ -3754,18 +3754,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12ec67a12e9dbe04797e49481d815ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossAnim:
-  - {fileID: 9100000, guid: 3eee6a00aad78c246999b99ea1c26eb8, type: 2}
-  - {fileID: 9100000, guid: 48368feceaad5614fbb0a6dbca0c00c3, type: 2}
-  - {fileID: 9100000, guid: b7f165e83a1222a4b919315ec43f7426, type: 2}
+  bosses:
+  - {fileID: 11400000, guid: 087c28e902ce4a148a6cb86668e7b250, type: 2}
+  - {fileID: 11400000, guid: 088538bb514924e419b646e57f7615b2, type: 2}
+  - {fileID: 11400000, guid: 7c92b3016608c7c4faa4f1bd8be25d8b, type: 2}
   enemyTier1:
-  - {fileID: 9100000, guid: 726fe54583447f64c8bb10278380c5f7, type: 2}
-  - {fileID: 9100000, guid: 7227d3cc31602434181a8f132a7e7b3b, type: 2}
-  - {fileID: 9100000, guid: 86f23c9aab74132439201c65336f5e5b, type: 2}
+  - {fileID: 11400000, guid: 8aa64d90177c3b948a27be8d9f53190e, type: 2}
+  - {fileID: 11400000, guid: d404b37f0ffe69e438154fddb771ed9f, type: 2}
+  - {fileID: 11400000, guid: 8ecd37ae3596a9a40be3ef4cca4f132d, type: 2}
   enemyTier2:
-  - {fileID: 9100000, guid: e8fde0c6b87d915478f6823561b47a45, type: 2}
-  - {fileID: 9100000, guid: 5a48100bdec7d08459ec6d8c62139fb7, type: 2}
-  - {fileID: 9100000, guid: a5a1a9256c4ea4745b45f71f4e7ff077, type: 2}
+  - {fileID: 11400000, guid: 59fea065db18e1f4aa80b5a021e2968d, type: 2}
+  - {fileID: 11400000, guid: 33e85691675115b4798e8e014242a792, type: 2}
+  - {fileID: 11400000, guid: 486bea32dfd21224fa074e805c5f2ff5, type: 2}
   enemyPlace: {fileID: 1013445265}
   hp_bar: {fileID: 390154677}
   enemyText: {fileID: 1809988152}
@@ -5176,8 +5176,11 @@ MonoBehaviour:
   gameStatus: 0
   NoSkill: {fileID: 0}
   currentRound: 0
-  maxNumOfTurn: 3
+  turnBeforeEnemyFirstAttack: 1
   maxNumOfReroll: 4
+  currentGold: 0
+  currentHp: 50
+  maxHp: 50
   turnsNum: {fileID: 1884609766}
   rerollsNum: {fileID: 346030891}
   shopRect: {fileID: 773698044}

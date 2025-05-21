@@ -351,11 +351,12 @@ public class ShopManager : Singleton<ShopManager>
                 DiceManager.Instance.AddOrUpdateDiceRate(DiceType.Twin, 0.1f);
                 break;
             case "r7":
-                SkillManager.Instance.actionHelpers[(GameManager.Instance.NoSkill, "r7")] = () =>
+                print("change this effect!");
+                /*SkillManager.Instance.actionHelpers[(GameManager.Instance.NoSkill, "r7")] = () =>
                 {
                     if (GameManager.Instance.CurrentNumOfTurn == 1)
                         GameManager.Instance.SetRerolls(5);
-                };
+                };*/
                 break;
             case "r8":
                 bool r8 = true;

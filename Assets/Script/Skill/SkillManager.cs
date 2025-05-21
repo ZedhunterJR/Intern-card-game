@@ -160,7 +160,8 @@ public class SkillManager : Singleton<SkillManager>
                 EnqueueMult(skill.v0, skill);
                 break;
             case "e5":
-                EnqueuePoint(30 * (GameManager.Instance.maxNumOfTurn - GameManager.Instance.CurrentNumOfTurn), skill);
+                print("Change this effect!");
+                //EnqueuePoint(30 * (GameManager.Instance.maxNumOfTurn - GameManager.Instance.CurrentNumOfTurn), skill);
                 break;
             case "e6":
                 if (currentDicePattern == DicePattern.Single)
@@ -237,8 +238,9 @@ public class SkillManager : Singleton<SkillManager>
                     EnqueueMult(0.7f, skill);
                 break;
             case "e15":
-                if (GameManager.Instance.CurrentNumOfTurn == 1)
-                    EnqueueMult(0.7f, skill);
+                print("change this effect");
+                //if (GameManager.Instance.CurrentNumOfTurn == 1)
+                    //EnqueueMult(0.7f, skill);
                 break;
             case "e16":
                 if (Enum.TryParse(skill.s0, out DicePattern patt))

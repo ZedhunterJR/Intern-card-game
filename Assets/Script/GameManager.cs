@@ -14,16 +14,16 @@ public class GameManager : Singleton<GameManager>
     public int currentRound = 0;
     public Dictionary<(Skill, string), Action> startRoundActionHelpers = new();
     public bool CanInteract => (SkillManager.Instance.canPlay && gameStatus == GameStatus.Battle) || gameStatus == GameStatus.Shop;
-    public int maxNumOfTurn, maxNumOfReroll;
-    public int CurrentNumOfTurn { get; private set; }
+    public int turnBeforeEnemyFirstAttack, maxNumOfReroll;
+    public int CurrentTurnBeforeEnemyAttack { get; private set; }
     public int CurrentNumOfReroll { get; private set; }
     public void SetTurns(int value = -1, bool set = false)
     {
         if (!set)
-            CurrentNumOfTurn += value;
+            CurrentTurnBeforeEnemyAttack += value;
         else
-            CurrentNumOfTurn = value;
-        turnsNum.text = CurrentNumOfTurn.ToString();
+            CurrentTurnBeforeEnemyAttack = value;
+        turnsNum.text = CurrentTurnBeforeEnemyAttack.ToString();
     }
     public void SetRerolls(int value = -1, bool set = false)
     {
@@ -33,6 +33,42 @@ public class GameManager : Singleton<GameManager>
             CurrentNumOfReroll = value;
         rerollsNum.text = CurrentNumOfReroll.ToString();
     }
+    public float currentGold;
+    /// <summary>
+    /// current += value;
+    /// To buy, check ModifyGold(-price). If false, that means there is not enough gold
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public bool ModifyGold(float value)
+    {
+        if (currentGold + value < 0)
+            return false;
+        currentGold += value;
+        //update text here ->
+
+        return true;
+    }
+    public float currentHp, maxHp;
+    /// <summary>
+    /// if return false, that means hp = 0 -> should be gameover
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public bool UpdateHp(float value)
+    {
+        currentHp += value;
+        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+        //update text here ->
+
+        if (currentHp == 0)
+        {
+            ChangeGameStatus(GameStatus.Lose);
+            return false;
+        }
+        return true;
+    }
+
 
     [SerializeField] TextMeshProUGUI turnsNum;
     [SerializeField] TextMeshProUGUI rerollsNum;
@@ -88,13 +124,13 @@ public class GameManager : Singleton<GameManager>
                     {
                         helper.Value?.Invoke();
                     }
-                    SetTurns(maxNumOfTurn, true);
                     SetRerolls(maxNumOfReroll, true);
                     DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
                     DiceManager.Instance.StartTurn();
                     AttackSequence.Instance.ResetNewTurn();
                     AttackSequence.Instance.ResetNewRound();
                     EnemyManager.Instance.SpawnEnemy(currentRound);
+                    SetTurns(turnBeforeEnemyFirstAttack + EnemyManager.Instance.currentEnemy.attackInterval, true);
                     currentRound++;
                     break;
                 case GameStatus.Shop:
