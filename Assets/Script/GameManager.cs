@@ -75,7 +75,7 @@ public class GameManager : Singleton<GameManager>
     public GameStatus GameStatus => gameStatus;
     
     public RectTransform shopRect;
-    public RectTransform iventoryRect;
+    public RectTransform inforRect;
     DataSpriteManager dataSpriteManager;
 
     private bool isShopOpen = false;
@@ -92,24 +92,12 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        /*if (Input.GetKeyUp(KeyCode.E))
-        {
-            if (!isShopOpen)
-            {
-                isShopOpen = true;
-                ShopOpen();
-            }
-            else
-            {
-                isShopOpen = false;
-                ShopClose();
-            }    
-        } */
             
     }
 
     public void ChangeGameStatus(GameStatus gameStatus)
     {
+        var tempStatus = this.gameStatus;
         if (this.gameStatus != gameStatus)
         {
             this.gameStatus = gameStatus;
@@ -120,18 +108,21 @@ public class GameManager : Singleton<GameManager>
                 case GameStatus.Pause:
                     break;
                 case GameStatus.Battle:
-                    foreach (var helper in startRoundActionHelpers)
+                    if (tempStatus != GameStatus.Pause)
                     {
-                        helper.Value?.Invoke();
+                        foreach (var helper in startRoundActionHelpers)
+                        {
+                            helper.Value?.Invoke();
+                        }
+                        SetRerolls(maxNumOfReroll, true);
+                        DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
+                        DiceManager.Instance.StartTurn();
+                        AttackSequence.Instance.ResetNewTurn();
+                        AttackSequence.Instance.ResetNewRound();
+                        EnemyManager.Instance.SpawnEnemy(currentRound);
+                        SetTurns(turnBeforeEnemyFirstAttack + EnemyManager.Instance.currentEnemy.attackInterval, true);
+                        currentRound++;
                     }
-                    SetRerolls(maxNumOfReroll, true);
-                    DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
-                    DiceManager.Instance.StartTurn();
-                    AttackSequence.Instance.ResetNewTurn();
-                    AttackSequence.Instance.ResetNewRound();
-                    EnemyManager.Instance.SpawnEnemy(currentRound);
-                    SetTurns(turnBeforeEnemyFirstAttack + EnemyManager.Instance.currentEnemy.attackInterval, true);
-                    currentRound++;
                     break;
                 case GameStatus.Shop:
                     ShopOpen();
@@ -180,6 +171,19 @@ public class GameManager : Singleton<GameManager>
         ChangeGameStatus(GameStatus.Battle);
     }
     
+    public void InforOpen()
+    {
+        inforRect.transform.position = Vector2.zero;
+        inforRect.transform.localScale = Vector2.zero;
+        inforRect.DOScale(Vector2.one, 0.5f).SetEase(Ease.InCubic);
+        ChangeGameStatus(GameStatus.Pause);
+    }
+
+    public void InforClose()
+    {
+        inforRect.DOAnchorPos(new Vector2(0, 600f), 0.5f).SetEase(Ease.OutCubic);
+        ChangeGameStatus (GameStatus.Battle);
+    }
 }
 
 public enum GameStatus
