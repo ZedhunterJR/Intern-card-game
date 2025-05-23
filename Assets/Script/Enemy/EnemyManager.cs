@@ -44,10 +44,10 @@ public class EnemyManager : Singleton<EnemyManager>
     /// </summary>
     /// <param name="dmg"></param>
     /// <returns></returns>
-    public int TakeDamage(float dmg)
+    public void TakeDamage(float dmg)
     {
         if (enemyCurrentHp == 0)
-            return 2;
+            return;
 
         //hurt anim ->
 
@@ -60,12 +60,7 @@ public class EnemyManager : Singleton<EnemyManager>
         {
             OnKillEnemyEvent();
         }
-        if (enemyCurrentHp == 0)
-        {
-            return 1;
-        }
 
-        return 0;
     }
     public void Endturn()
     {
@@ -76,6 +71,7 @@ public class EnemyManager : Singleton<EnemyManager>
             {
                 GameManager.Instance.ChangeGameStatus(GameStatus.Shop);
             }, 2f);
+            return;
         }
 
         if (GameManager.Instance.CurrentTurnBeforeEnemyAttack == 0)
