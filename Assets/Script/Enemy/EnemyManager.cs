@@ -52,7 +52,7 @@ public class EnemyManager : Singleton<EnemyManager>
         //hurt anim ->
 
         enemyCurrentHp -= dmg;
-        enemyCurrentHp = Mathf.Clamp((int)enemyCurrentHp, 0, enemyMaxHp);
+        enemyCurrentHp = Mathf.Clamp(enemyCurrentHp, 0, enemyMaxHp);
         hp_bar.transform.localScale = new Vector3(enemyCurrentHp / enemyMaxHp, 1, 1);
         UpdateInformationAfterPlay();
 
@@ -66,7 +66,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
     public void UpdateInformationAfterPlay()
     {
-        enemyTextCurrentHP.text = $"{enemyCurrentHp}/{enemyMaxHp}";
+        enemyTextCurrentHP.text = $"{enemyCurrentHp.DecimalFormat(0)}/{enemyMaxHp}";
         attackInterval.text = GameManager.Instance.CurrentTurnBeforeEnemyAttack.ToString();
     }
 
