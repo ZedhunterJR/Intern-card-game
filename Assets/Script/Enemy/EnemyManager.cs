@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using System;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
@@ -15,6 +16,8 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField] private TextMeshProUGUI enemyText, attackDamage, attackInterval, enemyTextCurrentHP;
     public EnemyData currentEnemy;
     [HideInInspector] public float enemyMaxHp, enemyCurrentHp;
+
+    public Dictionary<(Skill, string), Action<float>> enemyAttackActionHelpers = new();
     private void Start()
     {
         
@@ -84,7 +87,11 @@ public class EnemyManager : Singleton<EnemyManager>
             enemyPlace.GetComponent<Animator>().Play("attack");
             Pulse();
             GameManager.Instance.SetTurns(currentEnemy.attackInterval, true);
-            GameManager.Instance.UpdateHp(-currentEnemy.dmg);
+            var dead = !GameManager.Instance.UpdateHp(-currentEnemy.dmg);
+            if (!dead) foreach (var item in enemyAttackActionHelpers.Values)
+                    item?.Invoke(currentEnemy.dmg);
+
+            return dead;
             //return true;
         }
         return false;

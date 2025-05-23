@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting.Dependencies.NCalc;
+using System.Linq; 
 using UnityEngine;
 
 public class SkillManager : Singleton<SkillManager>
@@ -218,7 +217,11 @@ public class SkillManager : Singleton<SkillManager>
                 }
                 break;
             case "e12":
-                EnqueueMult(0.5f, skill);
+                if (skill.v0 == 0)
+                {
+                    EnqueueMult(0.5f, skill);
+                    skill.v0 = 1;
+                }
                 //print("not implemented the disable part");
                 break;
             case "e13":
@@ -258,7 +261,7 @@ public class SkillManager : Singleton<SkillManager>
                     EnqueueMult(1.5f, skill);
                 break;
             case "e19":
-                EnqueueMult(1f, skill);
+                EnqueueMult(1.5f, skill);
                 GameManager.Instance.SetTurns();
                 break;
             case "e20":
@@ -418,7 +421,15 @@ public class SkillManager : Singleton<SkillManager>
                     EnqueueMult(0.5f, skill);
                 break;
             case "e38":
-                print("later");
+                List<int> diceFaces = new List<int>();
+                foreach (var dice in diceInPlayed)
+                {
+                    if (dice != null)
+                        diceFaces.Add(dice.currentFace);
+                }
+                bool allUnique38 = diceFaces.Count == diceFaces.Distinct().Count();
+                if (allUnique38)
+                    EnqueuePoint(100, skill);
                 break;
             case "e39":
                 if (index == 0)
@@ -596,6 +607,9 @@ public class SkillManager : Singleton<SkillManager>
             case "e10":
                 actionHelpers.Remove((skill, "e10"));
                 break;
+            case "e12":
+                GameManager.Instance.startRoundActionHelpers.Remove((skill, "e12"));
+                break;
             case "e13":
                 actionHelpers.Remove((skill, "e13"));
                 break;
@@ -604,6 +618,9 @@ public class SkillManager : Singleton<SkillManager>
                 break;
             case "e22":
                 GameManager.Instance.startRoundActionHelpers.Remove((skill, "e22"));
+                break;
+            case "e35":
+                EnemyManager.Instance.enemyAttackActionHelpers.Remove((skill, "e35"));
                 break;
         }
         skill.v0 = 0;
@@ -631,6 +648,10 @@ public class SkillManager : Singleton<SkillManager>
                 actionHelpers[(skill, "e10")] = () => skill.v0 -= 5;
                 skill.v0 = 50;
                 break;
+            case "e12":
+                GameManager.Instance.startRoundActionHelpers[(skill, "e12")] = () => skill.v0 = 0;
+                //actionHelpers[(skill, "e5")] = () => skill.v0 += 30;
+                break;
             case "e13":
                 actionHelpers[(skill, "e13")] = () => skill.v0 += 5;
                 skill.v0 = 20;
@@ -649,7 +670,14 @@ public class SkillManager : Singleton<SkillManager>
             case "e22":
                 GameManager.Instance.startRoundActionHelpers[(skill, "e22")] = () =>
                 {
-                    skill.v0 += 0.01f * GameManager.Instance.CurrentNumOfReroll;
+                    skill.v0 += 0.05f * GameManager.Instance.CurrentNumOfReroll;
+                };
+                skill.v0 = 0.2f;
+                break;
+            case "e35":
+                EnemyManager.Instance.enemyAttackActionHelpers[(skill, "e35")] = (dmg) =>
+                {
+                    skill.v0 += 0.2f;
                 };
                 skill.v0 = 0.2f;
                 break;

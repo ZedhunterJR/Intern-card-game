@@ -128,18 +128,18 @@ public class DataSpriteManager : Singleton<DataSpriteManager>
             var pattentName = Global.Instance.DisplayNames[key];
 
             // DEBUG: In ra để kiểm tra
-            Debug.Log($"🔍 Trying to match pattern '{key}' with name '{pattentName}'");
+            Debug.Log($"Trying to match pattern '{key}' with name '{pattentName}'");
 
             var match = pattentSprite.FirstOrDefault(sprite => sprite.name == pattentName);
 
             if (match != null)
             {
                 dicSpritePattent[key] = match;
-                Debug.Log($"✅ Gán sprite: {pattentName} → {match.name}");
+                Debug.Log($"Gán sprite: {pattentName} to {match.name}");
             }
             else
             {
-                Debug.LogWarning($"⚠️ Không tìm thấy sprite có tên: {pattentName}");
+                Debug.LogWarning($"Không tìm thấy sprite có tên: {pattentName}");
             }
         }
     }

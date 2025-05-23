@@ -290,6 +290,15 @@ public class DiceManager : Singleton<DiceManager>
     }
     public void RerollAction()
     {
+        if (GameManager.Instance.CurrentNumOfReroll == 0)
+        {
+            if (GameManager.Instance.startRoundActionHelpers.ContainsKey((GameManager.Instance.NoSkill, "r7")))
+            {
+                GameManager.Instance.UpdateHp(-5);
+                GameManager.Instance.SetRerolls(1);
+            }
+
+        }
         if (!isRolling && selectedDice.Count != 0 &&
             GameManager.Instance.GameStatus == GameStatus.Battle && GameManager.Instance.CurrentNumOfReroll >= 0)
         {
