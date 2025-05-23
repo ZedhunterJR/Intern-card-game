@@ -118,7 +118,6 @@ public class AttackSequence : Singleton<AttackSequence>
             yield return new WaitForSeconds(0.5f);
             EnemyManager.Instance.TakeDamage(totalDamage / diceToLaunch.Count);
             totalDamageValue += totalDamage / diceToLaunch.Count;
-            totalDamageRoundText.text = totalDamageValue.DecimalFormat(2);
 
             PoolingObject.Instance.ReturnDiceToPool(die);
         }
@@ -164,10 +163,5 @@ public class AttackSequence : Singleton<AttackSequence>
         pointText.text = "0";
         multText.text = "0";
         totalDamageText.text = "0";
-    }
-    public void ResetNewRound()
-    {
-        totalDamageValue = 0;
-        totalDamageRoundText.text = "0";
     }
 }
