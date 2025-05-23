@@ -353,12 +353,8 @@ public class ShopManager : Singleton<ShopManager>
                 DiceManager.Instance.AddOrUpdateDiceRate(DiceType.Twin, 0.1f);
                 break;
             case "r7":
-                print("Deal with this effect later");
-                /*SkillManager.Instance.actionHelpers[(GameManager.Instance.NoSkill, "r7")] = () =>
-                {
-                    if (GameManager.Instance.CurrentNumOfTurn == 1)
-                        GameManager.Instance.SetRerolls(5);
-                };*/
+                //print("Deal with this effect later");
+                GameManager.Instance.startRoundActionHelpers[(GameManager.Instance.NoSkill, "r7")] = () => print("debug debug relic e7");
                 break;
             case "r8":
                 bool r8 = true;
@@ -366,8 +362,13 @@ public class ShopManager : Singleton<ShopManager>
                 {
                     if (r8)
                     {
-                        print("not implemented");
-                        r8 = false;
+                        var dices = SkillManager.Instance.diceInPlayed;
+                        foreach (var d in dices)
+                        {
+                            if (d == null) continue;
+                            if (d.currentFace == 1)
+                                r8 = false;
+                        }
                     }
                 };
                 GameManager.Instance.startRoundActionHelpers[(GameManager.Instance.NoSkill, "r8")] = () =>

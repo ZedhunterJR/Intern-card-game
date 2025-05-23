@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using System;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
@@ -15,6 +16,8 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField] private TextMeshProUGUI enemyText, attackDamage, attackInterval, enemyTextCurrentHP;
     public EnemyData currentEnemy;
     [HideInInspector] public float enemyMaxHp, enemyCurrentHp;
+
+    public Dictionary<(Skill, string), Action<float>> enemyAttackActionHelpers = new();
     private void Start()
     {
         
@@ -32,7 +35,7 @@ public class EnemyManager : Singleton<EnemyManager>
         OnSpawnEnemyEvent();
 
         enemyCurrentHp = enemyMaxHp;
-        enemyText.text = currentEnemy.name;
+        enemyText.text = currentEnemy.enemyName;
         attackDamage.text = currentEnemy.dmg.ToString();
         enemyTextCurrentHP.text = $"{enemyCurrentHp}/{enemyMaxHp}";
         attackInterval.text = currentEnemy.attackInterval.ToString();
@@ -49,7 +52,7 @@ public class EnemyManager : Singleton<EnemyManager>
         //hurt anim ->
 
         enemyCurrentHp -= dmg;
-        enemyCurrentHp = Mathf.Clamp((int)enemyCurrentHp, 0, enemyMaxHp);
+        enemyCurrentHp = Mathf.Clamp(enemyCurrentHp, 0, enemyMaxHp);
         hp_bar.transform.localScale = new Vector3(enemyCurrentHp / enemyMaxHp, 1, 1);
         UpdateInformationAfterPlay();
 
@@ -63,7 +66,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
     public void UpdateInformationAfterPlay()
     {
-        enemyTextCurrentHP.text = $"{enemyCurrentHp}/{enemyMaxHp}";
+        enemyTextCurrentHP.text = $"{enemyCurrentHp.DecimalFormat(0)}/{enemyMaxHp}";
         attackInterval.text = GameManager.Instance.CurrentTurnBeforeEnemyAttack.ToString();
     }
 
@@ -84,7 +87,11 @@ public class EnemyManager : Singleton<EnemyManager>
             enemyPlace.GetComponent<Animator>().Play("attack");
             Pulse();
             GameManager.Instance.SetTurns(currentEnemy.attackInterval, true);
-            GameManager.Instance.UpdateHp(-currentEnemy.dmg);
+            var dead = !GameManager.Instance.UpdateHp(-currentEnemy.dmg);
+            if (!dead) foreach (var item in enemyAttackActionHelpers.Values)
+                    item?.Invoke(currentEnemy.dmg);
+
+            return dead;
             //return true;
         }
         return false;
