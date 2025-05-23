@@ -115,7 +115,8 @@ public class AttackSequence : Singleton<AttackSequence>
             var die = diceToLaunch[i]; // capture reference directly
             die.gameObject.transform.DOMove(enemyPos.position, 0.5f);
 
-            yield return new WaitForSeconds(0.5f);EnemyManager.Instance.TakeDamage(totalDamage / diceToLaunch.Count);
+            yield return new WaitForSeconds(0.5f);
+            EnemyManager.Instance.TakeDamage(totalDamage / diceToLaunch.Count);
             totalDamageValue += totalDamage / diceToLaunch.Count;
             totalDamageRoundText.text = totalDamageValue.DecimalFormat(2);
 
@@ -123,11 +124,11 @@ public class AttackSequence : Singleton<AttackSequence>
         }
 
         yield return new WaitForSeconds(1f);
-        EnemyManager.Instance.Endturn();
-
-        yield return new WaitForSeconds(1f);
-        if (GameManager.Instance.currentHp > 0)
+        if (!EnemyManager.Instance.Endturn())
+        {
+            yield return new WaitForSeconds(1f);
             DiceManager.Instance.StartTurn();
+        }
         ResetNewTurn();
     }
 

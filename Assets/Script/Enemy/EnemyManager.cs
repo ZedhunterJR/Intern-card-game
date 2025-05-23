@@ -37,13 +37,7 @@ public class EnemyManager : Singleton<EnemyManager>
         hp_bar.transform.localScale = new Vector3(0, 1, 1);
         hp_bar.transform.DOScale(Vector3.one, 1f);
     }
-    /// <summary>
-    /// 0: not dead
-    /// 1: dead
-    /// 2: already dead, return
-    /// </summary>
-    /// <param name="dmg"></param>
-    /// <returns></returns>
+
     public void TakeDamage(float dmg)
     {
         if (enemyCurrentHp == 0)
@@ -62,7 +56,7 @@ public class EnemyManager : Singleton<EnemyManager>
         }
 
     }
-    public void Endturn()
+    public bool Endturn()
     {
         if (enemyCurrentHp == 0)
         {
@@ -71,7 +65,7 @@ public class EnemyManager : Singleton<EnemyManager>
             {
                 GameManager.Instance.ChangeGameStatus(GameStatus.Shop);
             }, 2f);
-            return;
+            return true;
         }
 
         if (GameManager.Instance.CurrentTurnBeforeEnemyAttack == 0)
@@ -80,7 +74,9 @@ public class EnemyManager : Singleton<EnemyManager>
             Pulse();
             GameManager.Instance.SetTurns(currentEnemy.attackInterval, true);
             GameManager.Instance.UpdateHp(-currentEnemy.dmg);
+            return true;
         }
+        return false;
     }
     public void OnSpawnEnemyEvent()
     {
