@@ -127,6 +127,11 @@ public class AttackSequence : Singleton<AttackSequence>
 
         yield return new WaitForSeconds(1f);
         if (enemyTakeDmgFlag == 0)
+        {
+            EnemyManager.Instance.Endturn();
+        }
+        yield return new WaitForSeconds(1f);
+        if (GameManager.Instance.currentHp > 0)
             DiceManager.Instance.StartTurn();
         ResetNewTurn();
     }

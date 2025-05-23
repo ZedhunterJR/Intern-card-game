@@ -62,26 +62,29 @@ public class EnemyManager : Singleton<EnemyManager>
         }
         if (enemyCurrentHp == 0)
         {
+            return 1;
+        }
+
+        return 0;
+    }
+    public void Endturn()
+    {
+        if (enemyCurrentHp == 0)
+        {
             enemyPlace.GetComponent<Animator>().Play("die");
             this.Invoke(() =>
             {
                 GameManager.Instance.ChangeGameStatus(GameStatus.Shop);
             }, 2f);
-            return 1;
         }
 
         if (GameManager.Instance.CurrentTurnBeforeEnemyAttack == 0)
         {
             enemyPlace.GetComponent<Animator>().Play("attack");
+            Pulse();
             GameManager.Instance.SetTurns(currentEnemy.attackInterval, true);
-
-            if (!GameManager.Instance.UpdateHp(-currentEnemy.dmg))
-            {
-                return 1;
-            }
+            GameManager.Instance.UpdateHp(-currentEnemy.dmg);
         }
-
-        return 0;
     }
     public void OnSpawnEnemyEvent()
     {
@@ -138,5 +141,13 @@ public class EnemyManager : Singleton<EnemyManager>
             case 11: return 10f;
         }
         return 1f;
+    }
+
+    private void Pulse()
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.AppendInterval(0.4f)
+           .Append(Camera.main.DOColor(Color.red, 0.15f))
+           .Append(Camera.main.DOColor(Color.black, 0.15f));
     }
 }
