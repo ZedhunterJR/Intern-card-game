@@ -439,156 +439,115 @@ public class SkillManager : Singleton<SkillManager>
                     EnqueuePoint(20, skill);
                 break;
         }
-    }    
-
+    }
+    List<DicePattern> priority = new List<DicePattern> 
+    {
+        DicePattern.SixOfAKind,
+        DicePattern.FiveOfAKind,
+        DicePattern.FullSixes,
+        DicePattern.Sequence6,
+        DicePattern.TwoTriplet,
+        DicePattern.FullHouse,
+        DicePattern.FourOfAKind,
+        DicePattern.ThreeOfAKind,
+        DicePattern.Sequence5,
+        DicePattern.ThreePair,
+        DicePattern.Sequence4,
+        DicePattern.TwoPair,
+        DicePattern.OnePair,
+        DicePattern.Sequence3,
+        DicePattern.Single
+    };
     public DicePattern DetectDicePattern(List<Dice> diceList)
     {
         if (diceList == null || diceList.Count == 0)
             return DicePattern.None;
+
         List<int> values = diceList
             .Where(d => d.currentFace != -1)
             .Select(d => d.currentFace)
             .ToList();
+
         if (values.Count == 0)
             return DicePattern.None;
-        // Reset used flags
-        foreach (var die in diceList)
-            die.usedInAttack = false;
+
+        Dictionary<DicePattern, List<Dice>> matchedPatterns = new();
+
+        void AddPattern(DicePattern pattern, List<int> valueSubset)
+        {
+            var used = new List<Dice>();
+            foreach (var val in valueSubset)
+            {
+                var die = diceList.FirstOrDefault(d => d.currentFace == val && !used.Contains(d));
+                if (die != null)
+                    used.Add(die);
+            }
+            if (used.Count > 0)
+                matchedPatterns[pattern] = used;
+        }
 
         var counts = values.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
         var countList = counts.Values.OrderByDescending(v => v).ToList();
         var unique = values.Distinct().OrderBy(x => x).ToList();
         int diceCount = values.Count;
 
-        // Helper: mark dice with matching value and desired count
-        void MarkDiceUsed(int value, int count)
-        {
-            var matched = diceList.Where(d => d.currentFace == value && !d.usedInAttack).Take(count);
-            foreach (var d in matched) d.usedInAttack = true;
-        }
+        // --- Pattern Detection ---
 
-        // Helper: mark multiple values
-        void MarkMultipleUsed(Dictionary<int, int> valueCount)
-        {
-            foreach (var pair in valueCount)
-                MarkDiceUsed(pair.Key, pair.Value);
-        }
-
-        // Six of a kind
         if (diceCount >= 6 && countList[0] == 6)
-        {
-            int val = counts.First(kv => kv.Value == 6).Key;
-            MarkDiceUsed(val, 6);
-            return DicePattern.SixOfAKind;
-        }
+            AddPattern(DicePattern.SixOfAKind, Enumerable.Repeat(counts.First(kv => kv.Value == 6).Key, 6).ToList());
 
-        // Full sixes (5 dice, all are 6)
         if (values.All(x => x == 6) && diceCount == 5)
-        {
-            foreach (var d in diceList)
-                d.usedInAttack = true;
-            return DicePattern.FullSixes;
-        }
+            AddPattern(DicePattern.FullSixes, values);
 
-        // Five of a kind
         if (countList[0] == 5)
-        {
-            int val = counts.First(kv => kv.Value == 5).Key;
-            MarkDiceUsed(val, 5);
-            return DicePattern.FiveOfAKind;
-        }
+            AddPattern(DicePattern.FiveOfAKind, Enumerable.Repeat(counts.First(kv => kv.Value == 5).Key, 5).ToList());
 
-        // Four of a kind
         if (countList[0] == 4)
-        {
-            int val = counts.First(kv => kv.Value == 4).Key;
-            MarkDiceUsed(val, 4);
-            return DicePattern.FourOfAKind;
-        }
+            AddPattern(DicePattern.FourOfAKind, Enumerable.Repeat(counts.First(kv => kv.Value == 4).Key, 4).ToList());
 
-        // Two triplets
         if (countList.Count >= 2 && countList[0] == 3 && countList[1] == 3)
-        {
-            var triplets = counts.Where(kv => kv.Value == 3).Take(2).ToDictionary(kv => kv.Key, kv => 3);
-            MarkMultipleUsed(triplets);
-            return DicePattern.TwoTriplet;
-        }
+            AddPattern(DicePattern.TwoTriplet, counts.Where(kv => kv.Value == 3).Take(2).SelectMany(kv => Enumerable.Repeat(kv.Key, 3)).ToList());
 
-        // Full house (3 + 2)
         if (countList.Count >= 2 && countList[0] == 3 && countList[1] == 2)
         {
             var triple = counts.First(kv => kv.Value == 3).Key;
             var pair = counts.First(kv => kv.Value == 2).Key;
-            MarkDiceUsed(triple, 3);
-            MarkDiceUsed(pair, 2);
-            return DicePattern.FullHouse;
+            AddPattern(DicePattern.FullHouse, Enumerable.Repeat(triple, 3).Concat(Enumerable.Repeat(pair, 2)).ToList());
         }
 
-        // Three of a kind
         if (countList[0] == 3)
-        {
-            int val = counts.First(kv => kv.Value == 3).Key;
-            MarkDiceUsed(val, 3);
-            return DicePattern.ThreeOfAKind;
-        }
+            AddPattern(DicePattern.ThreeOfAKind, Enumerable.Repeat(counts.First(kv => kv.Value == 3).Key, 3).ToList());
 
-        // Three pairs
         if (countList.Count >= 3 && countList[0] == 2 && countList[1] == 2 && countList[2] == 2)
-        {
-            var pairs = counts.Where(kv => kv.Value == 2).Take(3).ToDictionary(kv => kv.Key, kv => 2);
-            MarkMultipleUsed(pairs);
-            return DicePattern.ThreePair;
-        }
+            AddPattern(DicePattern.ThreePair, counts.Where(kv => kv.Value == 2).Take(3).SelectMany(kv => Enumerable.Repeat(kv.Key, 2)).ToList());
 
-        // Two pair
         if (countList.Count >= 2 && countList[0] == 2 && countList[1] == 2)
-        {
-            var pairs = counts.Where(kv => kv.Value == 2).Take(2).ToDictionary(kv => kv.Key, kv => 2);
-            MarkMultipleUsed(pairs);
-            return DicePattern.TwoPair;
-        }
+            AddPattern(DicePattern.TwoPair, counts.Where(kv => kv.Value == 2).Take(2).SelectMany(kv => Enumerable.Repeat(kv.Key, 2)).ToList());
 
-        // One pair
         if (countList[0] == 2)
-        {
-            int val = counts.First(kv => kv.Value == 2).Key;
-            MarkDiceUsed(val, 2);
-            return DicePattern.OnePair;
-        }
+            AddPattern(DicePattern.OnePair, Enumerable.Repeat(counts.First(kv => kv.Value == 2).Key, 2).ToList());
 
-        // Sequences
-        int maxSequence = 1;
-        int current = 1;
-        int startIndex = 0;
-
+        // Sequence
+        int maxSeq = 1, curr = 1, start = 0;
         for (int i = 1; i < unique.Count; i++)
         {
             if (unique[i] == unique[i - 1] + 1)
             {
-                current++;
-                if (current > maxSequence)
+                curr++;
+                if (curr > maxSeq)
                 {
-                    maxSequence = current;
-                    startIndex = i - current + 1;
+                    maxSeq = curr;
+                    start = i - curr + 1;
                 }
             }
             else
-            {
-                current = 1;
-            }
+                curr = 1;
         }
 
-        if (maxSequence >= 3)
+        if (maxSeq >= 3)
         {
-            var sequence = unique.Skip(startIndex).Take(maxSequence).ToList();
-
-            foreach (var val in sequence)
-            {
-                var die = diceList.FirstOrDefault(d => d.currentFace == val && !d.usedInAttack);
-                if (die != null) die.usedInAttack = true;
-            }
-
-            return maxSequence switch
+            var seq = unique.Skip(start).Take(maxSeq).ToList();
+            DicePattern p = maxSeq switch
             {
                 >= 6 => DicePattern.Sequence6,
                 5 => DicePattern.Sequence5,
@@ -596,14 +555,29 @@ public class SkillManager : Singleton<SkillManager>
                 3 => DicePattern.Sequence3,
                 _ => DicePattern.Single
             };
+            AddPattern(p, seq);
         }
 
-        // Single (mark the die with the highest value)
-        int maxVal = diceList.Max(d => d.currentFace);
-        var highestDie = diceList.FirstOrDefault(d => d.currentFace == maxVal);
-        if (highestDie != null) highestDie.usedInAttack = true;
-        return DicePattern.Single;
+        // Always fallback to Single (highest die)
+        int maxVal = values.Max();
+        var highDie = diceList.FirstOrDefault(d => d.currentFace == maxVal);
+        if (highDie != null)
+            matchedPatterns[DicePattern.Single] = new() { highDie };
+
+        // --- Apply best match from priority list ---
+        foreach (var pattern in priority)
+        {
+            if (matchedPatterns.ContainsKey(pattern))
+            {
+                foreach (var d in matchedPatterns[pattern])
+                    d.usedInAttack = true;
+                return pattern;
+            }
+        }
+
+        return DicePattern.None;
     }
+
 
     public void RemoveEffectFromSkill(Skill skill, EffectClause effect)
     {
