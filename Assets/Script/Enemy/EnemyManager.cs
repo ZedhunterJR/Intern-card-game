@@ -30,8 +30,6 @@ public class EnemyManager : Singleton<EnemyManager>
 
         enemyMaxHp = currentEnemy.baseHp * RoundRequirement(round);
         OnSpawnEnemyEvent();
-        enemyText.text = currentEnemy.name;
-        roundReq.text = enemyMaxHp.ToString();
 
         enemyCurrentHp = enemyMaxHp;
         hp_bar.transform.localScale = new Vector3(0, 1, 1);

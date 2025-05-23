@@ -50,6 +50,8 @@ public class GameManager : Singleton<GameManager>
         return true;
     }
     public float currentHp, maxHp;
+    [SerializeField] List<Sprite> hpSprite = new();
+    [SerializeField] Image hpImage;
     /// <summary>
     /// if return false, that means hp = 0 -> should be gameover
     /// </summary>
@@ -59,6 +61,7 @@ public class GameManager : Singleton<GameManager>
     {
         currentHp += value;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+        UpdateHpImage();
         //update text here ->
 
         if (currentHp == 0)
@@ -67,6 +70,31 @@ public class GameManager : Singleton<GameManager>
             return false;
         }
         return true;
+    }
+    void UpdateHpImage()
+    {
+        float hpPercent = (float)currentHp / maxHp * 100f;
+
+        if (hpPercent <= 0f)
+        {
+            hpImage.gameObject.SetActive(false);
+            return;
+        }
+        else
+        {
+            hpImage.gameObject.SetActive(true);
+        }
+
+        if (hpPercent > 80f)
+            hpImage.sprite = hpSprite[0];
+        else if (hpPercent > 60f)
+            hpImage.sprite = hpSprite[1];
+        else if (hpPercent > 40f)
+            hpImage.sprite = hpSprite[2];
+        else if (hpPercent > 20f)
+            hpImage.sprite = hpSprite[3];
+        else
+            hpImage.sprite = hpSprite[4];
     }
 
 
@@ -104,6 +132,7 @@ public class GameManager : Singleton<GameManager>
             switch (gameStatus)
             {
                 case GameStatus.Init:
+                    UpdateHpImage();
                     break;
                 case GameStatus.Pause:
                     break;
@@ -118,7 +147,6 @@ public class GameManager : Singleton<GameManager>
                         DiceManager.Instance.currentDiceNum = DiceManager.Instance.baseDiceNum;
                         DiceManager.Instance.StartTurn();
                         AttackSequence.Instance.ResetNewTurn();
-                        AttackSequence.Instance.ResetNewRound();
                         EnemyManager.Instance.SpawnEnemy(currentRound);
                         SetTurns(turnBeforeEnemyFirstAttack + EnemyManager.Instance.currentEnemy.attackInterval, true);
                         currentRound++;
