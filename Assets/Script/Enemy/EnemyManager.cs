@@ -35,7 +35,7 @@ public class EnemyManager : Singleton<EnemyManager>
         OnSpawnEnemyEvent();
 
         enemyCurrentHp = enemyMaxHp;
-        enemyText.text = currentEnemy.name;
+        enemyText.text = currentEnemy.enemyName;
         attackDamage.text = currentEnemy.dmg.ToString();
         enemyTextCurrentHP.text = $"{enemyCurrentHp}/{enemyMaxHp}";
         attackInterval.text = currentEnemy.attackInterval.ToString();
