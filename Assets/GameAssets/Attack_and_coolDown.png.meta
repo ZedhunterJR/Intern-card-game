@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a8409cc5acba3ae408b2d03a42b8d2b7
+guid: bef7148bf9a11aa4eb673470c570779b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WoodenShop_0
+      name: Attack_and_coolDown_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 71
-        width: 64
-        height: 21
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83db29a674c1c9e469fdc77689db1685
-      internalID: 270650457
+      spriteID: f9b12d645b8cb4d4facf5b4bd0e80da5
+      internalID: 73591232
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WoodenShop_1
+      name: Attack_and_coolDown_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
-        width: 64
-        height: 42
+        x: 16
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,8 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b06cf61e9c83d84eb43469b13153012
-      internalID: -162083054
+      spriteID: f35e6275a95921943ac80b0f5547fe3a
+      internalID: 1962931691
       vertices: []
       indices: 
       edges: []
@@ -175,8 +175,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WoodenShop_0: 270650457
-      WoodenShop_1: -162083054
+      Attack_and_coolDown_0: 73591232
+      Attack_and_coolDown_1: 1962931691
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

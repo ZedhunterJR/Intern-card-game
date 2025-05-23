@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,6 +52,7 @@ public class GameManager : Singleton<GameManager>
     public float currentHp, maxHp;
     [SerializeField] List<Sprite> hpSprite = new();
     [SerializeField] Image hpImage;
+    [SerializeField] TextMeshProUGUI hpText;
     /// <summary>
     /// if return false, that means hp = 0 -> should be gameover
     /// </summary>
@@ -61,7 +62,8 @@ public class GameManager : Singleton<GameManager>
     {
         currentHp += value;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
-        UpdateHpImage();
+
+        FlashHpImage(() => UpdateHpImage());
         //update text here ->
 
         if (currentHp == 0)
@@ -95,8 +97,25 @@ public class GameManager : Singleton<GameManager>
             hpImage.sprite = hpSprite[3];
         else
             hpImage.sprite = hpSprite[4];
+
+        hpText.text = $"{(int)currentHp}/{(int)maxHp}";
     }
 
+    void FlashHpImage(System.Action onComplete)
+    {
+        float originalAlpha = hpImage.color.a;
+        float flashAlpha = 0.3f; // độ mờ, có thể tùy chỉnh
+
+        Sequence seq = DOTween.Sequence();
+
+        for (int i = 0; i < 3; i++)
+        {
+            seq.Append(hpImage.DOFade(flashAlpha, 0.1f));  // Làm mờ
+            seq.Append(hpImage.DOFade(originalAlpha, 0.1f)); // Hiện rõ lại
+        }
+
+        seq.OnComplete(() => onComplete?.Invoke());
+    }
 
     [SerializeField] TextMeshProUGUI turnsNum;
     [SerializeField] TextMeshProUGUI rerollsNum;
@@ -109,7 +128,7 @@ public class GameManager : Singleton<GameManager>
     private bool isShopOpen = false;
     private void Awake()
     {
-        gameStatus = GameStatus.Init;
+        ChangeGameStatus(GameStatus.Init);
         dataSpriteManager = DataSpriteManager.Instance;
     }
 
@@ -216,6 +235,7 @@ public class GameManager : Singleton<GameManager>
 
 public enum GameStatus
 {
+    None,
     Init,
     Pause, 
     Battle, 

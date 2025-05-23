@@ -202,6 +202,7 @@ public class ShopManager : Singleton<ShopManager>
                 inforEffect.SetActive(true);
                 inforCanvas.overrideSorting = true;
                 inforCanvas.sortingLayerName = "Interact";
+                inforCanvas.sortingOrder = 10;
             }
         };
         buttonUI.MouseHoverExit = () =>
@@ -248,6 +249,7 @@ public class ShopManager : Singleton<ShopManager>
                 infor.SetActive(true);
                 inforCanvas.overrideSorting = true;
                 inforCanvas.sortingLayerName = "Interact";
+                inforCanvas.sortingOrder = 10;
             }
         };
         buttonUI.MouseHoverExit = () =>

@@ -12,7 +12,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
     [SerializeField] private GameObject enemyPlace;
     [SerializeField] private Transform hp_bar;
-    [SerializeField] private TextMeshProUGUI enemyText, roundReq;
+    [SerializeField] private TextMeshProUGUI enemyText, attackDamage, attackInterval, enemyTextCurrentHP;
     public EnemyData currentEnemy;
     [HideInInspector] public float enemyMaxHp, enemyCurrentHp;
     private void Start()
@@ -32,6 +32,11 @@ public class EnemyManager : Singleton<EnemyManager>
         OnSpawnEnemyEvent();
 
         enemyCurrentHp = enemyMaxHp;
+        enemyText.text = currentEnemy.name;
+        attackDamage.text = currentEnemy.dmg.ToString();
+        enemyTextCurrentHP.text = $"{enemyCurrentHp}/{enemyMaxHp}";
+        attackInterval.text = currentEnemy.attackInterval.ToString();
+
         hp_bar.transform.localScale = new Vector3(0, 1, 1);
         hp_bar.transform.DOScale(Vector3.one, 1f);
     }
@@ -44,8 +49,9 @@ public class EnemyManager : Singleton<EnemyManager>
         //hurt anim ->
 
         enemyCurrentHp -= dmg;
-        enemyCurrentHp = Mathf.Clamp(enemyCurrentHp, 0, enemyMaxHp);
+        enemyCurrentHp = Mathf.Clamp((int)enemyCurrentHp, 0, enemyMaxHp);
         hp_bar.transform.localScale = new Vector3(enemyCurrentHp / enemyMaxHp, 1, 1);
+        UpdateInformationAfterPlay();
 
         OnTakeDamage();
         if (enemyCurrentHp == 0)
@@ -54,6 +60,13 @@ public class EnemyManager : Singleton<EnemyManager>
         }
 
     }
+
+    public void UpdateInformationAfterPlay()
+    {
+        enemyTextCurrentHP.text = $"{enemyCurrentHp}/{enemyMaxHp}";
+        attackInterval.text = GameManager.Instance.CurrentTurnBeforeEnemyAttack.ToString();
+    }
+
     public bool Endturn()
     {
         if (enemyCurrentHp == 0)
@@ -72,7 +85,7 @@ public class EnemyManager : Singleton<EnemyManager>
             Pulse();
             GameManager.Instance.SetTurns(currentEnemy.attackInterval, true);
             GameManager.Instance.UpdateHp(-currentEnemy.dmg);
-            return true;
+            //return true;
         }
         return false;
     }
